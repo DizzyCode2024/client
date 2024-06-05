@@ -1,6 +1,6 @@
 import { DefaultTheme } from "styled-components";
-import { palette } from "../constants/palette";
-import { spacing } from "../constants/spacing";
+import { palette } from "@/constants/palette";
+import { spacing } from "@/constants/spacing";
 
 const theme: DefaultTheme = {
   colors: {
