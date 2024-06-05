@@ -1,17 +1,13 @@
 import { DefaultTheme } from "styled-components";
-import { palette } from "../constants/palette";
-import { spacing } from "../constants/spacing";
+import { palette } from "@/constants/palette";
+import { spacing } from "@/constants/spacing";
+import { extendTheme } from "@chakra-ui/react";
 
-const theme: DefaultTheme = {
+const theme = {
   colors: {
     text: palette.neutral700_gray,
     textDim: palette.neutral600_gray,
     textDimmer: palette.neutral500_gray,
-    primary: "#0038FF",
-    secondary: "#D0191C",
-    tertiary: "#4285F4",
-    background: "#F2F2F2",
-    border: "#949496",
   },
   spacing: {
     offset: spacing.offset,
@@ -21,4 +17,12 @@ const theme: DefaultTheme = {
   },
 };
 
-export { theme };
+// styled-components 테마
+const styledTheme: DefaultTheme = theme;
+
+// Chakra UI 테마
+const chakraTheme = extendTheme({
+  colors: theme.colors,
+});
+
+export { styledTheme, chakraTheme };

@@ -1,1 +1,1 @@
-//  { userId, accessToken, refreshToken, clearLoginData, setLoginData }
+//  { userId, accessToken, clearLoginData, setLoginData }

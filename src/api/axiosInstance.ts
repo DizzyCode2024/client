@@ -1,41 +1,21 @@
 import axios from "axios";
-import dayjs from "dayjs";
-import { getNewAccessToken, getNewRefreshToken } from "../utils/jwt";
+import { getNewAccessToken } from "../utils/jwt";
+import { signout } from "@/utils/auth";
 
 const BASE_URL = "http://localhost:5000";
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 1000,
+  withCredentials: true, // 쿠키 포함
 });
 
 axiosInstance.interceptors.request.use(
   async (config) => {
-    let accessToken = localStorage.getItem("accessToken");
-    const accessExp = localStorage.getItem("accessExp");
-    const refreshExp = localStorage.getItem("refreshExp");
-
-    if (accessToken && accessExp && refreshExp) {
-      const now = dayjs();
-
-      // accessToken 만료 15분 전 재발급
-      if (now.isAfter(dayjs.unix(Number(accessExp)).subtract(15, "minute"))) {
-        accessToken = await getNewAccessToken();
-        if (accessToken) {
-          config.headers.Authorization = `Bearer ${accessToken}`;
-        }
-      }
-
-      // Refresh token 만료 3일 전 재발급
-      if (now.isAfter(dayjs(refreshExp).subtract(3, "day"))) {
-        await getNewRefreshToken();
-      }
+    const token = localStorage.getItem("accessToken");
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
     }
-
-    if (accessToken) {
-      config.headers.Authorization = `Bearer ${accessToken}`;
-    }
-
     return config;
   },
   (error) => {
@@ -51,14 +31,15 @@ axiosInstance.interceptors.response.use(
     const originalRequest = error.config;
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-
       const newAccessToken = await getNewAccessToken();
       if (newAccessToken) {
         originalRequest.headers.Authorization = `Bearer ${newAccessToken}`;
         return axiosInstance(originalRequest);
       }
+    } else if (error.response.status === 400) {
+      // Refresh Token이 만료된 경우 signout
+      signout();
     }
-
     return Promise.reject(error);
   }
 );
