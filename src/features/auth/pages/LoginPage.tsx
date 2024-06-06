@@ -34,7 +34,7 @@ const LoginPage = () => {
       mx="auto"
       border={["none", "1px"]}
       borderColor={["", "gray.300"]}
-      borderRadius={15}
+      borderRadius={10}
     >
       <Text
         bgGradient="linear(to-l, #00cdac, #8ddad5)"
@@ -73,6 +73,9 @@ const LoginPage = () => {
       </FormControl>
       <Button colorScheme="teal" w="full" mt={7} onClick={handleSubmit}>
         로그인
+      </Button>
+      <Button colorScheme="blue" w="full" mt={3} variant="outline">
+        Google Login
       </Button>
     </Box>
   );
