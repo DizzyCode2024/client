@@ -35,7 +35,12 @@ const MainPage = () => {
           align="center"
           justifyContent="center"
         >
-          <Button colorScheme="teal" size="lg" variant="solid">
+          <Button
+            colorScheme="teal"
+            size="lg"
+            variant="solid"
+            onClick={gotoSignup}
+          >
             Sign up
           </Button>
           <Button
