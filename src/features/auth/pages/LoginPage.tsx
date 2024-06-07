@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import useInput from "../hooks/useInput";
 import {
   Button,
   Box,
@@ -10,14 +12,9 @@ import {
 } from "@chakra-ui/react";
 
 const LoginPage = () => {
-  const [email, setEmail] = useState<string>("");
-  const [password, setPassword] = useState<string>("");
+  const [email, onChangeEmail] = useInput("");
+  const [password, onChangePassword] = useInput("");
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
-
-  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setEmail(e.target.value);
-  const handlePasswordChange = (e: React.ChangeEvent<HTMLInputElement>) =>
-    setPassword(e.target.value);
 
   const handleSubmit = () => {
     setIsSubmitted(true);
@@ -25,6 +22,11 @@ const LoginPage = () => {
 
   const isEmailError = isSubmitted && email === "";
   const isPasswordError = isSubmitted && password === "";
+
+  const navigate = useNavigate();
+  const goToMain = () => {
+    navigate("/");
+  };
 
   return (
     <Box
@@ -41,6 +43,8 @@ const LoginPage = () => {
         bgClip="text"
         fontSize="6xl"
         fontWeight="bold"
+        onClick={goToMain}
+        _hover={{ cursor: "pointer" }}
       >
         Dizzy Code
       </Text>
@@ -54,7 +58,7 @@ const LoginPage = () => {
           variant="filled"
           type="email"
           value={email}
-          onChange={handleEmailChange}
+          onChange={onChangeEmail}
         />
         {isEmailError && <FormErrorMessage>Email is required</FormErrorMessage>}
       </FormControl>
@@ -65,7 +69,7 @@ const LoginPage = () => {
           variant="filled"
           type="password"
           value={password}
-          onChange={handlePasswordChange}
+          onChange={onChangePassword}
         />
         {isPasswordError && (
           <FormErrorMessage>Password is required</FormErrorMessage>
