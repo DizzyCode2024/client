@@ -9,15 +9,33 @@ import {
   FormLabel,
   Input,
   FormErrorMessage,
+  useToast,
 } from "@chakra-ui/react";
+import { useAuthActions } from "../hooks/useAuthActions";
 
 const LoginPage = () => {
   const [email, onChangeEmail] = useInput("");
   const [password, onChangePassword] = useInput("");
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
-  const handleSubmit = () => {
+  const { signin } = useAuthActions();
+  const toast = useToast();
+
+  const handleSubmit = async () => {
     setIsSubmitted(true);
+    if (email && password) {
+      try {
+        await signin(email, password);
+      } catch (error) {
+        toast({
+          title: "로그인 실패",
+          description: "로그인 중 오류가 발생했습니다.",
+          status: "error",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
+    }
   };
 
   const isEmailError = isSubmitted && email === "";
