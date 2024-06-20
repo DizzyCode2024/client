@@ -6,6 +6,7 @@ declare module "styled-components" {
       text: string;
       textDim: string;
       textDimmer: string;
+      textDark: string;
     };
     spacing: {
       offset: string;
