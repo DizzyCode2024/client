@@ -28,7 +28,7 @@ const UserBox = () => {
         display="flex"
         alignItems="center"
         cursor="pointer"
-        minWidth="13rem"
+        minWidth="19rem"
         height="4rem"
         transition="all 0.2s ease-in"
         borderRadius="3px"
@@ -46,11 +46,17 @@ const UserBox = () => {
         >
           <StarIcon color="white" width="2rem" />
         </Box>
-        <Box ml={4} display="flex" flexDirection="column" alignItems="center">
-          <Box color="gray.200" fontSize="2xl" fontWeight="bold" mt={1}>
+        <Box
+          ml={4}
+          display="flex"
+          flexDirection="column"
+          alignItems="center"
+          lineHeight="short"
+        >
+          <Box color="gray.200" fontSize="2xl" fontWeight="bold">
             사용자
           </Box>
-          <Box color="gray.400" fontSize="xl" mr="auto" mb={1}>
+          <Box color="gray.400" fontSize="xl" mr="auto" mt="-2px">
             온라인
           </Box>
         </Box>
