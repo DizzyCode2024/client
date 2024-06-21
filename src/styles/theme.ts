@@ -8,6 +8,7 @@ const theme = {
     text: palette.neutral700_gray,
     textDim: palette.neutral600_gray,
     textDimmer: palette.neutral500_gray,
+    textDark: palette.neutral400_gray,
   },
   spacing: {
     offset: spacing.offset,
