@@ -1,9 +1,15 @@
-import styled from "styled-components";
 import { Box, Stack, Text, Tooltip } from "@chakra-ui/react";
-import { AddIcon, SmallAddIcon, StarIcon } from "@chakra-ui/icons";
+import { SmallAddIcon, StarIcon } from "@chakra-ui/icons";
+import UserBox from "./UserBox";
 
 const Container = ({ children }) => (
-  <Box minWidth="23rem" height="100vh" bg="gray.700">
+  <Box
+    minWidth="23rem"
+    height="100vh"
+    bg="gray.700"
+    display="flex"
+    flexDirection="column"
+  >
     {children}
   </Box>
 );
@@ -81,6 +87,7 @@ const DMList = () => {
         height="4rem"
         marginLeft={4}
         color="gray.300"
+        borderRadius="3px"
         transition="all 0.2s ease-in"
         _hover={{ bg: "gray.600", color: "white" }}
       >
@@ -98,6 +105,7 @@ const DMList = () => {
         </Box>
         <Text marginLeft="1rem">하루단백바</Text>
       </Box>
+      <UserBox />
     </Container>
   );
 };
