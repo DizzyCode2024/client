@@ -16,7 +16,7 @@ const Top = styled.div`
   background-color: green;
   height: 7rem;
   position: relative;
-  margin-bottom: 4rem;
+  margin-bottom: 3rem;
 `;
 
 const EditProfile = () => (

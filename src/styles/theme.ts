@@ -2,6 +2,7 @@ import { DefaultTheme } from "styled-components";
 import { palette } from "@/constants/palette";
 import { spacing } from "@/constants/spacing";
 import { extendTheme } from "@chakra-ui/react";
+import { menuTheme } from "./menuTheme";
 
 const theme = {
   colors: {
@@ -24,6 +25,9 @@ const styledTheme: DefaultTheme = theme;
 // Chakra UI 테마
 const chakraTheme = extendTheme({
   colors: theme.colors,
+  components: {
+    Menu: menuTheme,
+  },
 });
 
 export { styledTheme, chakraTheme };
