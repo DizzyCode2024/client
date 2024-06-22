@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ChatSection from "../components/ChatSection";
-import ServerList from "../components/ServerList";
-import ServerMenu from "../components/ServerMenu";
+import ServerList from "../components/ServerList/ServerList";
+import ServerMenu from "../components/ServerMenu/ServerMenu";
 
 const Container = styled.div`
   /* temporary */

@@ -1,8 +1,7 @@
-import { useCustomToast } from "@/hooks/useCustomToast";
 import styled from "styled-components";
-import ServerList from "../components/ServerList";
 import DMList from "../components/DMList";
 import FriendList from "../components/FriendList";
+import ServerList from "../components/ServerList/ServerList";
 
 const Container = styled.div`
   /* temporary */
