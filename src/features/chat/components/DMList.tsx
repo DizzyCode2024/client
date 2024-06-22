@@ -52,7 +52,7 @@ const DMList = () => {
           fontSize="2xl"
           borderRadius="3px"
           transition="all 0.2s ease-in"
-          _hover={{ bg: "gray.600", color: "gray.200" }}
+          _hover={{ bg: "gray.500", color: "white" }}
         >
           <StarIcon marginRight={2} width="2rem" />
           친구

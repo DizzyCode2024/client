@@ -1,4 +1,3 @@
-import styled from "styled-components";
 import { Box } from "@chakra-ui/react";
 import TopMenu from "./TopMenu";
 
