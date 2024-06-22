@@ -1,9 +1,10 @@
-import styled from "styled-components";
+import CustomTooltip from "@/components/Tooltip";
 import { AddIcon } from "@chakra-ui/icons";
-import { Stack, Tooltip, Box, Divider } from "@chakra-ui/react";
+import { Box, Divider, Stack } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import styled from "styled-components";
 
-const Container = ({ children }) => (
+const Container = ({ children }: { children: React.ReactNode }) => (
   <Box minWidth="7rem" height="100vh" bg="gray.800">
     {children}
   </Box>
@@ -37,15 +38,18 @@ const DmButton = styled.button`
   }
 `;
 
-const TooltipButton = ({ label, onClick, children }) => (
-  <Tooltip
-    label={label}
-    fontSize="2xl"
-    placement="right"
-    backgroundColor="gray.900"
-  >
+const TooltipButton = ({
+  label,
+  onClick,
+  children,
+}: {
+  label: string;
+  onClick: () => void;
+  children: React.ReactNode;
+}) => (
+  <CustomTooltip label={label} placement="right">
     <div onClick={onClick}>{children}</div>
-  </Tooltip>
+  </CustomTooltip>
 );
 
 const ServerList = () => {

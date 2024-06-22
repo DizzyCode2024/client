@@ -12,8 +12,8 @@ const Container = styled.div`
 `;
 
 const MainPage = () => {
-  const toast = useCustomToast();
-  toast({ title: "hello", status: "success" });
+  // const toast = useCustomToast();
+  // toast({ title: "hello", status: "success" });
 
   return (
     <Container>
