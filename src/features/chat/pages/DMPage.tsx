@@ -1,8 +1,7 @@
-import { useCustomToast } from "@/hooks/useCustomToast";
 import styled from "styled-components";
-import ServerList from "../components/ServerList";
 import DMList from "../components/DMList";
 import FriendList from "../components/FriendList";
+import ServerList from "../components/ServerList/ServerList";
 
 const Container = styled.div`
   /* temporary */
@@ -11,7 +10,7 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.textDim};
 `;
 
-const MainPage = () => {
+const DMPage = () => {
   // const toast = useCustomToast();
   // toast({ title: "hello", status: "success" });
 
@@ -24,4 +23,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default DMPage;

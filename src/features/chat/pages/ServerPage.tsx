@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import ChatSection from "../components/ChatSection";
-import ServerList from "../components/ServerList";
-import ServerMenu from "../components/ServerMenu";
+import ServerList from "../components/ServerList/ServerList";
+import ServerMenu from "../components/ServerMenu/ServerMenu";
 
 const Container = styled.div`
   /* temporary */
@@ -10,7 +10,7 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.textDim};
 `;
 
-const ChannelPage = () => {
+const ServerPage = () => {
   // const toast = useCustomToast();
   // toast({ title: "hello", status: "success" });
 
@@ -23,4 +23,4 @@ const ChannelPage = () => {
   );
 };
 
-export default ChannelPage;
+export default ServerPage;
