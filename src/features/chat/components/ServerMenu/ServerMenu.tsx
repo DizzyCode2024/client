@@ -1,8 +1,10 @@
 import { Box } from "@chakra-ui/react";
-import UserBox from "../UserBox";
+import UserBox from "../../../user/components/UserBox/UserBox";
 import CategoryBox from "./CategoryBox";
 import ChannelBox from "./ChannelBox";
 import ServerMenuButton from "./ServerMenuButton";
+import useServerStore from "@/stores/useServerStore";
+import { useEffect, useState } from "react";
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
@@ -17,9 +19,20 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 );
 
 const ServerMenu = () => {
+  const servers = useServerStore((state) => state.servers);
+  const currentServer = useServerStore((state) => state.currentServerId);
+
+  const [currentServerName, setCurrentServerName] = useState<string>("");
+
+  useEffect(() => {
+    servers?.map((server) => {
+      server.id === currentServer ? setCurrentServerName(server.name) : null;
+    });
+  }, [currentServer]);
+
   return (
     <Container>
-      <ServerMenuButton name="서버 1" />
+      <ServerMenuButton name={currentServerName} />
       <CategoryBox name="채팅 채널">
         <ChannelBox name="채널 1" />
         <ChannelBox name="채널 2" />

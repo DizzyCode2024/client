@@ -10,7 +10,7 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.textDim};
 `;
 
-const ChannelPage = () => {
+const ServerPage = () => {
   // const toast = useCustomToast();
   // toast({ title: "hello", status: "success" });
 
@@ -23,4 +23,4 @@ const ChannelPage = () => {
   );
 };
 
-export default ChannelPage;
+export default ServerPage;

@@ -1,5 +1,5 @@
 import { IServer } from "@/features/chat/types";
-import create from "zustand";
+import { create } from "zustand";
 
 interface IServerState {
   servers: IServer[] | null;

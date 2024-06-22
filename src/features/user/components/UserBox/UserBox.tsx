@@ -1,13 +1,7 @@
 import CustomTooltip from "@/components/Tooltip";
-import UserPopoverBox from "@/features/user/components/UserPopoverBox";
+import UserPopoverBox from "@/features/user/components/UserBox/UserPopoverBox";
 import { SettingsIcon, StarIcon } from "@chakra-ui/icons";
-import {
-  Box,
-  Popover,
-  PopoverTrigger,
-  Tooltip,
-  keyframes,
-} from "@chakra-ui/react";
+import { Box, Popover, PopoverTrigger, keyframes } from "@chakra-ui/react";
 import { motion } from "framer-motion";
 
 const Container = ({ children }: { children: React.ReactNode }) => (
@@ -19,7 +13,6 @@ const Container = ({ children }: { children: React.ReactNode }) => (
     justifyContent="space-between"
     alignItems="center"
     mt="auto"
-    onClick={() => console.log("clicked")}
   >
     {children}
   </Box>
@@ -35,7 +28,7 @@ const UserBox = () => {
 
   return (
     <Container>
-      <Popover placement="top" closeOnBlur={true}>
+      <Popover placement="top">
         <PopoverTrigger>
           <Box
             display="flex"

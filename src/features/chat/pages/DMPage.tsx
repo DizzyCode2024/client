@@ -10,7 +10,7 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.textDim};
 `;
 
-const MainPage = () => {
+const DMPage = () => {
   // const toast = useCustomToast();
   // toast({ title: "hello", status: "success" });
 
@@ -23,4 +23,4 @@ const MainPage = () => {
   );
 };
 
-export default MainPage;
+export default DMPage;

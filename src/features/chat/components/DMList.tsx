@@ -1,6 +1,6 @@
 import { Box, Stack, Text, Tooltip } from "@chakra-ui/react";
 import { SmallAddIcon, StarIcon } from "@chakra-ui/icons";
-import UserBox from "./UserBox";
+import UserBox from "../../user/components/UserBox/UserBox";
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
