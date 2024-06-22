@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import { AddIcon } from "@chakra-ui/icons";
 import { Stack, Tooltip, Box, Divider } from "@chakra-ui/react";
+import { useNavigate } from "react-router-dom";
 
 const Container = ({ children }) => (
   <Box minWidth="7rem" height="100vh" bg="gray.800">
@@ -36,18 +37,20 @@ const DmButton = styled.button`
   }
 `;
 
-const TooltipButton = ({ label, children }) => (
+const TooltipButton = ({ label, onClick, children }) => (
   <Tooltip
     label={label}
     fontSize="2xl"
     placement="right"
     backgroundColor="gray.900"
   >
-    {children}
+    <div onClick={onClick}>{children}</div>
   </Tooltip>
 );
 
 const ServerList = () => {
+  const navigate = useNavigate();
+
   return (
     <Container>
       <Stack
@@ -56,17 +59,29 @@ const ServerList = () => {
         alignItems="center"
         marginTop={2}
       >
-        <TooltipButton label="다이렉트 메시지">
+        <TooltipButton
+          label="다이렉트 메시지"
+          onClick={() => navigate("/chat/main")}
+        >
           <DmButton>DM</DmButton>
         </TooltipButton>
         <Divider borderColor="gray.500" w="3rem" />
-        <TooltipButton label="서버1">
+        <TooltipButton
+          label="서버1"
+          onClick={() => navigate("/chat/channels/1")}
+        >
           <ServerButton>서버1</ServerButton>
         </TooltipButton>
-        <TooltipButton label="서버2">
+        <TooltipButton
+          label="서버2"
+          onClick={() => navigate("/chat/channels/1")}
+        >
           <ServerButton>서버2</ServerButton>
         </TooltipButton>
-        <TooltipButton label="서버 추가하기">
+        <TooltipButton
+          label="서버 추가하기"
+          onClick={() => navigate("/chat/channels/1")}
+        >
           <ServerButton>
             <AddIcon w={6} h={6} paddingBottom={1} />
           </ServerButton>
