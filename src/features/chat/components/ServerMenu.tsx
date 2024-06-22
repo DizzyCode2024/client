@@ -1,3 +1,4 @@
+import MenuItemWithIcon from "@/components/MenuItemWithIcon";
 import CustomTooltip from "@/components/Tooltip";
 import {
   ChatIcon,
@@ -7,23 +8,19 @@ import {
 } from "@chakra-ui/icons";
 import {
   Box,
+  Button,
   Menu,
   MenuButton,
-  MenuItem,
+  MenuDivider,
   MenuList,
   Text,
-  Button,
-  MenuDivider,
-  Icon,
 } from "@chakra-ui/react";
-import UserBox from "./UserBox";
-import { MdPersonAddAlt1 } from "react-icons/md";
-import { IconType } from "react-icons";
-import { IoMdSettings } from "react-icons/io";
-import { RiFileAddFill } from "react-icons/ri";
 import { FaBell } from "react-icons/fa";
+import { IoMdSettings } from "react-icons/io";
+import { MdPersonAddAlt1 } from "react-icons/md";
+import { RiFileAddFill } from "react-icons/ri";
 import { VscSignOut } from "react-icons/vsc";
-import MenuItemWithIcon from "@/components/MenuItemWithIcon";
+import UserBox from "./UserBox";
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
