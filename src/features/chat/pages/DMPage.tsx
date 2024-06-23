@@ -1,7 +1,8 @@
 import useRoomStore from "@/stores/useRoomStore";
 import { BASE_URL } from "@/utils/config";
+import { StompSubscription } from "@stomp/stompjs";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import styled from "styled-components";
 import { getRooms } from "../api/chatApi";
 import DMList from "../components/DMList";
@@ -18,22 +19,14 @@ const Container = styled.div`
 `;
 
 const DMPage = () => {
-  const [message, setMessage] = useState<string>("");
-  const [messages, setMessages] = useState<ChatMessage[]>([]);
-
-  // websocket connection
-  const { isConnected, sendMessage } = useStompClient(
-    `${BASE_URL}/ws/gs-guide-websocket`,
-    "/topic/greetings",
-    (chatMessage) => {
-      console.log(chatMessage);
-      // setMessages((prevMessages) => [...prevMessages, chatMessage]);
-    }
-  );
-
   // get rooms
   const setRooms = useRoomStore((state) => state.setRooms);
-  const { data: rooms } = useQuery<IRoom[], Error>({
+  const {
+    data: rooms,
+    isLoading,
+    isError,
+    error,
+  } = useQuery<IRoom[], Error>({
     queryKey: ["rooms"],
     queryFn: getRooms,
   });
@@ -42,6 +35,35 @@ const DMPage = () => {
       setRooms(rooms);
     }
   }, [rooms]);
+
+  // 웹소켓 연결, rooms 구독
+  const { isConnected, subscribe, unsubscribe } = useStompClient(
+    `${BASE_URL}/ws/gs-guide-websocket`
+  );
+  useEffect(() => {
+    if (rooms && isConnected) {
+      const subscriptions: StompSubscription[] = [];
+
+      rooms.forEach((room) => {
+        const subscription = subscribe(
+          `/topic/rooms/${room.roomId}`,
+          (message) => {
+            const chatMessage: ChatMessage = JSON.parse(message.body);
+            console.log(
+              `Received message in room ${room.roomId}:`,
+              chatMessage
+            );
+            // 추가 설정
+          }
+        );
+        if (subscription) subscriptions.push(subscription);
+      });
+
+      return () => {
+        subscriptions.forEach((subscription) => unsubscribe(subscription));
+      };
+    }
+  }, [rooms, isConnected, subscribe, unsubscribe]);
 
   return (
     <Container>

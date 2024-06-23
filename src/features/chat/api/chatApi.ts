@@ -8,6 +8,5 @@ export const createRoom = async (roomName: string): Promise<IRoom> => {
 
 export const getRooms = async (): Promise<IRoom[]> => {
   const response = await axiosInstance.get("/rooms");
-  console.log("11111", response.data);
   return response.data;
 };
