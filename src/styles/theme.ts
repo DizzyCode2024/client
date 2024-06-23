@@ -3,6 +3,7 @@ import { palette } from "@/constants/palette";
 import { spacing } from "@/constants/spacing";
 import { extendTheme } from "@chakra-ui/react";
 import { menuTheme } from "./menuTheme";
+import { modalTheme } from "./modalTheme";
 
 const theme = {
   colors: {
@@ -27,6 +28,7 @@ const chakraTheme = extendTheme({
   colors: theme.colors,
   components: {
     Menu: menuTheme,
+    Modal: modalTheme,
   },
 });
 

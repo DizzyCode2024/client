@@ -1,8 +1,12 @@
 import axios from "axios";
 import { getNewAccessToken } from "../utils/jwt";
 import { signout } from "@/utils/auth";
+<<<<<<< HEAD
 
 const BASE_URL = "http://localhost:8080";
+=======
+import { BASE_URL } from "@/utils/config";
+>>>>>>> main
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,

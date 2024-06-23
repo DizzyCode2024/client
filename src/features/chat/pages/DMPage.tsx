@@ -2,6 +2,10 @@ import styled from "styled-components";
 import DMList from "../components/DMList";
 import FriendList from "../components/FriendList";
 import ServerList from "../components/ServerList/ServerList";
+import useStompClient from "../hooks/useStompClient";
+import { ChatMessage } from "../types";
+import { useState } from "react";
+import { BASE_URL } from "@/utils/config";
 
 const Container = styled.div`
   /* temporary */
@@ -11,8 +15,26 @@ const Container = styled.div`
 `;
 
 const DMPage = () => {
-  // const toast = useCustomToast();
-  // toast({ title: "hello", status: "success" });
+  const [message, setMessage] = useState<string>("");
+  const [messages, setMessages] = useState<ChatMessage[]>([]);
+
+  const { isConnected, sendMessage } = useStompClient(
+    `${BASE_URL}/ws/gs-guide-websocket`,
+    "/topic/greetings",
+    (chatMessage) => {
+      console.log(chatMessage);
+      // setMessages((prevMessages) => [...prevMessages, chatMessage]);
+    }
+  );
+  // const handleSendMessage = () => {
+  //   const messageContent: ChatMessage = {
+  //     sender: "UserA",
+  //     content: message,
+  //     type: "CHAT",
+  //   };
+  //   sendMessage("/app/chat.sendMessage", messageContent);
+  //   setMessage("");
+  // };
 
   return (
     <Container>
