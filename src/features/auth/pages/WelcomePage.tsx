@@ -25,8 +25,8 @@ const WelcomePage = () => {
   const gotoSignup = () => navigate("/signup");
   const gotoLogin = () => navigate("/login");
 
-  const toast = useCustomToast();
-  toast({ title: "hello", status: "success" });
+  // const toast = useCustomToast();
+  // toast({ title: "hello", status: "success" });
 
   return (
     <Container>

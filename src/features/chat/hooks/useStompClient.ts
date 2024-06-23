@@ -1,59 +1,59 @@
-import { Client } from "@stomp/stompjs";
 import { useEffect, useRef, useState } from "react";
+import { Client, IMessage, StompSubscription } from "@stomp/stompjs";
 import SockJS from "sockjs-client";
-import { ChatMessage } from "../types";
 
-const useStompClient = (
-  brokerURL: string,
-  topic: string,
-  onMessageReceived: (message: ChatMessage) => void
-) => {
+const useStompClient = (brokerURL: string) => {
   const client = useRef<Client | null>(null);
   const [isConnected, setIsConnected] = useState(false);
 
   useEffect(() => {
     const socket = new SockJS(brokerURL);
-
     client.current = new Client({
       webSocketFactory: () => socket,
       onConnect: () => {
-        console.log("Connected successfully");
         setIsConnected(true);
-        subscribe();
+        console.log(`Connected to server ${brokerURL}`);
       },
       onDisconnect: () => {
-        console.log("Disconnected");
         setIsConnected(false);
+        console.log("Disconnected from server");
       },
       debug: (str) => {
-        console.log(str);
+        console.log(`STOMP Debug: ${str}`);
       },
     });
 
     client.current.activate();
 
     return () => {
-      if (client.current) {
-        client.current.deactivate();
-      }
+      client.current?.deactivate();
     };
-  }, [brokerURL, topic]);
+  }, [brokerURL]);
 
-  const subscribe = () => {
-    client.current?.subscribe(topic, (message) => {
-      const chatMessage: ChatMessage = JSON.parse(message.body);
-      onMessageReceived(chatMessage);
-    });
+  const subscribe = (
+    destination: string,
+    callback: (message: IMessage) => void
+  ): StompSubscription | null => {
+    if (!client.current || !isConnected) return null;
+    return client.current.subscribe(destination, callback);
   };
 
-  const sendMessage = (destination: string, messageContent: ChatMessage) => {
-    client.current?.publish({
-      destination,
-      body: JSON.stringify(messageContent),
-    });
+  const unsubscribe = (subscription: StompSubscription) => {
+    subscription.unsubscribe();
   };
 
-  return { isConnected, sendMessage };
+  const sendMessage = (destination: string, body: string) => {
+    if (client.current && isConnected) {
+      client.current.publish({ destination, body });
+    }
+  };
+
+  return {
+    isConnected,
+    subscribe,
+    unsubscribe,
+    sendMessage,
+  };
 };
 
 export default useStompClient;

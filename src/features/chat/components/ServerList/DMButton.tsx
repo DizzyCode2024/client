@@ -2,12 +2,12 @@ import CustomTooltip from "@/components/Tooltip";
 import { Box, Button, Text } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import Indicator from "./Indicator";
-import useServerStore from "@/stores/useServerStore";
+import useRoomStore from "@/stores/useRoomStore";
 
 const DMButton = () => {
-  const isSelected = useServerStore((state) => state.currentServerId === 0); // DM server의 id는 0
+  const isSelected = useRoomStore((state) => state.currentRoomId === 0); // DM server의 id는 0
   const navigate = useNavigate();
-  const setCurrentServer = useServerStore((state) => state.setCurrentServer);
+  const setCurrentServer = useRoomStore((state) => state.setCurrentRoom);
 
   const handleClick = () => {
     navigate("/chat/main");
