@@ -3,6 +3,7 @@ import UserPopoverBox from "@/features/user/components/UserBox/UserPopoverBox";
 import { SettingsIcon, StarIcon } from "@chakra-ui/icons";
 import { Box, Popover, PopoverTrigger, keyframes } from "@chakra-ui/react";
 import { motion } from "framer-motion";
+import { useAuthStore } from "@/features/auth/hooks/useAuthStore";
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
@@ -19,6 +20,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 );
 
 const UserBox = () => {
+  const user = useAuthStore((state) => state.user);
   const spin = keyframes`
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
@@ -60,10 +62,10 @@ const UserBox = () => {
               lineHeight="short"
             >
               <Box color="gray.200" fontSize="2xl" fontWeight="bold">
-                사용자
+                {user || "사용자"}
               </Box>
               <Box color="gray.400" fontSize="xl" mr="auto" mt="-2px">
-                온라인
+                {user ? "온라인" : "오프라인"}
               </Box>
             </Box>
           </Box>
