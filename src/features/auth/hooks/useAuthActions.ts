@@ -1,6 +1,6 @@
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "./useAuthStore";
+import { useAuthStore } from "../../../stores/useAuthStore";
 
 import axios from "axios";
 

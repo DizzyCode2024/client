@@ -3,7 +3,7 @@ import UserPopoverBox from "@/features/user/components/UserBox/UserPopoverBox";
 import { SettingsIcon, StarIcon } from "@chakra-ui/icons";
 import { Box, Popover, PopoverTrigger, keyframes } from "@chakra-ui/react";
 import { motion } from "framer-motion";
-import { useAuthStore } from "@/features/auth/hooks/useAuthStore";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box

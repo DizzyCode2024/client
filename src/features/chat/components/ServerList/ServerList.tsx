@@ -1,4 +1,4 @@
-import useServerStore from "@/stores/useServerStore";
+import useRoomStore from "@/stores/useRoomStore";
 import { Box, Divider, Stack, Text } from "@chakra-ui/react";
 import AddServerButton from "./AddServerButton";
 import DMButton from "./DMButton";
@@ -11,7 +11,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 );
 
 const ServerList = () => {
-  const serverList = useServerStore((state) => state.servers);
+  const roomList = useRoomStore((state) => state.rooms);
 
   return (
     <Container>
@@ -22,12 +22,12 @@ const ServerList = () => {
         <Divider borderColor="gray.500" w="3rem" />
 
         {/* Server */}
-        {serverList?.map((server) => (
+        {roomList?.map((room) => (
           <ServerButton
-            key={server.id}
-            id={server.id}
-            thumbnail={<Text fontSize="2xl">{server.name}</Text>}
-            label={server.name}
+            key={room.roomId}
+            id={room.roomId}
+            thumbnail={<Text fontSize="2xl">{room.roomName}</Text>}
+            label={room.roomName}
           />
         ))}
 
