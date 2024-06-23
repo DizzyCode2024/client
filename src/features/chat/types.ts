@@ -8,3 +8,8 @@ export interface ChatMessage {
   content: string;
   type: string;
 }
+
+export interface RoomResponse {
+  roomId: number;
+  roomName: string;
+}

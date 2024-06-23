@@ -3,7 +3,7 @@ import { AddIcon } from "@chakra-ui/icons";
 import { Button, useDisclosure } from "@chakra-ui/react";
 import AddServerModal from "./AddServerModal";
 
-const AddServerButton = ({ onClick }: { onClick: () => void }) => {
+const AddServerButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
