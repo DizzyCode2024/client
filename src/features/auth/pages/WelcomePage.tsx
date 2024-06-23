@@ -1,13 +1,24 @@
+import React, { ReactNode } from "react";
 import { useCustomToast } from "@/hooks/useCustomToast";
-import { Text, Button, Center, Stack } from "@chakra-ui/react";
+import { Text, Button, Center, Stack, Box } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import styled from "styled-components";
 
-const Container = styled.div`
-  /* temporary */
-  width: 100%;
-  background-color: ${({ theme }) => theme.colors.textDim};
-`;
+type ContainerProps = {
+  children: ReactNode;
+};
+const Container: React.FC<ContainerProps> = ({ children }) => (
+  <Box
+    width="100%"
+    height="100dvh"
+    display="flex"
+    justifyContent="center"
+    alignItems="center"
+    bg="gray.600"
+    color="gray.100"
+  >
+    {children}
+  </Box>
+);
 
 const WelcomePage = () => {
   const navigate = useNavigate();
@@ -53,8 +64,6 @@ const WelcomePage = () => {
           </Button>
         </Stack>
       </Center>
-
-      <h1>Chat</h1>
     </Container>
   );
 };

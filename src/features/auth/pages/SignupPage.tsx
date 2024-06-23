@@ -22,28 +22,14 @@ const SignupPage = () => {
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 
   const { signup } = useAuthActions();
-  const toast = useToast();
 
   const handleSubmit = async () => {
     setIsSubmitted(true);
     if (email && username && password && !mismatchError) {
       try {
         await signup(email, password, username);
-        toast({
-          title: "회원가입 성공",
-          description: "회원가입이 성공적으로 완료되었습니다.",
-          status: "success",
-          duration: 5000,
-          isClosable: true,
-        });
       } catch (error) {
-        toast({
-          title: "회원가입 실패",
-          description: "회원가입 중 오류가 발생했습니다.",
-          status: "error",
-          duration: 5000,
-          isClosable: true,
-        });
+        console.log(error);
       }
     }
   };
