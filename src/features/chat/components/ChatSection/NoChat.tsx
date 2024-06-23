@@ -1,21 +1,7 @@
-import { Box } from "@chakra-ui/react";
-import ChatTopMenu from "./ChatTopMenu";
 import { ChatIcon } from "@chakra-ui/icons";
-import ChatInput from "./ChatInput";
+import { Box } from "@chakra-ui/react";
 
-const Container = ({ children }) => (
-  <Box
-    width="100%"
-    height="100vh"
-    bg="gray.600"
-    display="flex"
-    flexDirection="column"
-  >
-    {children}
-  </Box>
-);
-
-const NoChat = () => {
+const NoChatUI = () => {
   return (
     <Box color="white" mt="auto" ml={5}>
       <Box
@@ -43,14 +29,5 @@ const NoChat = () => {
     </Box>
   );
 };
-const ChatSection = () => {
-  return (
-    <Container>
-      <ChatTopMenu />
-      <NoChat />
-      <ChatInput />
-    </Container>
-  );
-};
 
-export default ChatSection;
+export default NoChatUI;
