@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import ChatSection from "../components/ChatSection/ChatSection";
-import ServerList from "../components/ServerList/ServerList";
 import ServerMenu from "../components/ServerMenu/ServerMenu";
 
 const Container = styled.div`
@@ -16,7 +15,6 @@ const ServerPage = () => {
 
   return (
     <Container>
-      <ServerList />
       <ServerMenu />
       <ChatSection />
     </Container>

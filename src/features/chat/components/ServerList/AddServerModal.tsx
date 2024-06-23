@@ -16,6 +16,7 @@ import { useEffect, useState } from "react";
 import { IRoom } from "../../types";
 import { useCustomToast } from "@/hooks/useCustomToast";
 import { useAuthStore } from "@/stores/useAuthStore";
+import useRoomStore from "@/stores/useRoomStore";
 
 const AddServerModal = ({
   isOpen,
@@ -27,6 +28,7 @@ const AddServerModal = ({
   const username = useAuthStore((state) => state.user);
   const [roomName, setRoomName] = useState<string>("");
 
+  const setRooms = useRoomStore((state) => state.setRooms);
   const toast = useCustomToast();
 
   useEffect(() => {
@@ -43,6 +45,7 @@ const AddServerModal = ({
     mutation.mutate(roomName, {
       onSuccess: (data) => {
         console.log("Room created successfully:", data);
+        // setRooms((prevRooms) => [...prevRooms, data]);
       },
       onError: (error) => {
         console.error("Error creating room:", error);
