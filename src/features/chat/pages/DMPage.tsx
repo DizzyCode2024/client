@@ -5,6 +5,7 @@ import ServerList from "../components/ServerList/ServerList";
 import useStompClient from "../hooks/useStompClient";
 import { ChatMessage } from "../types";
 import { useState } from "react";
+import { BASE_URL } from "@/utils/config";
 
 const Container = styled.div`
   /* temporary */
@@ -18,7 +19,7 @@ const DMPage = () => {
   const [messages, setMessages] = useState<ChatMessage[]>([]);
 
   const { isConnected, sendMessage } = useStompClient(
-    "http://localhost:8080/ws/gs-guide-websocket",
+    `${BASE_URL}/ws/gs-guide-websocket`,
     "/topic/greetings",
     (chatMessage) => {
       console.log(chatMessage);

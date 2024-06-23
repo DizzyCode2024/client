@@ -32,7 +32,7 @@ const ServerList = () => {
         ))}
 
         {/* Add Server */}
-        <AddServerButton onClick={() => {}} />
+        <AddServerButton />
       </Stack>
     </Container>
   );

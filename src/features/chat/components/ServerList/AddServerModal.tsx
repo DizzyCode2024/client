@@ -1,3 +1,4 @@
+import { createRoom } from "@/features/chat/api/chatApi";
 import {
   Button,
   Input,
@@ -10,7 +11,10 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
+import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
+import { RoomResponse } from "../../types";
+import { useCustomToast } from "@/hooks/useCustomToast";
 
 const AddServerModal = ({
   isOpen,
@@ -22,11 +26,33 @@ const AddServerModal = ({
   const name = "김땡땡";
   const [roomName, setRoomName] = useState<string>("");
 
+  const toast = useCustomToast();
+
   useEffect(() => {
     setRoomName(`${name}'s server`);
   }, []);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setRoomName(event.target.value);
+
+  const mutation = useMutation<RoomResponse, Error, string>({
+    mutationFn: createRoom,
+  });
+
+  const handleSubmit = () => {
+    mutation.mutate(roomName, {
+      onSuccess: (data) => {
+        console.log("Room created successfully:", data);
+      },
+      onError: (error) => {
+        console.error("Error creating room:", error);
+        toast({
+          title: "방 생성 실패",
+          description: "다시 시도해주세요.",
+          status: "error",
+        });
+      },
+    });
+  };
 
   return (
     <Modal isOpen={isOpen} onClose={onClose} size="xl" isCentered>
@@ -62,7 +88,9 @@ const AddServerModal = ({
           >
             취소
           </Button>
-          <Button fontSize="xl">채널 만들기</Button>
+          <Button fontSize="xl" onClick={handleSubmit}>
+            채널 만들기
+          </Button>
         </ModalFooter>
       </ModalContent>
     </Modal>
