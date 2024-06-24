@@ -2,6 +2,7 @@ import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../stores/useAuthStore";
 import axiosInstance from "@/api/axiosInstance";
+import signupAxiosInstance from "@/api/signupAxiosInstance";
 
 interface IUseAuth {
   signin: (email: string, password: string) => Promise<void>;
@@ -17,7 +18,7 @@ export const useAuthActions = (): IUseAuth => {
 
   const signup = async (email: string, password: string, username: string) => {
     try {
-      const response = await axiosInstance.post(`/signup`, {
+      const response = await signupAxiosInstance.post(`/signup`, {
         email,
         password,
         username,
@@ -46,6 +47,8 @@ export const useAuthActions = (): IUseAuth => {
   };
 
   const signin = async (email: string, password: string) => {
+    localStorage.removeItem("accessToken");
+
     try {
       const response = await axiosInstance.post(`/login`, {
         email,
