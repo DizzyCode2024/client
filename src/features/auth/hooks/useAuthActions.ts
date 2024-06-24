@@ -1,21 +1,13 @@
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "./useAuthStore";
-
-import axios from "axios";
+import axiosInstance from "@/api/axiosInstance";
 
 interface IUseAuth {
   signin: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string, username: string) => Promise<void>;
   signout: () => void;
 }
-
-const BASE_URL = "http://localhost:8080";
-
-const axiosInstance = axios.create({
-  baseURL: BASE_URL,
-  withCredentials: true,
-});
 
 export const useAuthActions = (): IUseAuth => {
   const toast = useToast();
