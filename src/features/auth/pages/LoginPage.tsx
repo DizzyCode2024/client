@@ -1,17 +1,10 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useInput from "../hooks/useInput";
-import {
-  Button,
-  Box,
-  Text,
-  FormControl,
-  FormLabel,
-  Input,
-  FormErrorMessage,
-  useToast,
-} from "@chakra-ui/react";
+import { Button, Box, Text, useToast } from "@chakra-ui/react";
 import { useAuthActions } from "../hooks/useAuthActions";
+import useInput from "../hooks/useInput";
+import CustomInput from "@/components/AuthInput"; // CustomInput 컴포넌트 임포트
+import Container from "@/components/Container"; // Container 컴포넌트 임포트
 
 const LoginPage = () => {
   const [email, onChangeEmail] = useInput("");
@@ -46,60 +39,82 @@ const LoginPage = () => {
     navigate("/");
   };
 
+  const gotoSignup = () => navigate("/signup");
+
   return (
-    <Box
-      w={["full", "md"]}
-      p={[15, 10]}
-      mt={[20, "10vh"]}
-      mx="auto"
-      border={["none", "1px"]}
-      borderColor={["", "gray.300"]}
-      borderRadius={10}
-    >
-      <Text
-        bgGradient="linear(to-l, #00cdac, #8ddad5)"
-        bgClip="text"
-        fontSize="6xl"
-        fontWeight="bold"
-        onClick={goToMain}
-        _hover={{ cursor: "pointer" }}
+    <Container>
+      <Box
+        w={["full", "md"]}
+        p={[15, 10]}
+        mt={[20, "10vh"]}
+        mx="auto"
+        bg="gray.900"
+        border={["none", "1px"]}
+        borderColor={["", "purple.400"]}
+        borderRadius={10}
+        color="gray.100"
       >
-        Dizzy Code
-      </Text>
-      <Text mt={5} fontSize={12}>
-        이메일과 비밀번호를 입력해주세요.
-      </Text>
-      <FormControl mt={8} isInvalid={isEmailError}>
-        <FormLabel>이메일</FormLabel>
-        <Input
-          rounded="none"
-          variant="filled"
+        <Text
+          bgGradient="linear(to-l, purple.400, purple.300)"
+          bgClip="text"
+          fontSize="6xl"
+          fontWeight="bold"
+          onClick={goToMain}
+          _hover={{ cursor: "pointer" }}
+        >
+          Dizzy Code
+        </Text>
+        <CustomInput
+          label="이메일"
           type="email"
           value={email}
           onChange={onChangeEmail}
+          isInvalid={isEmailError}
+          errorMessage="Email is required"
         />
-        {isEmailError && <FormErrorMessage>Email is required</FormErrorMessage>}
-      </FormControl>
-      <FormControl mt={3} isInvalid={isPasswordError}>
-        <FormLabel>비밀번호</FormLabel>
-        <Input
-          rounded="none"
-          variant="filled"
+        <CustomInput
+          label="비밀번호"
           type="password"
           value={password}
           onChange={onChangePassword}
+          isInvalid={isPasswordError}
+          errorMessage="Password is required"
         />
-        {isPasswordError && (
-          <FormErrorMessage>Password is required</FormErrorMessage>
-        )}
-      </FormControl>
-      <Button colorScheme="teal" w="full" mt={7} onClick={handleSubmit}>
-        로그인
-      </Button>
-      <Button colorScheme="blue" w="full" mt={3} variant="outline">
-        Google Login
-      </Button>
-    </Box>
+        <Button
+          colorScheme="purple"
+          w="full"
+          mt={7}
+          onClick={handleSubmit}
+          size="lg"
+        >
+          로그인
+        </Button>
+        <Button
+          colorScheme="purple"
+          w="full"
+          mt={5}
+          variant="outline"
+          size="lg"
+        >
+          Google Login
+        </Button>
+      </Box>
+      <Box display="flex" alignItems="center" mt={5}>
+        <Text color="purple.600" fontSize="xl">
+          Don't have an account?
+        </Text>
+        <Box
+          borderColor={["", "purple.400"]}
+          color="purple.400"
+          fontSize="xl"
+          ml={2}
+          cursor="pointer"
+          onClick={gotoSignup}
+        >
+          Sign up
+        </Box>
+      </Box>
+    </Container>
   );
 };
 

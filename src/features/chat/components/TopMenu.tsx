@@ -1,5 +1,6 @@
-import { ChatIcon, StarIcon } from "@chakra-ui/icons";
+import { ChatIcon, StarIcon, UnlockIcon } from "@chakra-ui/icons";
 import { Box, Tooltip } from "@chakra-ui/react";
+import { useAuthActions } from "@/features/auth/hooks/useAuthActions";
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
@@ -20,6 +21,11 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 const MenuList = ["온라인", "모두", "대기중", "차단 목록", "친구 추가하기"];
 
 const TopMenu = () => {
+  const { signout } = useAuthActions();
+  const handleLogout = () => {
+    signout();
+  };
+
   return (
     <Container>
       <Box display="flex" alignItems="center">
@@ -56,11 +62,18 @@ const TopMenu = () => {
           ))}
         </Box>
       </Box>
-      <Tooltip label="새로운 그룹 메시지" bg="gray.900" fontSize="2xl">
-        <Box as="button">
-          <ChatIcon color="gray.300" _hover={{ color: "white" }} />
-        </Box>
-      </Tooltip>
+      <Box>
+        <Tooltip label="새로운 그룹 메시지" bg="gray.900" fontSize="2xl">
+          <Box as="button">
+            <ChatIcon color="gray.300" _hover={{ color: "white" }} />
+          </Box>
+        </Tooltip>
+        <Tooltip label="로그아웃" bg="gray.900" fontSize="2xl">
+          <Box as="button" ml={5} onClick={handleLogout}>
+            <UnlockIcon color="gray.300" _hover={{ color: "white" }} />
+          </Box>
+        </Tooltip>
+      </Box>
     </Container>
   );
 };

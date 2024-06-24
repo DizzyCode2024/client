@@ -1,21 +1,14 @@
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useAuthStore } from "../../../stores/useAuthStore";
-
-import axios from "axios";
+import axiosInstance from "@/api/axiosInstance";
+import signupAxiosInstance from "@/api/signupAxiosInstance";
 
 interface IUseAuth {
   signin: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string, username: string) => Promise<void>;
   signout: () => void;
 }
-
-const BASE_URL = "http://localhost:8080";
-
-const axiosInstance = axios.create({
-  baseURL: BASE_URL,
-  withCredentials: true,
-});
 
 export const useAuthActions = (): IUseAuth => {
   const toast = useToast();
@@ -25,7 +18,7 @@ export const useAuthActions = (): IUseAuth => {
 
   const signup = async (email: string, password: string, username: string) => {
     try {
-      const response = await axiosInstance.post(`/signup`, {
+      const response = await signupAxiosInstance.post(`/signup`, {
         email,
         password,
         username,
@@ -54,16 +47,18 @@ export const useAuthActions = (): IUseAuth => {
   };
 
   const signin = async (email: string, password: string) => {
+    localStorage.removeItem("accessToken");
+
     try {
       const response = await axiosInstance.post(`/login`, {
         email,
         password,
       });
-      console.log(response);
+
       if (response.status === 200) {
         const accessToken = response.headers.authorization.split(" ")[1];
         localStorage.setItem("accessToken", accessToken);
-        setUser(response.data.username, accessToken);
+        setUser(response.data.username, response.data.email, accessToken);
         navigate("/chat/main");
       }
     } catch (error) {
@@ -81,16 +76,18 @@ export const useAuthActions = (): IUseAuth => {
   const signout = async () => {
     try {
       const response = await axiosInstance.post(`/logout`, {});
-      localStorage.removeItem("accessToken");
-      clearUser();
-      navigate("/login");
-      toast({
-        title: "로그아웃 성공",
-        description: "로그아웃이 성공적으로 완료되었습니다.",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
+      if (response) {
+        localStorage.removeItem("accessToken");
+        clearUser();
+        navigate("/login");
+        toast({
+          title: "로그아웃 성공",
+          description: "로그아웃이 성공적으로 완료되었습니다.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     } catch (error) {
       console.error("Logout error:", error);
       toast({

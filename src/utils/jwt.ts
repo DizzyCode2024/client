@@ -1,15 +1,20 @@
-import axiosInstance from "@/api/axiosInstance";
-import { signout } from "./auth";
+import axios from "axios";
+import { BASE_URL } from "@/utils/config";
 
 export const getNewAccessToken = async () => {
   try {
-    const response = await axiosInstance.post("/auth/refresh");
-    const newAccessToken = response.headers.authorization.split(" ")[1];
-    localStorage.setItem("accessToken", newAccessToken);
-    return newAccessToken;
+    const response = await axios.post(
+      `${BASE_URL}/reissue`,
+      {},
+      { withCredentials: true }
+    );
+    if (response.status === 200) {
+      const newAccessToken = response.data.accessToken;
+      localStorage.setItem("accessToken", newAccessToken);
+      return newAccessToken;
+    }
   } catch (error) {
-    console.error("Refresh token error:", error);
-    signout();
+    console.error("Error getting new access token", error);
     return null;
   }
 };

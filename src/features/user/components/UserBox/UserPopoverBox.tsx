@@ -9,6 +9,7 @@ import {
 } from "@chakra-ui/react";
 import styled from "styled-components";
 import EditProfile from "./EditButton";
+import { useAuthStore } from "@/stores/useAuthStore";
 
 const Top = styled.div`
   background-color: green;
@@ -18,6 +19,9 @@ const Top = styled.div`
 `;
 
 const UserPopoverBox = () => {
+  const user = useAuthStore((state) => state.user);
+  const email = useAuthStore((state) => state.email);
+
   return (
     <PopoverContent
       bg="gray.900"
@@ -64,9 +68,9 @@ const UserPopoverBox = () => {
           fontSize="small"
         >
           <Text fontSize={"2xl"} fontWeight={"bold"}>
-            김땡땡
+            {user}
           </Text>
-          <Text>test@gmail.com</Text>
+          <Text>{email}</Text>
           <Divider borderColor="gray.500" w="100%" marginBlock={5} />
           <Text fontSize={"xl"} fontWeight={"bold"}>
             MEMBER SINCE

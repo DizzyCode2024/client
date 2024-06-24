@@ -36,7 +36,6 @@ axiosInstance.interceptors.response.use(
         return axiosInstance(originalRequest);
       }
     } else if (error.response.status === 400) {
-      // Refresh Token이 만료된 경우 signout
       signout();
     }
     return Promise.reject(error);
