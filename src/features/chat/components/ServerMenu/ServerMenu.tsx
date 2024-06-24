@@ -3,7 +3,7 @@ import UserBox from "../../../user/components/UserBox/UserBox";
 import CategoryBox from "./CategoryBox";
 import ChannelBox from "./ChannelBox";
 import ServerMenuButton from "./ServerMenuButton";
-import useServerStore from "@/stores/useServerStore";
+import useRoomStore from "@/stores/useRoomStore";
 import { useEffect, useState } from "react";
 
 const Container = ({ children }: { children: React.ReactNode }) => (
@@ -19,14 +19,16 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 );
 
 const ServerMenu = () => {
-  const servers = useServerStore((state) => state.servers);
-  const currentServer = useServerStore((state) => state.currentServerId);
+  const rooms = useRoomStore((state) => state.rooms);
+  const currentServer = useRoomStore((state) => state.currentRoomId);
 
   const [currentServerName, setCurrentServerName] = useState<string>("");
 
   useEffect(() => {
-    servers?.map((server) => {
-      server.id === currentServer ? setCurrentServerName(server.name) : null;
+    rooms?.map((room) => {
+      room.roomId === currentServer
+        ? setCurrentServerName(room.roomName)
+        : null;
     });
   }, [currentServer]);
 

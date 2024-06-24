@@ -1,7 +1,9 @@
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "./useAuthStore";
+
 import axiosInstance from "@/api/axiosInstance";
+
+import { useAuthStore } from "../../../stores/useAuthStore";
 
 interface IUseAuth {
   signin: (email: string, password: string) => Promise<void>;
@@ -73,16 +75,18 @@ export const useAuthActions = (): IUseAuth => {
   const signout = async () => {
     try {
       const response = await axiosInstance.post(`/logout`, {});
-      localStorage.removeItem("accessToken");
-      clearUser();
-      navigate("/login");
-      toast({
-        title: "로그아웃 성공",
-        description: "로그아웃이 성공적으로 완료되었습니다.",
-        status: "success",
-        duration: 5000,
-        isClosable: true,
-      });
+      if (response) {
+        localStorage.removeItem("accessToken");
+        clearUser();
+        navigate("/login");
+        toast({
+          title: "로그아웃 성공",
+          description: "로그아웃이 성공적으로 완료되었습니다.",
+          status: "success",
+          duration: 5000,
+          isClosable: true,
+        });
+      }
     } catch (error) {
       console.error("Logout error:", error);
       toast({

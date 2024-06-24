@@ -1,5 +1,5 @@
 import CustomTooltip from "@/components/Tooltip";
-import useServerStore from "@/stores/useServerStore";
+import useRoomStore from "@/stores/useRoomStore";
 import { Box, Button } from "@chakra-ui/react";
 import Indicator from "./Indicator";
 import { useNavigate } from "react-router-dom";
@@ -14,8 +14,8 @@ const ServerButton = ({
   thumbnail: JSX.Element;
 }) => {
   const navigate = useNavigate();
-  const isSelected = useServerStore((state) => state.currentServerId === id);
-  const setCurrentServer = useServerStore((state) => state.setCurrentServer);
+  const isSelected = useRoomStore((state) => state.currentRoomId === id);
+  const setCurrentServer = useRoomStore((state) => state.setCurrentRoom);
 
   const handleClick = () => {
     setCurrentServer(id);

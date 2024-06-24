@@ -13,8 +13,10 @@ import {
 } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
-import { RoomResponse } from "../../types";
+import { IRoom } from "../../types";
 import { useCustomToast } from "@/hooks/useCustomToast";
+import { useAuthStore } from "@/stores/useAuthStore";
+import useRoomStore from "@/stores/useRoomStore";
 
 const AddServerModal = ({
   isOpen,
@@ -23,18 +25,19 @@ const AddServerModal = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const name = "김땡땡";
+  const username = useAuthStore((state) => state.user);
   const [roomName, setRoomName] = useState<string>("");
 
+  const setRooms = useRoomStore((state) => state.setRooms);
   const toast = useCustomToast();
 
   useEffect(() => {
-    setRoomName(`${name}'s server`);
+    setRoomName(`${username}'s server`);
   }, []);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setRoomName(event.target.value);
 
-  const mutation = useMutation<RoomResponse, Error, string>({
+  const mutation = useMutation<IRoom, Error, string>({
     mutationFn: createRoom,
   });
 
@@ -42,6 +45,7 @@ const AddServerModal = ({
     mutation.mutate(roomName, {
       onSuccess: (data) => {
         console.log("Room created successfully:", data);
+        // setRooms((prevRooms) => [...prevRooms, data]);
       },
       onError: (error) => {
         console.error("Error creating room:", error);
@@ -52,6 +56,7 @@ const AddServerModal = ({
         });
       },
     });
+    onClose();
   };
 
   return (
