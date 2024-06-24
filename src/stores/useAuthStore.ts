@@ -7,8 +7,12 @@ export const useAuthStore = create(
     (set) => ({
       user: null,
       token: null,
-      setUser: (user, token) => set({ user, token }),
-      clearUser: () => set({ user: null, token: null }),
+      email: null,
+      setUser: (user, email, token) => {
+        set({ user, email, token });
+      },
+
+      clearUser: () => set({ user: null, email: null, token: null }),
     }),
     {
       name: "auth-storage",

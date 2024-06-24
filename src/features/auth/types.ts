@@ -6,7 +6,8 @@ export interface User {
 
 export interface AuthState {
   user: User | null;
+  email: string | null;
   token: string | null;
-  setUser: (user: User, token: string) => void;
+  setUser: (user: User, email: string, token: string) => void;
   clearUser: () => void;
 }

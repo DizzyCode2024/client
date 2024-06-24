@@ -62,7 +62,7 @@ const UserBox = () => {
               lineHeight="short"
             >
               <Box color="gray.200" fontSize="2xl" fontWeight="bold">
-                {user || "사용자"}
+                {user}
               </Box>
               <Box color="gray.400" fontSize="xl" mr="auto" mt="-2px">
                 {user ? "온라인" : "오프라인"}

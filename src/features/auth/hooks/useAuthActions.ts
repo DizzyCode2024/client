@@ -1,9 +1,7 @@
 import { useToast } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
-
-import axiosInstance from "@/api/axiosInstance";
-
 import { useAuthStore } from "../../../stores/useAuthStore";
+import axiosInstance from "@/api/axiosInstance";
 
 interface IUseAuth {
   signin: (email: string, password: string) => Promise<void>;
@@ -53,11 +51,11 @@ export const useAuthActions = (): IUseAuth => {
         email,
         password,
       });
-      console.log(response);
+
       if (response.status === 200) {
         const accessToken = response.headers.authorization.split(" ")[1];
         localStorage.setItem("accessToken", accessToken);
-        setUser(response.data.username, accessToken);
+        setUser(response.data.username, response.data.email, accessToken);
         navigate("/chat/main");
       }
     } catch (error) {
