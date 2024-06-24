@@ -11,7 +11,6 @@ export const getNewAccessToken = async () => {
     if (response.status === 200) {
       const newAccessToken = response.data.accessToken;
       localStorage.setItem("accessToken", newAccessToken);
-      console.log("토큰 재발급!");
       return newAccessToken;
     }
   } catch (error) {
