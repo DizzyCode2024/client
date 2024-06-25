@@ -1,6 +1,6 @@
-import styled from "styled-components";
-import DMList from "../components/DMList";
-import FriendList from "../components/FriendList";
+import styled from 'styled-components';
+import DMList from '../components/DMList';
+import FriendList from '../components/FriendList';
 
 const Container = styled.div`
   /* temporary */

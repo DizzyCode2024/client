@@ -1,26 +1,26 @@
-import { Box } from "@chakra-ui/react";
-import { StompSubscription } from "@stomp/stompjs";
-import { useQuery } from "@tanstack/react-query";
-import { useEffect, useRef } from "react";
-import { Route, Routes } from "react-router-dom";
-import { getRooms } from "./features/chat/api/roomApi";
-import RoomList from "./features/chat/components/RoomList/RoomList";
-import useStompClient from "./features/chat/hooks/useStompClient";
-import DMPage from "./features/chat/pages/DMPage";
-import RoomPage from "./features/chat/pages/RoomPage";
-import { ChatMessage, IRoom } from "./features/chat/types";
-import { BASE_URL } from "./utils/config";
+import { Box } from '@chakra-ui/react';
+import { StompSubscription } from '@stomp/stompjs';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import { getRooms } from './features/chat/api/roomApi';
+import RoomList from './features/chat/components/RoomList/RoomList';
+import useStompClient from './features/chat/hooks/useStompClient';
+import DMPage from './features/chat/pages/DMPage';
+import RoomPage from './features/chat/pages/RoomPage';
+import { ChatMessage, IRoom } from './features/chat/types';
+import { BASE_URL } from './utils/config';
 
 const LoggedRouter = () => {
   // get rooms
   const { data: rooms } = useQuery<IRoom[], Error>({
-    queryKey: ["rooms"],
+    queryKey: ['rooms'],
     queryFn: getRooms,
   });
 
   // 웹소켓 연결
   const { isConnected, subscribe, unsubscribe } = useStompClient(
-    `${BASE_URL}/ws/gs-guide-websocket`
+    `${BASE_URL}/ws/gs-guide-websocket`,
   );
 
   // rooms 구독
@@ -39,10 +39,10 @@ const LoggedRouter = () => {
               const chatMessage: ChatMessage = JSON.parse(message.body);
               console.log(
                 `Received message in room ${room.roomId}:`,
-                chatMessage
+                chatMessage,
               );
               // 추가 설정
-            }
+            },
           );
           if (subscription) {
             existingSubscriptions.set(room.roomId, subscription);
@@ -75,11 +75,11 @@ const LoggedRouter = () => {
   }, [rooms, isConnected, subscribe, unsubscribe]);
 
   return (
-    <Box display={"flex"}>
+    <Box display={'flex'}>
       <RoomList />
       <Routes>
-        <Route path="/main" element={<DMPage />} />
-        <Route path="/channels/:id" element={<RoomPage />} />
+        <Route path={'/main'} element={<DMPage />} />
+        <Route path={'/channels/:id'} element={<RoomPage />} />
       </Routes>
     </Box>
   );

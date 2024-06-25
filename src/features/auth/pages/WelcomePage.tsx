@@ -1,8 +1,8 @@
-import React, { ReactNode } from "react";
-import { Text, Button, Center, Stack, Box, keyframes } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
-import Container from "@/components/Container";
+import React, { ReactNode } from 'react';
+import { Text, Button, Center, Stack, Box, keyframes } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import Container from '@/components/Container';
 
 const animationKeyframes = keyframes`
 0% { transform: scale(1) rotate(0); border-radius: 20%; }
@@ -29,11 +29,11 @@ const CustomButton: React.FC<CustomButtonProps> = ({ children, ...props }) => {
   return (
     <Button
       as={motion.button}
-      colorScheme="purple"
-      size="xl"
-      width="10rem"
-      height="3rem"
-      transition="0.3s ease-in"
+      colorScheme={'purple'}
+      size={'xl'}
+      width={'10rem'}
+      height={'3rem'}
+      transition={'0.3s ease-in'}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
       {...props}
@@ -45,47 +45,47 @@ const CustomButton: React.FC<CustomButtonProps> = ({ children, ...props }) => {
 
 const WelcomePage = () => {
   const navigate = useNavigate();
-  const gotoSignup = () => navigate("/signup");
-  const gotoLogin = () => navigate("/login");
+  const gotoSignup = () => navigate('/signup');
+  const gotoLogin = () => navigate('/login');
 
   return (
     <Container>
-      <Center w="100vw" h="100vh" flexDirection="column">
+      <Center w={'100vw'} h={'100vh'} flexDirection={'column'}>
         <Text
-          bgGradient="linear(to-l, purple.400, purple.200)"
-          bgClip="text"
-          fontSize="8xl"
-          fontWeight="bold"
+          bgGradient={'linear(to-l, purple.400, purple.200)'}
+          bgClip={'text'}
+          fontSize={'8xl'}
+          fontWeight={'bold'}
           mb={5}
         >
-          Dizzy Code
+          {'Dizzy Code'}
         </Text>
         <Box
-          m="5rem"
+          m={'5rem'}
           as={motion.div}
           animation={animation}
-          padding="2"
-          bgGradient="linear(to-l, purple.800, purple.400)"
-          width="8rem"
-          height="8rem"
-          display="flex"
+          padding={'2'}
+          bgGradient={'linear(to-l, purple.800, purple.400)'}
+          width={'8rem'}
+          height={'8rem'}
+          display={'flex'}
         />
         <Stack
-          direction="row"
-          mt="7rem"
+          direction={'row'}
+          mt={'7rem'}
           spacing={10}
-          align="center"
-          justifyContent="center"
+          align={'center'}
+          justifyContent={'center'}
         >
-          <CustomButton onClick={gotoSignup} variant="solid">
-            Sign up
+          <CustomButton onClick={gotoSignup} variant={'solid'}>
+            {'Sign up'}
           </CustomButton>
           <CustomButton
             onClick={gotoLogin}
-            variant="outline"
-            _hover={{ bg: "white" }}
+            variant={'outline'}
+            _hover={{ bg: 'white' }}
           >
-            Login
+            {'Login'}
           </CustomButton>
         </Stack>
       </Center>

@@ -1,8 +1,8 @@
-import { useToast } from "@chakra-ui/react";
-import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../../../stores/useAuthStore";
-import axiosInstance from "@/api/axiosInstance";
-import signupAxiosInstance from "@/api/signupAxiosInstance";
+import { useToast } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
+import axiosInstance from '@/api/axiosInstance';
+import signupAxiosInstance from '@/api/signupAxiosInstance';
+import { useAuthStore } from '../../../stores/useAuthStore';
 
 interface IUseAuth {
   signin: (email: string, password: string) => Promise<void>;
@@ -26,20 +26,20 @@ export const useAuthActions = (): IUseAuth => {
 
       if (response) {
         toast({
-          title: "회원가입 성공",
-          description: "회원가입이 성공적으로 완료되었습니다.",
-          status: "success",
+          title: '회원가입 성공',
+          description: '회원가입이 성공적으로 완료되었습니다.',
+          status: 'success',
           duration: 5000,
           isClosable: true,
         });
-        navigate("/login");
+        navigate('/login');
       }
     } catch (error) {
-      console.error("Signup error:", error);
+      console.error('Signup error:', error);
       toast({
-        title: "회원가입 실패",
-        description: "닉네임과 이메일 형식을 확인해주세요.",
-        status: "error",
+        title: '회원가입 실패',
+        description: '닉네임과 이메일 형식을 확인해주세요.',
+        status: 'error',
         duration: 5000,
         isClosable: true,
       });
@@ -47,7 +47,7 @@ export const useAuthActions = (): IUseAuth => {
   };
 
   const signin = async (email: string, password: string) => {
-    localStorage.removeItem("accessToken");
+    localStorage.removeItem('accessToken');
 
     try {
       const response = await axiosInstance.post(`/login`, {
@@ -56,17 +56,17 @@ export const useAuthActions = (): IUseAuth => {
       });
 
       if (response.status === 200) {
-        const accessToken = response.headers.authorization.split(" ")[1];
-        localStorage.setItem("accessToken", accessToken);
+        const accessToken = response.headers.authorization.split(' ')[1];
+        localStorage.setItem('accessToken', accessToken);
         setUser(response.data.username, response.data.email, accessToken);
-        navigate("/chat/main");
+        navigate('/chat/main');
       }
     } catch (error) {
-      console.error("Login error:", error);
+      console.error('Login error:', error);
       toast({
-        title: "로그인 실패",
-        description: "닉네임과 비밀번호를 확인해주세요.",
-        status: "error",
+        title: '로그인 실패',
+        description: '닉네임과 비밀번호를 확인해주세요.',
+        status: 'error',
         duration: 5000,
         isClosable: true,
       });
@@ -77,23 +77,23 @@ export const useAuthActions = (): IUseAuth => {
     try {
       const response = await axiosInstance.post(`/logout`, {});
       if (response) {
-        localStorage.removeItem("accessToken");
+        localStorage.removeItem('accessToken');
         clearUser();
-        navigate("/login");
+        navigate('/login');
         toast({
-          title: "로그아웃 성공",
-          description: "로그아웃이 성공적으로 완료되었습니다.",
-          status: "success",
+          title: '로그아웃 성공',
+          description: '로그아웃이 성공적으로 완료되었습니다.',
+          status: 'success',
           duration: 5000,
           isClosable: true,
         });
       }
     } catch (error) {
-      console.error("Logout error:", error);
+      console.error('Logout error:', error);
       toast({
-        title: "로그아웃 실패",
-        description: "로그아웃 중 오류가 발생했습니다.",
-        status: "error",
+        title: '로그아웃 실패',
+        description: '로그아웃 중 오류가 발생했습니다.',
+        status: 'error',
         duration: 5000,
         isClosable: true,
       });
