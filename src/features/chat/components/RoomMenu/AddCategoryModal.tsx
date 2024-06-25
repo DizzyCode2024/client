@@ -10,30 +10,29 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { useAuthStore } from '@/stores/useAuthStore';
-import useHandleRoom from '../../hooks/useHandleRoom';
+import { useState } from 'react';
+import useHandleCategory from '../../hooks/useHandleCategory';
+import { RoomId } from '../../types';
 
-const AddRoomModal = ({
+const AddCategoryModal = ({
   isOpen,
   onClose,
+  roomId,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  roomId: RoomId;
 }) => {
-  const username = useAuthStore((state) => state.user);
-  const [roomName, setRoomName] = useState<string>('');
+  const [catName, setCatName] = useState<string>('');
 
-  useEffect(() => {
-    setRoomName(`${username}'s room`);
-  }, []);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setRoomName(event.target.value);
+    setCatName(event.target.value);
 
-  // add room
-  const { addRoomMutation } = useHandleRoom();
+  // add category
+  const { addCatMutation } = useHandleCategory();
+
   const handleSubmit = () => {
-    addRoomMutation.mutate(roomName);
+    addCatMutation.mutate({ roomId, categoryName: catName });
     onClose();
   };
 
@@ -45,11 +44,12 @@ const AddRoomModal = ({
         <ModalCloseButton size={'xl'} />
         <ModalBody pt={'2rem'}>
           <Text fontWeight={'bold'} fontSize={'xl'} color={'gray.300'}>
-            {'ROOM NAME'}
+            {'CATEGORY NAME'}
           </Text>
           <Input
-            value={roomName}
+            value={catName}
             onChange={handleChange}
+            placeholder={'카테고리 이름을 입력하세요.'}
             fontSize={'2xl'}
             bg={'gray.900'}
             border={'none'}
@@ -72,7 +72,7 @@ const AddRoomModal = ({
             {'취소'}
           </Button>
           <Button fontSize={'xl'} onClick={handleSubmit}>
-            {'방 만들기'}
+            {'카테고리 만들기'}
           </Button>
         </ModalFooter>
       </ModalContent>
@@ -80,4 +80,4 @@ const AddRoomModal = ({
   );
 };
 
-export default AddRoomModal;
+export default AddCategoryModal;

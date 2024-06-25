@@ -1,5 +1,5 @@
 import axiosInstance from '../../../api/axiosInstance';
-import { IRoom } from '../types';
+import { IRoom, RoomId } from '../types';
 
 export const createRoom = async (roomName: string): Promise<IRoom> => {
   const response = await axiosInstance.post('/rooms', { roomName });
@@ -11,11 +11,6 @@ export const getRooms = async (): Promise<IRoom[]> => {
   return response.data;
 };
 
-export const deleteRoom = async (roomId: number): Promise<void> => {
+export const deleteRoom = async (roomId: RoomId): Promise<void> => {
   await axiosInstance.delete(`/rooms/${roomId}`);
-};
-
-export const getRoom = async (roomId: number): Promise<IRoom> => {
-  const response = await axiosInstance.get(`/rooms/${roomId}/categories`);
-  return response.data;
 };

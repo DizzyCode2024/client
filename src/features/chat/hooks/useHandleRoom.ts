@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCustomToast } from '@/hooks/useCustomToast';
 import { createRoom, deleteRoom } from '../api/roomApi';
-import { IRoom } from '../types';
+import { IRoom, RoomId } from '../types';
 
 const useHandleRoom = () => {
   const toast = useCustomToast();
@@ -30,7 +30,7 @@ const useHandleRoom = () => {
   });
 
   //   delete room
-  const deleteRoomMutation = useMutation<void, Error, number>({
+  const deleteRoomMutation = useMutation<void, Error, RoomId>({
     mutationFn: deleteRoom,
     onSuccess: () => {
       console.log('Room deleted');

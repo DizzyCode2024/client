@@ -1,9 +1,10 @@
+import useRoomStore from '@/stores/useRoomStore';
 import { Box } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import useRoomStore from '@/stores/useRoomStore';
 import UserBox from '../../../user/components/UserBox/UserBox';
-import { getRoom, getRooms } from '../../api/roomApi';
+import { getCategories } from '../../api/categoryApi';
+import { getRooms } from '../../api/roomApi';
 import { IRoom } from '../../types';
 import CategoryBox from './CategoryBox';
 import ChannelBox from './ChannelBox';
@@ -38,22 +39,25 @@ const RoomMenu = () => {
     });
   }, [currentRoom, rooms]);
 
-  const { data: room } = useQuery({
-    queryKey: ['rooms', currentRoom],
-    queryFn: () => getRoom(currentRoom),
+  const { data: categories } = useQuery({
+    queryKey: ['CatwChannels', currentRoom],
+    queryFn: () => getCategories(currentRoom),
   });
 
   useEffect(() => {
-    console.log('room:', room);
-  }, [room]);
+    console.log('categories:', categories);
+  }, [categories]);
 
   return (
     <Container>
       <RoomMenuButton name={currentRoomName} />
-      <CategoryBox name={'채팅 채널'}>
-        <ChannelBox name={'채널 1'} />
-        <ChannelBox name={'채널 2'} />
-      </CategoryBox>
+      {categories?.map((category) => (
+        <CategoryBox key={category.categoryId} name={category.categoryName}>
+          {category?.channels?.map((channel) => (
+            <ChannelBox key={channel.channelId} name={channel.channelName} />
+          ))}
+        </CategoryBox>
+      ))}
       <UserBox />
     </Container>
   );

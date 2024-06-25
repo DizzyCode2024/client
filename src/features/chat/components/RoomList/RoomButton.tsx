@@ -13,6 +13,7 @@ import useRoomStore from '@/stores/useRoomStore';
 import { handleRightClick } from '@/utils/handleRightClick';
 import useHandleRoom from '../../hooks/useHandleRoom';
 import Indicator from './Indicator';
+import { RoomId } from '../../types';
 
 const RoomButton = ({
   label,
@@ -20,7 +21,7 @@ const RoomButton = ({
   thumbnail,
 }: {
   label: string;
-  id: number;
+  id: RoomId;
   thumbnail: JSX.Element;
 }) => {
   const navigate = useNavigate();
