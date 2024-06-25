@@ -5,6 +5,9 @@ import ChannelBox from "./ChannelBox";
 import ServerMenuButton from "./ServerMenuButton";
 import useRoomStore from "@/stores/useRoomStore";
 import { useEffect, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
+import { IRoom } from "../../types";
+import { getRooms } from "../../api/chatApi";
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
@@ -19,7 +22,10 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 );
 
 const ServerMenu = () => {
-  const rooms = useRoomStore((state) => state.rooms);
+  const { data: rooms } = useQuery<IRoom[], Error>({
+    queryKey: ["rooms"],
+    queryFn: getRooms,
+  });
   const currentServer = useRoomStore((state) => state.currentRoomId);
 
   const [currentServerName, setCurrentServerName] = useState<string>("");
