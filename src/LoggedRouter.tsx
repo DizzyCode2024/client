@@ -10,11 +10,12 @@ import DMPage from './features/chat/pages/DMPage';
 import RoomPage from './features/chat/pages/RoomPage';
 import { ChatMessage, IRoom } from './features/chat/types';
 import { BASE_URL } from './utils/config';
+import { QUERY_KEYS } from './features/chat/api/queryKeys';
 
 const LoggedRouter = () => {
   // get rooms
   const { data: rooms } = useQuery<IRoom[], Error>({
-    queryKey: ['rooms'],
+    queryKey: QUERY_KEYS.ROOMS,
     queryFn: getRooms,
   });
 

@@ -2,6 +2,7 @@ import { useCustomToast } from '@/hooks/useCustomToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { createCategory } from '../api/categoryApi';
 import { ICategory, RoomId } from '../types';
+import { QUERY_KEYS } from '../api/queryKeys';
 
 const useHandleCategory = () => {
   const toast = useCustomToast();
@@ -21,7 +22,9 @@ const useHandleCategory = () => {
         description: '새로운 카테고리가 생성되었습니다.',
         status: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: ['CatwChannels'] });
+      queryClient.invalidateQueries({
+        queryKey: QUERY_KEYS.CATWCHANNELS(data.roomId),
+      });
     },
     onError: (error) => {
       console.error('Error creating category:', error);

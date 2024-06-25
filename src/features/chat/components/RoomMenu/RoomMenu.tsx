@@ -9,6 +9,7 @@ import { IRoom } from '../../types';
 import CategoryBox from './CategoryBox';
 import ChannelBox from './ChannelBox';
 import RoomMenuButton from './RoomMenuButton';
+import { QUERY_KEYS } from '../../api/queryKeys';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
@@ -24,7 +25,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 
 const RoomMenu = () => {
   const { data: rooms } = useQuery<IRoom[], Error>({
-    queryKey: ['rooms'],
+    queryKey: QUERY_KEYS.ROOMS,
     queryFn: getRooms,
   });
   const currentRoom = useRoomStore((state) => state.currentRoomId);
@@ -40,7 +41,7 @@ const RoomMenu = () => {
   }, [currentRoom, rooms]);
 
   const { data: categories } = useQuery({
-    queryKey: ['CatwChannels', currentRoom],
+    queryKey: QUERY_KEYS.CATWCHANNELS(currentRoom),
     queryFn: () => getCategories(currentRoom),
   });
 

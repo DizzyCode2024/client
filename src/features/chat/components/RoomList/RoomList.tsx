@@ -5,6 +5,7 @@ import { IRoom } from '../../types';
 import AddRoomButton from './AddRoomButton';
 import DMButton from './DMButton';
 import RoomButton from './RoomButton';
+import { QUERY_KEYS } from '../../api/queryKeys';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box minWidth={'7.5rem'} height={'100vh'} bg={'gray.800'}>
@@ -14,7 +15,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 
 const RoomList = () => {
   const { data: rooms = [] } = useQuery<IRoom[], Error>({
-    queryKey: ['rooms'],
+    queryKey: QUERY_KEYS.ROOMS,
     queryFn: getRooms,
     initialData: [],
   });
