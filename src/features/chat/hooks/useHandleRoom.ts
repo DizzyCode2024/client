@@ -1,7 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCustomToast } from '@/hooks/useCustomToast';
 import { createRoom, deleteRoom } from '../api/roomApi';
-import { IRoom } from '../types';
+import { IRoom, RoomId } from '../types';
+import { QUERY_KEYS } from '../api/queryKeys';
 
 const useHandleRoom = () => {
   const toast = useCustomToast();
@@ -17,7 +18,7 @@ const useHandleRoom = () => {
         description: '새로운 방이 생성되었습니다.',
         status: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: ['rooms'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ROOMS });
     },
     onError: (error) => {
       console.error('Error creating room:', error);
@@ -30,7 +31,7 @@ const useHandleRoom = () => {
   });
 
   //   delete room
-  const deleteRoomMutation = useMutation<void, Error, number>({
+  const deleteRoomMutation = useMutation<void, Error, RoomId>({
     mutationFn: deleteRoom,
     onSuccess: () => {
       console.log('Room deleted');
@@ -39,7 +40,7 @@ const useHandleRoom = () => {
         description: '방이 삭제되었습니다.',
         status: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: ['rooms'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ROOMS });
     },
     onError: (error) => {
       console.error('Error deleting room:', error);

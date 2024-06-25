@@ -1,3 +1,7 @@
+import MenuItemWithIcon from '@/components/MenuItemWithIcon';
+import CustomTooltip from '@/components/Tooltip';
+import useRoomStore from '@/stores/useRoomStore';
+import { handleRightClick } from '@/utils/handleRightClick';
 import {
   Box,
   Button,
@@ -7,11 +11,8 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import MenuItemWithIcon from '@/components/MenuItemWithIcon';
-import CustomTooltip from '@/components/Tooltip';
-import useRoomStore from '@/stores/useRoomStore';
-import { handleRightClick } from '@/utils/handleRightClick';
 import useHandleRoom from '../../hooks/useHandleRoom';
+import { RoomId } from '../../types';
 import Indicator from './Indicator';
 
 const RoomButton = ({
@@ -20,7 +21,7 @@ const RoomButton = ({
   thumbnail,
 }: {
   label: string;
-  id: number;
+  id: RoomId;
   thumbnail: JSX.Element;
 }) => {
   const navigate = useNavigate();

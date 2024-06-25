@@ -1,16 +1,24 @@
 import { AddIcon, ChevronDownIcon, ChevronRightIcon } from '@chakra-ui/icons';
-import { Box } from '@chakra-ui/react';
+import { Box, useDisclosure } from '@chakra-ui/react';
 import { useState } from 'react';
 import CustomTooltip from '@/components/Tooltip';
+import useRoomStore from '@/stores/useRoomStore';
+import AddChannelModal from './AddChannelModal';
+import { CategoryId } from '../../types';
 
 const CategoryBox = ({
   name,
+  categoryId,
   children,
 }: {
   name: string;
+  categoryId: CategoryId;
   children: React.ReactNode;
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(true);
+  const { isOpen: isChannelModalOpen, onOpen, onClose } = useDisclosure();
+
+  const roomId = useRoomStore((state) => state.currentRoomId);
   return (
     <>
       <Box
@@ -39,8 +47,15 @@ const CategoryBox = ({
           <AddIcon
             boxSize={4}
             _hover={{ bg: 'gray.600', color: 'white', cursor: 'pointer' }}
+            onClick={onOpen}
           />
         </CustomTooltip>
+        <AddChannelModal
+          isOpen={isChannelModalOpen}
+          onClose={onClose}
+          roomId={roomId}
+          categoryId={categoryId}
+        />
       </Box>
       {isOpen ? children : null}
     </>

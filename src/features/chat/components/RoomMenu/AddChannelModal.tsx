@@ -10,30 +10,31 @@ import {
   ModalOverlay,
   Text,
 } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
-import { useAuthStore } from '@/stores/useAuthStore';
-import useHandleRoom from '../../hooks/useHandleRoom';
+import { useState } from 'react';
+import useHandleChannel from '../../hooks/useHandleChannel';
+import { CategoryId, RoomId } from '../../types';
 
-const AddRoomModal = ({
+const AddChannelModal = ({
   isOpen,
   onClose,
+  roomId,
+  categoryId,
 }: {
   isOpen: boolean;
   onClose: () => void;
+  roomId: RoomId;
+  categoryId: CategoryId;
 }) => {
-  const username = useAuthStore((state) => state.user);
-  const [roomName, setRoomName] = useState<string>('');
+  const [channelName, setChannelName] = useState<string>('');
 
-  useEffect(() => {
-    setRoomName(`${username}'s room`);
-  }, []);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
-    setRoomName(event.target.value);
+    setChannelName(event.target.value);
 
-  // add room
-  const { addRoomMutation } = useHandleRoom();
+  // add channel
+  const { addChannelMutation } = useHandleChannel(roomId);
+
   const handleSubmit = () => {
-    addRoomMutation.mutate(roomName);
+    addChannelMutation.mutate({ roomId, categoryId, channelName });
     onClose();
   };
 
@@ -45,11 +46,12 @@ const AddRoomModal = ({
         <ModalCloseButton size={'xl'} />
         <ModalBody pt={'2rem'}>
           <Text fontWeight={'bold'} fontSize={'xl'} color={'gray.300'}>
-            {'ROOM NAME'}
+            {'CHANNEL NAME'}
           </Text>
           <Input
-            value={roomName}
+            value={channelName}
             onChange={handleChange}
+            placeholder={'채널 이름을 입력하세요.'}
             fontSize={'2xl'}
             bg={'gray.900'}
             border={'none'}
@@ -72,7 +74,7 @@ const AddRoomModal = ({
             {'취소'}
           </Button>
           <Button fontSize={'xl'} onClick={handleSubmit}>
-            {'방 만들기'}
+            {'채널 만들기'}
           </Button>
         </ModalFooter>
       </ModalContent>
@@ -80,4 +82,4 @@ const AddRoomModal = ({
   );
 };
 
-export default AddRoomModal;
+export default AddChannelModal;
