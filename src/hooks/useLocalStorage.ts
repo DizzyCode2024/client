@@ -38,12 +38,12 @@
  * };
  */
 
-import { useState } from "react";
+import { useState } from 'react';
 
 function useLocalStorage<T>(key: string, initialValue: T) {
   // get the value from local storage
   const readValue = () => {
-    if (typeof window === "undefined") {
+    if (typeof window === 'undefined') {
       return initialValue;
     }
 
@@ -68,7 +68,7 @@ function useLocalStorage<T>(key: string, initialValue: T) {
       setStoredValue(valueToStore);
 
       // save to local storage
-      if (typeof window !== "undefined") {
+      if (typeof window !== 'undefined') {
         window.localStorage.setItem(key, JSON.stringify(valueToStore));
       }
     } catch (error) {

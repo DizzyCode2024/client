@@ -1,4 +1,4 @@
-import { useToast } from "@chakra-ui/react";
+import { useToast } from '@chakra-ui/react';
 
 /**
  *
@@ -45,8 +45,8 @@ import { useToast } from "@chakra-ui/react";
 export function useCustomToast() {
   return useToast({
     isClosable: true,
-    variant: "subtle",
-    position: "top",
+    variant: 'subtle',
+    position: 'top',
     duration: 3000,
   });
 }

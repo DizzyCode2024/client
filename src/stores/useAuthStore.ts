@@ -1,6 +1,6 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
-import { AuthState } from "../features/auth/types";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
+import { AuthState } from '../features/auth/types';
 
 export const useAuthStore = create(
   persist<AuthState>(
@@ -15,7 +15,7 @@ export const useAuthStore = create(
       clearUser: () => set({ user: null, email: null, token: null }),
     }),
     {
-      name: "auth-storage",
-    }
-  )
+      name: 'auth-storage',
+    },
+  ),
 );

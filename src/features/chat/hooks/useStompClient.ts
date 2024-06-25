@@ -1,6 +1,6 @@
-import { useEffect, useRef, useState } from "react";
-import { Client, IMessage, StompSubscription } from "@stomp/stompjs";
-import SockJS from "sockjs-client";
+import { useEffect, useRef, useState } from 'react';
+import { Client, IMessage, StompSubscription } from '@stomp/stompjs';
+import SockJS from 'sockjs-client';
 
 const useStompClient = (brokerURL: string) => {
   const client = useRef<Client | null>(null);
@@ -16,7 +16,7 @@ const useStompClient = (brokerURL: string) => {
       },
       onDisconnect: () => {
         setIsConnected(false);
-        console.log("Disconnected from server");
+        console.log('Disconnected from server');
       },
       debug: (str) => {
         console.log(`STOMP Debug: ${str}`);
@@ -32,7 +32,7 @@ const useStompClient = (brokerURL: string) => {
 
   const subscribe = (
     destination: string,
-    callback: (message: IMessage) => void
+    callback: (message: IMessage) => void,
   ): StompSubscription | null => {
     if (!client.current || !isConnected) return null;
     return client.current.subscribe(destination, callback);

@@ -1,8 +1,8 @@
-import { Box } from "@chakra-ui/react";
-import TopMenu from "./TopMenu";
+import { Box } from '@chakra-ui/react';
+import TopMenu from './TopMenu';
 
 const Container = ({ children }) => (
-  <Box width="100%" height="100vh" bg="gray.600">
+  <Box width={'100%'} height={'100vh'} bg={'gray.600'}>
     {children}
   </Box>
 );

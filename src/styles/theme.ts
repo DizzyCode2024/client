@@ -1,9 +1,9 @@
-import { DefaultTheme } from "styled-components";
-import { palette } from "@/constants/palette";
-import { spacing } from "@/constants/spacing";
-import { extendTheme } from "@chakra-ui/react";
-import { menuTheme } from "./menuTheme";
-import { modalTheme } from "./modalTheme";
+import { DefaultTheme } from 'styled-components';
+import { extendTheme } from '@chakra-ui/react';
+import { palette } from '@/constants/palette';
+import { spacing } from '@/constants/spacing';
+import { menuTheme } from './menuTheme';
+import { modalTheme } from './modalTheme';
 
 const theme = {
   colors: {

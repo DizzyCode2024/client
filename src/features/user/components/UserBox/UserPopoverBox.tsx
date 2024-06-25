@@ -1,4 +1,3 @@
-import { spacing } from "@/constants/spacing";
 import {
   Box,
   Divider,
@@ -6,10 +5,11 @@ import {
   PopoverContent,
   PopoverHeader,
   Text,
-} from "@chakra-ui/react";
-import styled from "styled-components";
-import EditProfile from "./EditButton";
-import { useAuthStore } from "@/stores/useAuthStore";
+} from '@chakra-ui/react';
+import styled from 'styled-components';
+import { spacing } from '@/constants/spacing';
+import { useAuthStore } from '@/stores/useAuthStore';
+import EditProfile from './EditButton';
 
 const Top = styled.div`
   background-color: green;
@@ -24,58 +24,58 @@ const UserPopoverBox = () => {
 
   return (
     <PopoverContent
-      bg="gray.900"
-      color="white"
-      w="300px"
-      borderColor={"transparent"}
-      border="0"
+      bg={'gray.900'}
+      color={'white'}
+      w={'300px'}
+      borderColor={'transparent'}
+      border={'0'}
       borderRadius={10}
-      overflow="hidden"
-      m="3"
+      overflow={'hidden'}
+      m={'3'}
       ml={20}
     >
-      <PopoverHeader pt={4} fontWeight="bold" border="0" p="0">
+      <PopoverHeader pt={4} fontWeight={'bold'} border={'0'} p={'0'}>
         <Top>
           <EditProfile />
           <Box
-            bg="gray.900"
-            w="8rem"
-            h="8rem"
-            borderRadius="50%"
-            position="absolute"
+            bg={'gray.900'}
+            w={'8rem'}
+            h={'8rem'}
+            borderRadius={'50%'}
+            position={'absolute'}
             bottom={-35}
             left={10}
             p={3}
           >
             <Box
-              bg="green"
-              borderRadius="50%"
-              w="100%"
-              h="100%"
-              overflow={"hidden"}
+              bg={'green'}
+              borderRadius={'50%'}
+              w={'100%'}
+              h={'100%'}
+              overflow={'hidden'}
             >
-              <img src="/icon.jpeg" alt="user" />
+              <img src={'/icon.jpeg'} alt={'user'} />
             </Box>
           </Box>
         </Top>
       </PopoverHeader>
-      <PopoverBody m="0" p="0">
+      <PopoverBody m={'0'} p={'0'}>
         <Box
-          bg={"black"}
+          bg={'black'}
           borderRadius={10}
           p={spacing.padding}
           m={spacing.gutter}
-          fontSize="small"
+          fontSize={'small'}
         >
-          <Text fontSize={"2xl"} fontWeight={"bold"}>
+          <Text fontSize={'2xl'} fontWeight={'bold'}>
             {user}
           </Text>
           <Text>{email}</Text>
-          <Divider borderColor="gray.500" w="100%" marginBlock={5} />
-          <Text fontSize={"xl"} fontWeight={"bold"}>
-            MEMBER SINCE
+          <Divider borderColor={'gray.500'} w={'100%'} marginBlock={5} />
+          <Text fontSize={'xl'} fontWeight={'bold'}>
+            {'MEMBER SINCE'}
           </Text>
-          <Text>May 27, 2024</Text>
+          <Text>{'May 27, 2024'}</Text>
         </Box>
       </PopoverBody>
     </PopoverContent>
