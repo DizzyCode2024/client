@@ -14,3 +14,8 @@ export const getRooms = async (): Promise<IRoom[]> => {
 export const deleteRoom = async (roomId: number): Promise<void> => {
   await axiosInstance.delete(`/rooms/${roomId}`);
 };
+
+export const getRoom = async (roomId: number): Promise<IRoom> => {
+  const response = await axiosInstance.get(`/rooms/${roomId}/categories`);
+  return response.data;
+};

@@ -13,9 +13,10 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 );
 
 const RoomList = () => {
-  const { data: rooms } = useQuery<IRoom[], Error>({
+  const { data: rooms = [] } = useQuery<IRoom[], Error>({
     queryKey: ['rooms'],
     queryFn: getRooms,
+    initialData: [],
   });
 
   return (

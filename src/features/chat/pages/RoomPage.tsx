@@ -10,9 +10,6 @@ const Container = styled.div`
 `;
 
 const RoomPage = () => {
-  // const toast = useCustomToast();
-  // toast({ title: "hello", status: "success" });
-
   return (
     <Container>
       <RoomMenu />
