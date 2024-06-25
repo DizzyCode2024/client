@@ -14,7 +14,7 @@ import { MdPersonAddAlt1 } from "react-icons/md";
 import { RiFileAddFill } from "react-icons/ri";
 import { VscSignOut } from "react-icons/vsc";
 
-const ServerMenuButton = ({ name }: { name: string }) => (
+const RoomMenuButton = ({ name }: { name: string }) => (
   <Menu>
     {({ isOpen }) => (
       <>
@@ -55,4 +55,4 @@ const ServerMenuButton = ({ name }: { name: string }) => (
   </Menu>
 );
 
-export default ServerMenuButton;
+export default RoomMenuButton;

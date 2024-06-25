@@ -1,13 +1,13 @@
+import useRoomStore from "@/stores/useRoomStore";
 import { Box } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+import { useEffect, useState } from "react";
 import UserBox from "../../../user/components/UserBox/UserBox";
+import { getRooms } from "../../api/roomApi";
+import { IRoom } from "../../types";
 import CategoryBox from "./CategoryBox";
 import ChannelBox from "./ChannelBox";
-import ServerMenuButton from "./ServerMenuButton";
-import useRoomStore from "@/stores/useRoomStore";
-import { useEffect, useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { IRoom } from "../../types";
-import { getRooms } from "../../api/chatApi";
+import RoomMenuButton from "./RoomMenuButton";
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
@@ -21,26 +21,24 @@ const Container = ({ children }: { children: React.ReactNode }) => (
   </Box>
 );
 
-const ServerMenu = () => {
+const RoomMenu = () => {
   const { data: rooms } = useQuery<IRoom[], Error>({
     queryKey: ["rooms"],
     queryFn: getRooms,
   });
-  const currentServer = useRoomStore((state) => state.currentRoomId);
+  const currentRoom = useRoomStore((state) => state.currentRoomId);
 
-  const [currentServerName, setCurrentServerName] = useState<string>("");
+  const [currentRoomName, setCurrentRoomName] = useState<string>("");
 
   useEffect(() => {
     rooms?.map((room) => {
-      room.roomId === currentServer
-        ? setCurrentServerName(room.roomName)
-        : null;
+      room.roomId === currentRoom ? setCurrentRoomName(room.roomName) : null;
     });
-  }, [currentServer]);
+  }, [currentRoom]);
 
   return (
     <Container>
-      <ServerMenuButton name={currentServerName} />
+      <RoomMenuButton name={currentRoomName} />
       <CategoryBox name="채팅 채널">
         <ChannelBox name="채널 1" />
         <ChannelBox name="채널 2" />
@@ -50,4 +48,4 @@ const ServerMenu = () => {
   );
 };
 
-export default ServerMenu;
+export default RoomMenu;

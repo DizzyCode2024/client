@@ -5,13 +5,16 @@ const MenuItemWithIcon = ({
   text,
   icon,
   isRed = false,
+  onClick,
 }: {
   text: string;
-  icon: IconType;
+  icon?: IconType;
   isRed?: boolean;
+  onClick?: () => void;
 }) => {
   return (
     <MenuItem
+      onClick={onClick}
       display="flex"
       justifyContent="space-between"
       alignItems="center"
@@ -25,7 +28,7 @@ const MenuItemWithIcon = ({
       }
     >
       <Text>{text}</Text>
-      <Icon as={icon} boxSize={7} />
+      {icon && <Icon as={icon} boxSize={7} />}
     </MenuItem>
   );
 };
