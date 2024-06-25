@@ -23,6 +23,7 @@ export interface ICategoryBase {
 export interface ICategory extends ICategoryBase {}
 
 export interface IChannel {
+  categoryId: CategoryId;
   channelId: number;
   channelName: string;
 }

@@ -53,7 +53,11 @@ const RoomMenu = () => {
     <Container>
       <RoomMenuButton name={currentRoomName} />
       {categories?.map((category) => (
-        <CategoryBox key={category.categoryId} name={category.categoryName}>
+        <CategoryBox
+          key={category.categoryId}
+          name={category.categoryName}
+          categoryId={category.categoryId}
+        >
           {category?.channels?.map((channel) => (
             <ChannelBox key={channel.channelId} name={channel.channelName} />
           ))}
