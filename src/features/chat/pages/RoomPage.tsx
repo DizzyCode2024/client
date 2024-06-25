@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import ChatSection from "../components/ChatSection/ChatSection";
-import ServerMenu from "../components/ServerMenu/ServerMenu";
+import RoomMenu from "../components/RoomMenu/RoomMenu";
 
 const Container = styled.div`
   /* temporary */
@@ -9,16 +9,16 @@ const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.textDim};
 `;
 
-const ServerPage = () => {
+const RoomPage = () => {
   // const toast = useCustomToast();
   // toast({ title: "hello", status: "success" });
 
   return (
     <Container>
-      <ServerMenu />
+      <RoomMenu />
       <ChatSection />
     </Container>
   );
 };
 
-export default ServerPage;
+export default RoomPage;

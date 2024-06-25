@@ -1,9 +1,9 @@
 import CustomTooltip from "@/components/Tooltip";
 import { AddIcon } from "@chakra-ui/icons";
 import { Button, useDisclosure } from "@chakra-ui/react";
-import AddServerModal from "./AddServerModal";
+import AddRoomModal from "./AddRoomModal";
 
-const AddServerButton = () => {
+const AddRoomButton = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
@@ -28,9 +28,9 @@ const AddServerButton = () => {
           <AddIcon boxSize={6} />
         </Button>
       </CustomTooltip>
-      <AddServerModal isOpen={isOpen} onClose={onClose} />
+      <AddRoomModal isOpen={isOpen} onClose={onClose} />
     </>
   );
 };
 
-export default AddServerButton;
+export default AddRoomButton;

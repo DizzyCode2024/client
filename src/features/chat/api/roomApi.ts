@@ -10,3 +10,7 @@ export const getRooms = async (): Promise<IRoom[]> => {
   const response = await axiosInstance.get("/rooms");
   return response.data;
 };
+
+export const deleteRoom = async (roomId: number): Promise<void> => {
+  await axiosInstance.delete(`/rooms/${roomId}`);
+};

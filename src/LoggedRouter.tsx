@@ -3,11 +3,11 @@ import { StompSubscription } from "@stomp/stompjs";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect, useRef } from "react";
 import { Route, Routes } from "react-router-dom";
-import { getRooms } from "./features/chat/api/chatApi";
-import ServerList from "./features/chat/components/ServerList/ServerList";
+import { getRooms } from "./features/chat/api/roomApi";
+import RoomList from "./features/chat/components/RoomList/RoomList";
 import useStompClient from "./features/chat/hooks/useStompClient";
 import DMPage from "./features/chat/pages/DMPage";
-import ServerPage from "./features/chat/pages/ServerPage";
+import RoomPage from "./features/chat/pages/RoomPage";
 import { ChatMessage, IRoom } from "./features/chat/types";
 import { BASE_URL } from "./utils/config";
 
@@ -76,10 +76,10 @@ const LoggedRouter = () => {
 
   return (
     <Box display={"flex"}>
-      <ServerList />
+      <RoomList />
       <Routes>
         <Route path="/main" element={<DMPage />} />
-        <Route path="/channels/:id" element={<ServerPage />} />
+        <Route path="/channels/:id" element={<RoomPage />} />
       </Routes>
     </Box>
   );

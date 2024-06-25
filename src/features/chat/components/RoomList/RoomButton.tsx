@@ -1,3 +1,4 @@
+import MenuItemWithIcon from "@/components/MenuItemWithIcon";
 import CustomTooltip from "@/components/Tooltip";
 import useRoomStore from "@/stores/useRoomStore";
 import { handleRightClick } from "@/utils/handleRightClick";
@@ -6,15 +7,14 @@ import {
   Button,
   Menu,
   MenuButton,
-  MenuItem,
   MenuList,
   useDisclosure,
 } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import useHandleRoom from "../../hooks/useHandleRoom";
 import Indicator from "./Indicator";
-import MenuItemWithIcon from "@/components/MenuItemWithIcon";
 
-const ServerButton = ({
+const RoomButton = ({
   label,
   id,
   thumbnail,
@@ -25,13 +25,21 @@ const ServerButton = ({
 }) => {
   const navigate = useNavigate();
   const isSelected = useRoomStore((state) => state.currentRoomId === id);
-  const setCurrentServer = useRoomStore((state) => state.setCurrentRoom);
+  const setCurrentRoom = useRoomStore((state) => state.setCurrentRoom);
 
   const handleClick = () => {
-    setCurrentServer(id);
+    setCurrentRoom(id);
     navigate(`/chat/channels/${id}`);
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
+
+  // delete room
+  const { deleteRoomMutation } = useHandleRoom();
+  const handleDelete = () => {
+    deleteRoomMutation.mutate(id);
+    onClose();
+  };
+
   return (
     <Box
       w="100%"
@@ -66,11 +74,11 @@ const ServerButton = ({
       <Menu isOpen={isOpen} onClose={onClose}>
         <MenuButton as={Box} style={{}} />
         <MenuList mt="-5rem" ml="1rem">
-          <MenuItemWithIcon onClick={() => {}} text="방 삭제" isRed />
+          <MenuItemWithIcon onClick={handleDelete} text="방 삭제" isRed />
         </MenuList>
       </Menu>
     </Box>
   );
 };
 
-export default ServerButton;
+export default RoomButton;
