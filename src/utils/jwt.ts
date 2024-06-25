@@ -8,8 +8,8 @@ export const getNewAccessToken = async () => {
       {},
       { withCredentials: true },
     );
-    if (response.status === 200) {
-      const newAccessToken = response.data.accessToken;
+    if (response.status === 200 && response.headers.authorization) {
+      const newAccessToken = response.headers.authorization.split(' ')[1];
       localStorage.setItem('accessToken', newAccessToken);
       return newAccessToken;
     }
