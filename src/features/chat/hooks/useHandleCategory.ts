@@ -16,7 +16,7 @@ const useHandleCategory = () => {
   >({
     mutationFn: createCategory,
     onSuccess: (data) => {
-      console.log('Category created:', data);
+      // console.log('Category created:', data);
       toast({
         title: '카테고리 생성 성공',
         description: '새로운 카테고리가 생성되었습니다.',
