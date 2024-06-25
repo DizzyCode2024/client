@@ -50,6 +50,22 @@ axiosInstance.interceptors.response.use(
           },
         });
       }
+    }
+    if (error.response.status === 500 && !originalRequest._retry) {
+      console.log('Handling 500 error - attempting to refresh token');
+      originalRequest._retry = true;
+      delete originalRequest.headers.Authorization;
+      const newAccessToken = await getNewAccessToken(); // 토큰 재발급 받기
+      if (newAccessToken) {
+        localStorage.setItem('accessToken', newAccessToken);
+        return axiosInstance({
+          ...originalRequest,
+          headers: {
+            ...originalRequest.headers,
+            Authorization: `Bearer ${newAccessToken}`,
+          },
+        });
+      }
     } else if (error.response.status === 400) {
       signout();
     }
