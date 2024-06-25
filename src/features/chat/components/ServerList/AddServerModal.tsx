@@ -1,4 +1,6 @@
 import { createRoom } from "@/features/chat/api/chatApi";
+import { useCustomToast } from "@/hooks/useCustomToast";
+import { useAuthStore } from "@/stores/useAuthStore";
 import {
   Button,
   Input,
@@ -11,12 +13,9 @@ import {
   ModalOverlay,
   Text,
 } from "@chakra-ui/react";
-import { useMutation } from "@tanstack/react-query";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useState } from "react";
 import { IRoom } from "../../types";
-import { useCustomToast } from "@/hooks/useCustomToast";
-import { useAuthStore } from "@/stores/useAuthStore";
-import useRoomStore from "@/stores/useRoomStore";
 
 const AddServerModal = ({
   isOpen,
@@ -28,8 +27,8 @@ const AddServerModal = ({
   const username = useAuthStore((state) => state.user);
   const [roomName, setRoomName] = useState<string>("");
 
-  const setRooms = useRoomStore((state) => state.setRooms);
   const toast = useCustomToast();
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     setRoomName(`${username}'s server`);
@@ -39,23 +38,27 @@ const AddServerModal = ({
 
   const mutation = useMutation<IRoom, Error, string>({
     mutationFn: createRoom,
+    onSuccess: (data) => {
+      console.log("Room created:", data);
+      toast({
+        title: "방 생성 성공",
+        description: "새로운 방이 생성되었습니다.",
+        status: "success",
+      });
+      queryClient.invalidateQueries({ queryKey: ["rooms"] });
+    },
+    onError: (error) => {
+      console.error("Error creating room:", error);
+      toast({
+        title: "방 생성 실패",
+        description: "다시 시도해주세요.",
+        status: "error",
+      });
+    },
   });
 
   const handleSubmit = () => {
-    mutation.mutate(roomName, {
-      onSuccess: (data) => {
-        console.log("Room created successfully:", data);
-        // setRooms((prevRooms) => [...prevRooms, data]);
-      },
-      onError: (error) => {
-        console.error("Error creating room:", error);
-        toast({
-          title: "방 생성 실패",
-          description: "다시 시도해주세요.",
-          status: "error",
-        });
-      },
-    });
+    mutation.mutate(roomName);
     onClose();
   };
 

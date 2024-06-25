@@ -1,5 +1,7 @@
-import useRoomStore from "@/stores/useRoomStore";
 import { Box, Divider, Stack, Text } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
+import { getRooms } from "../../api/chatApi";
+import { IRoom } from "../../types";
 import AddServerButton from "./AddServerButton";
 import DMButton from "./DMButton";
 import ServerButton from "./ServerButton";
@@ -11,7 +13,10 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 );
 
 const ServerList = () => {
-  const roomList = useRoomStore((state) => state.rooms);
+  const { data: rooms } = useQuery<IRoom[], Error>({
+    queryKey: ["rooms"],
+    queryFn: getRooms,
+  });
 
   return (
     <Container>
@@ -22,7 +27,7 @@ const ServerList = () => {
         <Divider borderColor="gray.500" w="3rem" />
 
         {/* Server */}
-        {roomList?.map((room) => (
+        {rooms?.map((room) => (
           <ServerButton
             key={room.roomId}
             id={room.roomId}
