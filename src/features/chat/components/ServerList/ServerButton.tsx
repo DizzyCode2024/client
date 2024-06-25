@@ -1,8 +1,18 @@
 import CustomTooltip from "@/components/Tooltip";
 import useRoomStore from "@/stores/useRoomStore";
-import { Box, Button } from "@chakra-ui/react";
-import Indicator from "./Indicator";
+import { handleRightClick } from "@/utils/handleRightClick";
+import {
+  Box,
+  Button,
+  Menu,
+  MenuButton,
+  MenuItem,
+  MenuList,
+  useDisclosure,
+} from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
+import Indicator from "./Indicator";
+import MenuItemWithIcon from "@/components/MenuItemWithIcon";
 
 const ServerButton = ({
   label,
@@ -21,14 +31,17 @@ const ServerButton = ({
     setCurrentServer(id);
     navigate(`/chat/channels/${id}`);
   };
+  const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box
       w="100%"
       display={"flex"}
       justifyContent={"center"}
       position={"relative"}
+      onContextMenu={(e) => handleRightClick(e, onOpen)}
     >
       {isSelected && <Indicator />}
+
       <CustomTooltip label={label} placement="right">
         <Button
           onClick={handleClick}
@@ -49,6 +62,13 @@ const ServerButton = ({
           {thumbnail}
         </Button>
       </CustomTooltip>
+
+      <Menu isOpen={isOpen} onClose={onClose}>
+        <MenuButton as={Box} style={{}} />
+        <MenuList mt="-5rem" ml="1rem">
+          <MenuItemWithIcon onClick={() => {}} text="방 삭제" isRed />
+        </MenuList>
+      </Menu>
     </Box>
   );
 };

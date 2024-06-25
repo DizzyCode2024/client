@@ -31,7 +31,7 @@ const ServerList = () => {
           <ServerButton
             key={room.roomId}
             id={room.roomId}
-            thumbnail={<Text fontSize="2xl">{room.roomName}</Text>}
+            thumbnail={<Text fontSize="2xl">{room.roomName.slice(0, 2)}</Text>}
             label={room.roomName}
           />
         ))}

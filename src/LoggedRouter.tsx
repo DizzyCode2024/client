@@ -58,6 +58,14 @@ const LoggedRouter = () => {
         }
       });
     }
+
+    // 연결이 끊어지면 모든 구독 해제
+    if (!isConnected) {
+      subscriptionsRef.current.forEach((subscription) => {
+        unsubscribe(subscription);
+      });
+      subscriptionsRef.current.clear();
+    }
     // return () => {
     //   subscriptionsRef.current.forEach((subscription) => {
     //     unsubscribe(subscription);
