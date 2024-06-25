@@ -71,6 +71,7 @@ const LoginPage = () => {
           onChange={onChangeEmail}
           isInvalid={isEmailError}
           errorMessage={'Email is required'}
+          onEnterPress={handleSubmit}
         />
         <CustomInput
           label={'비밀번호'}
@@ -79,6 +80,7 @@ const LoginPage = () => {
           onChange={onChangePassword}
           isInvalid={isPasswordError}
           errorMessage={'Password is required'}
+          onEnterPress={handleSubmit}
         />
         <Button
           colorScheme={'purple'}

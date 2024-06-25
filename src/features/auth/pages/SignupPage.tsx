@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { Button, Box, Text } from '@chakra-ui/react';
 import CustomInput from '@/components/AuthInput';
 import Container from '@/components/Container';
-import { useAuthActions } from '../hooks/useAuthActions';
-import useInput from '../hooks/useInput';
+import { useAuthActions } from '@/features/auth/hooks/useAuthActions';
+import useInput from '@/features/auth/hooks/useInput';
 
 const SignupPage = () => {
   const [email, onChangeEmail] = useInput('');
@@ -83,6 +83,7 @@ const SignupPage = () => {
           onChange={onChangeEmail}
           isInvalid={isEmailError}
           errorMessage={'Email is required'}
+          onEnterPress={handleSubmit}
         />
         <CustomInput
           label={'닉네임'}
@@ -91,6 +92,7 @@ const SignupPage = () => {
           onChange={onChangeUsername}
           isInvalid={isUsernameError}
           errorMessage={'Username is required'}
+          onEnterPress={handleSubmit}
         />
         <CustomInput
           label={'비밀번호'}
@@ -99,6 +101,7 @@ const SignupPage = () => {
           onChange={handlePasswordChange}
           isInvalid={isPasswordError}
           errorMessage={'Password is required'}
+          onEnterPress={handleSubmit}
         />
         <CustomInput
           label={'비밀번호 확인'}
@@ -107,6 +110,7 @@ const SignupPage = () => {
           onChange={handlePasswordCheckChange}
           isInvalid={mismatchError}
           errorMessage={'Passwords do not match'}
+          onEnterPress={handleSubmit}
         />
         <Button
           colorScheme={'purple'}
