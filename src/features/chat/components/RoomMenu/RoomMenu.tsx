@@ -3,7 +3,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import useRoomStore from '@/stores/useRoomStore';
 import UserBox from '../../../user/components/UserBox/UserBox';
-import { getRooms } from '../../api/roomApi';
+import { getRoom, getRooms } from '../../api/roomApi';
 import { IRoom } from '../../types';
 import CategoryBox from './CategoryBox';
 import ChannelBox from './ChannelBox';
@@ -37,6 +37,15 @@ const RoomMenu = () => {
       }
     });
   }, [currentRoom, rooms]);
+
+  const { data: room } = useQuery({
+    queryKey: ['rooms', currentRoom],
+    queryFn: () => getRoom(currentRoom),
+  });
+
+  useEffect(() => {
+    console.log('room:', room);
+  }, [room]);
 
   return (
     <Container>
