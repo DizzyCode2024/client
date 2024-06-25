@@ -9,8 +9,8 @@ import useInput from '../hooks/useInput';
 const SignupPage = () => {
   const [email, onChangeEmail] = useInput('');
   const [username, onChangeUsername] = useInput('');
-  const [password, onChangePassword, setPassword] = useInput('');
-  const [passwordCheck, onChangePasswordCheck, setPasswordCheck] = useInput('');
+  const [password, onChangePassword] = useInput('');
+  const [passwordCheck, onChangePasswordCheck] = useInput('');
   const [mismatchError, setMismatchError] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState<boolean>(false);
 

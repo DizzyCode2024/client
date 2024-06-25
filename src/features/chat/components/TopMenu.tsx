@@ -44,10 +44,10 @@ const TopMenu = () => {
           {'친구'}
         </Box>
         <Box display={'flex'} marginLeft={4}>
-          {MenuList.map((menu, index) => (
+          {MenuList.map((menu) => (
             <Box
               as={'button'}
-              key={index}
+              key={menu}
               display={'flex'}
               alignItems={'center'}
               marginRight={4}
