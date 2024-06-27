@@ -7,6 +7,7 @@ export interface ChatMessage {
 export type RoomId = number;
 export type CategoryId = number;
 export type ChannelId = number;
+export type ChannelType = 'text' | 'voice';
 
 export interface IRoom {
   roomId: RoomId;
@@ -26,6 +27,7 @@ export interface IChannel {
   categoryId: CategoryId;
   channelId: number;
   channelName: string;
+  channelType: ChannelType;
 }
 
 export interface ICatwChannel extends ICategoryBase {
