@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import useRoomStore from '@/stores/useRoomStore';
 import { useEffect } from 'react';
-import MainContainer from '../components/MainContainer';
+import MainContainer from '@/components/MainContainer';
 
 const ExplorePage = () => {
   const setCurrentRoom = useRoomStore((state) => state.setCurrentRoom);

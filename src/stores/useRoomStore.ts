@@ -1,4 +1,4 @@
-import { RoomId } from '@/features/chat/types';
+import { RoomId } from '@/features/room/types';
 import { create } from 'zustand';
 
 interface IRoomState {

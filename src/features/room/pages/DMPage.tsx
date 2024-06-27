@@ -1,6 +1,6 @@
 import DMList from '../components/DMList';
 import FriendList from '../components/FriendList';
-import MainContainer from '../components/MainContainer';
+import MainContainer from '../../../components/MainContainer';
 
 const DMPage = () => {
   return (
