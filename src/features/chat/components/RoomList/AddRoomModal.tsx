@@ -1,4 +1,5 @@
 import {
+  Box,
   Button,
   Input,
   Modal,
@@ -8,6 +9,9 @@ import {
   ModalFooter,
   ModalHeader,
   ModalOverlay,
+  Radio,
+  RadioGroup,
+  Stack,
   Text,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
@@ -23,6 +27,10 @@ const AddRoomModal = ({
 }) => {
   const username = useAuthStore((state) => state.user);
   const [roomName, setRoomName] = useState<string>('');
+  const [isPrivate, setIsPrivate] = useState<boolean>(false);
+  const handlePrivacyChange = (value: string) => {
+    setIsPrivate(value === 'true');
+  };
 
   useEffect(() => {
     setRoomName(`${username}'s room`);
@@ -33,7 +41,7 @@ const AddRoomModal = ({
   // add room
   const { addRoomMutation } = useHandleRoom();
   const handleSubmit = () => {
-    addRoomMutation.mutate(roomName);
+    addRoomMutation.mutate({ roomName, isPrivate });
     onClose();
   };
 
@@ -44,17 +52,42 @@ const AddRoomModal = ({
         <ModalHeader />
         <ModalCloseButton size={'xl'} />
         <ModalBody pt={'2rem'}>
-          <Text fontWeight={'bold'} fontSize={'xl'} color={'gray.300'}>
-            {'ROOM NAME'}
-          </Text>
-          <Input
-            value={roomName}
-            onChange={handleChange}
-            fontSize={'2xl'}
-            bg={'gray.900'}
-            border={'none'}
-            py={'10'}
-          />
+          <Box>
+            <Text fontWeight={'bold'} fontSize={'xl'} color={'gray.300'}>
+              {'ROOM NAME'}
+            </Text>
+            <Input
+              value={roomName}
+              onChange={handleChange}
+              fontSize={'2xl'}
+              bg={'gray.900'}
+              border={'none'}
+              py={'10'}
+            />
+          </Box>
+          <Box pt={'2rem'}>
+            <Text
+              fontWeight={'bold'}
+              fontSize={'xl'}
+              color={'gray.300'}
+              pb={'1rem'}
+            >
+              {'공개 여부'}
+            </Text>
+            <RadioGroup
+              onChange={handlePrivacyChange}
+              value={isPrivate.toString()}
+            >
+              <Stack>
+                <Radio value={'false'} size={'lg'} colorScheme={'white'}>
+                  {'공개'}
+                </Radio>
+                <Radio value={'true'} size={'lg'} colorScheme={'white'}>
+                  {'비공개'}
+                </Radio>
+              </Stack>
+            </RadioGroup>
+          </Box>
         </ModalBody>
 
         <ModalFooter>

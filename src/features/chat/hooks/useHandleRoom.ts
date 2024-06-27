@@ -9,7 +9,14 @@ const useHandleRoom = () => {
   const queryClient = useQueryClient();
 
   //   add room
-  const addRoomMutation = useMutation<IRoom, Error, string>({
+  const addRoomMutation = useMutation<
+    IRoom,
+    Error,
+    {
+      roomName: string;
+      isPrivate: boolean;
+    }
+  >({
     mutationFn: createRoom,
     onSuccess: (data) => {
       console.log('Room created:', data);

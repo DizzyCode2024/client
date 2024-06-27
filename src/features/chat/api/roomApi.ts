@@ -1,8 +1,14 @@
 import axiosInstance from '../../../api/axiosInstance';
 import { IRoom, RoomId } from '../types';
 
-export const createRoom = async (roomName: string): Promise<IRoom> => {
-  const response = await axiosInstance.post('/rooms', { roomName });
+export const createRoom = async ({
+  roomName,
+  isPrivate,
+}: {
+  roomName: string;
+  isPrivate: boolean;
+}): Promise<IRoom> => {
+  const response = await axiosInstance.post('/rooms', { roomName, isPrivate });
   return response.data;
 };
 
