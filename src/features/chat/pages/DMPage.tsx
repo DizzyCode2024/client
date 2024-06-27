@@ -1,20 +1,13 @@
-import styled from 'styled-components';
 import DMList from '../components/DMList';
 import FriendList from '../components/FriendList';
-
-const Container = styled.div`
-  /* temporary */
-  width: 100%;
-  display: flex;
-  background-color: ${({ theme }) => theme.colors.textDim};
-`;
+import MainContainer from '../components/MainContainer';
 
 const DMPage = () => {
   return (
-    <Container>
+    <MainContainer>
       <DMList />
       <FriendList />
-    </Container>
+    </MainContainer>
   );
 };
 
