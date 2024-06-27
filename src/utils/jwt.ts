@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { BASE_URL } from '@/utils/config';
+import { useAuthStore } from '@/stores/useAuthStore';
 
 export const getNewAccessToken = async () => {
   try {
@@ -12,6 +13,7 @@ export const getNewAccessToken = async () => {
     if (response.status === 200 && response.headers.authorization) {
       const newAccessToken = response.headers.authorization.split(' ')[1];
       localStorage.setItem('accessToken', newAccessToken);
+      useAuthStore.getState().setToken(newAccessToken);
       console.log('accessToken 발급 완료', newAccessToken);
       return newAccessToken;
     }

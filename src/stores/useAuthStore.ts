@@ -11,6 +11,9 @@ export const useAuthStore = create(
       setUser: (user, email, token) => {
         set({ user, email, token });
       },
+      setToken: (token) => {
+        set({ token });
+      },
 
       clearUser: () => set({ user: null, email: null, token: null }),
     }),
