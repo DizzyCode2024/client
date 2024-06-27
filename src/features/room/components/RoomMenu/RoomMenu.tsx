@@ -2,6 +2,7 @@ import useRoomStore from '@/stores/useRoomStore';
 import { Box } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
+import { QUERY_KEYS } from '@/api/queryKeys';
 import UserBox from '../../../user/components/UserBox/UserBox';
 import { getCategories } from '../../api/categoryApi';
 import { getRooms } from '../../api/roomApi';
@@ -9,7 +10,6 @@ import { IRoom } from '../../types';
 import CategoryBox from './CategoryBox';
 import ChannelBox from './ChannelBox';
 import RoomMenuButton from './RoomMenuButton';
-import { QUERY_KEYS } from '../../api/queryKeys';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box

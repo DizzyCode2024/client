@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCustomToast } from '@/hooks/useCustomToast';
+import { QUERY_KEYS } from '@/api/queryKeys';
 import { createRoom, deleteRoom } from '../api/roomApi';
 import { IRoom, RoomId } from '../types';
-import { QUERY_KEYS } from '../api/queryKeys';
 
 const useHandleRoom = () => {
   const toast = useCustomToast();

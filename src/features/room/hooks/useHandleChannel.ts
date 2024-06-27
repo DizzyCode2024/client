@@ -1,6 +1,6 @@
 import { useCustomToast } from '@/hooks/useCustomToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { QUERY_KEYS } from '../api/queryKeys';
+import { QUERY_KEYS } from '@/api/queryKeys';
 import { createChannel } from '../api/channelApi';
 import { RoomId } from '../types';
 

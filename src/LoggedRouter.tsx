@@ -3,7 +3,8 @@ import { StompSubscription } from '@stomp/stompjs';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { QUERY_KEYS } from './features/room/api/queryKeys';
+import { QUERY_KEYS } from './api/queryKeys';
+import ExplorePage from './features/explore/pages/ExplorePage';
 import { getRooms } from './features/room/api/roomApi';
 import RoomList from './features/room/components/RoomList/RoomList';
 import useStompClient from './features/room/hooks/useStompClient';
@@ -11,7 +12,6 @@ import DMPage from './features/room/pages/DMPage';
 import RoomPage from './features/room/pages/RoomPage';
 import { ChatMessage, IRoom } from './features/room/types';
 import { BASE_URL } from './utils/config';
-import ExplorePage from './features/explore/pages/ExplorePage';
 
 const LoggedRouter = () => {
   // get rooms
