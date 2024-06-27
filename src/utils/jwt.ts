@@ -8,9 +8,11 @@ export const getNewAccessToken = async () => {
       {},
       { withCredentials: true },
     );
+    console.log(response);
     if (response.status === 200 && response.headers.authorization) {
       const newAccessToken = response.headers.authorization.split(' ')[1];
       localStorage.setItem('accessToken', newAccessToken);
+      console.log('accessToken 발급 완료', newAccessToken);
       return newAccessToken;
     }
   } catch (error) {
