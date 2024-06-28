@@ -3,7 +3,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import { QUERY_KEYS } from '@/api/queryKeys';
 import { RoomId } from '@/features/room/types';
-import { enterRoom } from '../api/exploreApi';
+import { enterRoom } from '@/features/room/api/roomApi';
 
 const useEnterRoom = (roomId: RoomId) => {
   const toast = useCustomToast();

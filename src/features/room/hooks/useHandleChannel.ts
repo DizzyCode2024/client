@@ -10,7 +10,7 @@ const useHandleChannel = (roomId: RoomId) => {
 
   // add channel
 
-  const addChannelMutation = useMutation({
+  const { mutate: addChannelMutation } = useMutation({
     mutationFn: createChannel,
     onSuccess: (data) => {
       console.log('Channel created:', data);

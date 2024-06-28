@@ -59,7 +59,11 @@ const RoomMenu = () => {
           categoryId={category.categoryId}
         >
           {category?.channels?.map((channel) => (
-            <ChannelBox key={channel.channelId} name={channel.channelName} />
+            <ChannelBox
+              key={channel.channelId}
+              name={channel.channelName}
+              type={channel.channelType}
+            />
           ))}
         </CategoryBox>
       ))}

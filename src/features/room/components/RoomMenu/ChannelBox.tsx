@@ -1,7 +1,9 @@
 import { ChatIcon } from '@chakra-ui/icons';
-import { Box, Text } from '@chakra-ui/react';
+import { Box, Icon, Text } from '@chakra-ui/react';
+import { MdKeyboardVoice } from 'react-icons/md';
+import { ChannelType } from '../../types';
 
-const ChannelBox = ({ name }: { name: string }) => {
+const ChannelBox = ({ name, type }: { name: string; type: ChannelType }) => {
   return (
     <Box
       display={'flex'}
@@ -22,7 +24,11 @@ const ChannelBox = ({ name }: { name: string }) => {
         width={'3rem'}
         height={'3rem'}
       >
-        <ChatIcon width={'2rem'} />
+        {type === 'CHAT' ? (
+          <ChatIcon width={'2rem'} />
+        ) : (
+          <Icon as={MdKeyboardVoice} width={'2rem'} />
+        )}
       </Box>
       <Text>{name}</Text>
     </Box>

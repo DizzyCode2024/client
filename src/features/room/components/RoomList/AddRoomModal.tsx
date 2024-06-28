@@ -41,7 +41,7 @@ const AddRoomModal = ({
   // add room
   const { addRoomMutation } = useHandleRoom();
   const handleSubmit = () => {
-    addRoomMutation.mutate({ roomName, open });
+    addRoomMutation({ roomName, open });
     onClose();
   };
 

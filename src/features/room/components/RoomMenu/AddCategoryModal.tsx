@@ -32,7 +32,7 @@ const AddCategoryModal = ({
   const { addCatMutation } = useHandleCategory();
 
   const handleSubmit = () => {
-    addCatMutation.mutate({ roomId, categoryName: catName });
+    addCatMutation({ roomId, categoryName: catName });
     onClose();
   };
 
