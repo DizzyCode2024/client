@@ -45,10 +45,6 @@ const RoomMenu = () => {
     queryFn: () => getCategories(currentRoom),
   });
 
-  useEffect(() => {
-    console.log('categories:', categories);
-  }, [categories]);
-
   return (
     <Container>
       <RoomMenuButton name={currentRoomName} />
@@ -61,8 +57,10 @@ const RoomMenu = () => {
           {category?.channels?.map((channel) => (
             <ChannelBox
               key={channel.channelId}
+              channelId={channel.channelId}
               name={channel.channelName}
               type={channel.channelType}
+              categoryId={category.categoryId}
             />
           ))}
         </CategoryBox>

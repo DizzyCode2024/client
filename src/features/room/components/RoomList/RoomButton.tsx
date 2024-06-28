@@ -28,10 +28,7 @@ const RoomButton = ({
     (state) => state.currentChannelPath.roomId === id,
   );
 
-  const { setCurrentChannel } = useRoomStore();
-
   const handleClick = () => {
-    setCurrentChannel({ roomId: id, categoryId: 0, channelId: 0 });
     navigate(`/chat/channels/${id}`);
   };
   const { isOpen, onOpen, onClose } = useDisclosure();

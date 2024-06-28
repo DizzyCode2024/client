@@ -1,11 +1,44 @@
 import { ChatIcon } from '@chakra-ui/icons';
 import { Box, Icon, Text } from '@chakra-ui/react';
 import { MdKeyboardVoice } from 'react-icons/md';
-import { ChannelType } from '../../types';
+import useRoomStore from '@/stores/useRoomStore';
+import { CategoryId, ChannelId, ChannelType } from '../../types';
 
-const ChannelBox = ({ name, type }: { name: string; type: ChannelType }) => {
+const ChannelBox = ({
+  channelId,
+  name,
+  type,
+  categoryId,
+}: {
+  channelId: ChannelId;
+  name: string;
+  type: ChannelType;
+  categoryId: CategoryId;
+}) => {
+  const {
+    isSelected,
+    setCurrentChannel,
+    currentChannelPath,
+    setCurrentChannelName,
+  } = useRoomStore((state) => ({
+    isSelected: state.currentChannelPath.channelId === channelId,
+    setCurrentChannel: state.setCurrentChannel,
+    currentChannelPath: state.currentChannelPath,
+    setCurrentChannelName: state.setCurrentChannelName,
+  }));
+
+  const handleClick = () => {
+    setCurrentChannel({
+      roomId: currentChannelPath.roomId,
+      categoryId,
+      channelId,
+    });
+
+    setCurrentChannelName(name);
+  };
   return (
     <Box
+      onClick={handleClick}
       display={'flex'}
       alignItems={'center'}
       mx={2}
@@ -23,6 +56,7 @@ const ChannelBox = ({ name, type }: { name: string; type: ChannelType }) => {
         marginLeft={2}
         width={'3rem'}
         height={'3rem'}
+        color={isSelected ? 'white' : 'gray.400'}
       >
         {type === 'CHAT' ? (
           <ChatIcon width={'2rem'} />
@@ -30,7 +64,12 @@ const ChannelBox = ({ name, type }: { name: string; type: ChannelType }) => {
           <Icon as={MdKeyboardVoice} width={'2rem'} />
         )}
       </Box>
-      <Text>{name}</Text>
+      <Text
+        fontWeight={isSelected ? '900' : '500'}
+        color={isSelected ? 'white' : 'gray.400'}
+      >
+        {name}
+      </Text>
     </Box>
   );
 };

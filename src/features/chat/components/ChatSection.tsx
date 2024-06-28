@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
-import ChatInput from '../ChatInput';
-import ChatTopMenu from '../ChatTopMenu';
+import ChatInput from './ChatInput';
+import Header from './ChatHeader/Header';
 import NoChatUI from './NoChat';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
@@ -18,7 +18,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 const ChatSection = () => {
   return (
     <Container>
-      <ChatTopMenu />
+      <Header />
       <NoChatUI />
       <ChatInput />
     </Container>
