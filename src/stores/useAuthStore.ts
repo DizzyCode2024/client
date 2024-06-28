@@ -7,22 +7,17 @@ export const useAuthStore = create(
     (set) => ({
       user: null,
       token: null,
-      email: null,
       setUser: (user: IUser, token: string) => {
         set({ user, token });
       },
-      setToken: (token: string) => {
-        set({ token });
-      },
-
       clearUser: () => set({ user: null, token: null }),
     }),
     {
       name: 'auth-storage',
       onRehydrateStorage: () => (state) => {
         const token = localStorage.getItem('accessToken');
-        if (token && state) {
-          state.setToken(token);
+        if (state && token && state.user) {
+          state.setUser(state.user, token);
         }
       },
     },

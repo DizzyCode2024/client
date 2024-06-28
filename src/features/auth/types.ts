@@ -8,6 +8,5 @@ export interface IAuthState {
   user: IUser | null;
   token: string | null;
   setUser: (user: IUser, token: string) => void;
-  setToken: (token: string) => void;
   clearUser: () => void;
 }

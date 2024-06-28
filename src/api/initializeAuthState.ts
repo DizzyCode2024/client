@@ -7,7 +7,9 @@ const initializeAuthState = () => {
     const isTokenExpired = payload.exp * 1000 < Date.now();
 
     if (!isTokenExpired) {
-      useAuthStore.getState().setToken(token);
+      fetchUserDetails(token).then((userDetails) => {
+        useAuthStore.getState().setUser(userDetails, token);
+      });
     } else {
       useAuthStore.getState().clearUser();
       localStorage.removeItem('accessToken');
@@ -18,3 +20,13 @@ const initializeAuthState = () => {
 };
 
 export default initializeAuthState;
+
+async function fetchUserDetails(token: string) {
+  const response = await fetch('/api/user/details', {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+  if (!response.ok) throw new Error('Failed to fetch user details');
+  return response.json();
+}
