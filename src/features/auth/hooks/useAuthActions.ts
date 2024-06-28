@@ -75,6 +75,8 @@ export const useAuthActions = (): IUseAuth => {
 
   const signout = async () => {
     try {
+      localStorage.removeItem('accessToken');
+      useAuthStore.getState().clearUser();
       const response = await axiosInstance.post(`/logout`, {});
       if (response) {
         localStorage.removeItem('accessToken');
