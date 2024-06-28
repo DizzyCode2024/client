@@ -1,9 +1,8 @@
-import { SettingsIcon, StarIcon } from '@chakra-ui/icons';
-import { Box, Popover, PopoverTrigger, keyframes } from '@chakra-ui/react';
-import { motion } from 'framer-motion';
 import UserPopoverBox from '@/features/user/components/UserBox/UserPopoverBox';
-import CustomTooltip from '@/components/Tooltip';
 import { useAuthStore } from '@/stores/useAuthStore';
+import { StarIcon } from '@chakra-ui/icons';
+import { Box, Popover, PopoverTrigger } from '@chakra-ui/react';
+import UserSettingsButton from './UserSettingsButton';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
@@ -21,12 +20,6 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 
 const UserBox = () => {
   const user = useAuthStore((state) => state.user);
-  const spin = keyframes`
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-`;
-
-  const MotionSettingsIcon = motion(SettingsIcon);
 
   return (
     <Container>
@@ -72,18 +65,8 @@ const UserBox = () => {
         </PopoverTrigger>
         <UserPopoverBox />
       </Popover>
-      <CustomTooltip label={'사용자 설정'}>
-        <Box
-          mr={5}
-          as={'button'}
-          display={'flex'}
-          alignItems={'center'}
-          justifyContent={'center'}
-          _hover={{ animation: `${spin} 1s linear infinite` }}
-        >
-          <MotionSettingsIcon color={'gray.400'} />
-        </Box>
-      </CustomTooltip>
+
+      <UserSettingsButton />
     </Container>
   );
 };
