@@ -22,8 +22,10 @@ const UserSettingsButton = () => {
         <MenuButton
           as={'button'}
           display={'flex'}
-          alignItems={'center'}
-          justifyContent={'center'}
+          style={{
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
           _hover={{ animation: `${spin} 1s linear infinite` }}
         >
           <MotionSettingsIcon mr={5} color={'gray.400'} />

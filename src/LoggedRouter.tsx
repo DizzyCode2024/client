@@ -1,8 +1,9 @@
 import { Box } from '@chakra-ui/react';
-import { StompSubscription } from '@stomp/stompjs';
+import { Client, StompSubscription } from '@stomp/stompjs';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { Route, Routes } from 'react-router-dom';
+import SockJS from 'sockjs-client';
 import { QUERY_KEYS } from './api/queryKeys';
 import ExplorePage from './features/explore/pages/ExplorePage';
 import { getRooms } from './features/room/api/roomApi';
@@ -11,7 +12,7 @@ import useStompClient from './features/room/hooks/useStompClient';
 import DMPage from './features/room/pages/DMPage';
 import RoomPage from './features/room/pages/RoomPage';
 import { ChatMessage, IRoom } from './features/room/types';
-import { BASE_URL } from './utils/config';
+import { BROKER_URL } from './utils/config';
 
 const LoggedRouter = () => {
   // get rooms
@@ -21,9 +22,31 @@ const LoggedRouter = () => {
   });
 
   // 웹소켓 연결
-  const { isConnected, subscribe, unsubscribe } = useStompClient(
-    `${BASE_URL}/ws/gs-guide-websocket`,
-  );
+  const { client, isConnected, setIsConnected, subscribe, unsubscribe } =
+    useStompClient();
+  useEffect(() => {
+    const socket = new SockJS(BROKER_URL);
+    client.current = new Client({
+      webSocketFactory: () => socket,
+      onConnect: () => {
+        setIsConnected(true);
+        console.log(`Connected to server ${BROKER_URL}`);
+      },
+      onDisconnect: () => {
+        setIsConnected(false);
+        console.log('Disconnected from server');
+      },
+      debug: (str) => {
+        console.log(`STOMP Debug: ${str}`);
+      },
+    });
+
+    client.current.activate();
+
+    return () => {
+      client.current?.deactivate();
+    };
+  }, []);
 
   // rooms 구독
   const subscriptionsRef = useRef<Map<number, StompSubscription>>(new Map());
