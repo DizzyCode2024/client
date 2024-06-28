@@ -1,9 +1,3 @@
-export interface ChatMessage {
-  sender: string;
-  content: string;
-  type: string;
-}
-
 export type RoomId = number;
 export type CategoryId = number;
 export type ChannelId = number;

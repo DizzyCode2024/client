@@ -11,7 +11,7 @@ import RoomList from './features/room/components/RoomList/RoomList';
 import useStompClient from './features/room/hooks/useStompClient';
 import DMPage from './features/room/pages/DMPage';
 import RoomPage from './features/room/pages/RoomPage';
-import { ChatMessage, IRoom } from './features/room/types';
+import { IRoom } from './features/room/types';
 import { BROKER_URL } from './utils/config';
 
 const LoggedRouter = () => {
@@ -61,7 +61,7 @@ const LoggedRouter = () => {
           const subscription = subscribe(
             `/topic/rooms/${room.roomId}`,
             (message) => {
-              const chatMessage: ChatMessage = JSON.parse(message.body);
+              const chatMessage = JSON.parse(message.body);
               console.log(
                 `Received message in room ${room.roomId}:`,
                 chatMessage,

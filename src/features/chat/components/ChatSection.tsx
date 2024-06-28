@@ -1,8 +1,8 @@
 import { Box } from '@chakra-ui/react';
+import useRoomStore from '@/stores/useRoomStore';
 import ChatInput from './ChatInput';
 import Header from './ChatHeader/Header';
 import NoChatUI from './NoChat';
-// import useRoomStore from '@/stores/useRoomStore';
 // import useStompClient from '@/features/room/hooks/useStompClient';
 // import { useEffect, useRef } from 'react';
 // import { StompSubscription } from '@stomp/stompjs';
@@ -23,9 +23,9 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 const ChatSection = () => {
   // 서버에서 채팅방 구독 topic이 아직 생성이 안됨
 
-  // const {
-  //   currentChannelPath: { roomId, categoryId, channelId },
-  // } = useRoomStore();
+  const {
+    currentChannelPath: { roomId, categoryId, channelId },
+  } = useRoomStore();
 
   // // 채팅방 연결 subscribe
   // const { isConnected, subscribe, unsubscribe, sendMessage } = useStompClient();
@@ -50,16 +50,13 @@ const ChatSection = () => {
   //   };
   // }, [isConnected, roomId, categoryId, channelId, subscribe, unsubscribe]);
 
-  // const handleSendMessage = (message: string) => {
-  //   const destination = `/rooms/${roomId}/categories/${categoryId}/channels/${channelId}`;
-  //   sendMessage(destination, message);
-  // };
+  const destination = `/rooms/${roomId}/categories/${categoryId}/channels/${channelId}`;
 
   return (
     <Container>
       <Header />
       <NoChatUI />
-      <ChatInput />
+      <ChatInput destination={destination} />
     </Container>
   );
 };
