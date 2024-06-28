@@ -1,14 +1,12 @@
-export interface User {
+export interface IUser {
   id: string;
   email: string;
   username: string;
 }
 
-export interface AuthState {
-  user: User | null;
-  email: string | null;
+export interface IAuthState {
+  user: IUser | null;
   token: string | null;
-  setUser: (user: User, email: string, token: string) => void;
-  setToken: (token: string) => void;
+  setUser: (user: IUser, token: string) => void;
   clearUser: () => void;
 }
