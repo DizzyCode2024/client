@@ -1,14 +1,15 @@
-import { RoomId } from '@/features/room/types';
+import { IChannelPath } from '@/features/room/types';
 import { create } from 'zustand';
 
 interface IRoomState {
-  currentRoomId: RoomId;
-  setCurrentRoom: (roomId: RoomId) => void;
+  currentChannelPath: IChannelPath;
+  setCurrentChannel: ({ roomId, categoryId, channelId }: IChannelPath) => void;
 }
 
 const useRoomStore = create<IRoomState>((set) => ({
-  currentRoomId: 0,
-  setCurrentRoom: (roomId) => set({ currentRoomId: roomId }),
+  currentChannelPath: { roomId: 0, categoryId: 0, channelId: 0 },
+  setCurrentChannel: ({ roomId, categoryId, channelId }) =>
+    set({ currentChannelPath: { roomId, categoryId, channelId } }),
 }));
 
 export default useRoomStore;

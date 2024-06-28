@@ -28,7 +28,7 @@ const RoomMenu = () => {
     queryKey: QUERY_KEYS.ROOMS,
     queryFn: getRooms,
   });
-  const currentRoom = useRoomStore((state) => state.currentRoomId);
+  const currentRoom = useRoomStore((state) => state.currentChannelPath.roomId);
 
   const [currentRoomName, setCurrentRoomName] = useState<string>('');
 

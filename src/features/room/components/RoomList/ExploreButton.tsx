@@ -7,7 +7,9 @@ import Indicator from './Indicator';
 
 const ExploreButton = () => {
   const navigate = useNavigate();
-  const isSelected = useRoomStore((state) => state.currentRoomId === -1);
+  const isSelected = useRoomStore(
+    (state) => state.currentChannelPath.roomId === -1,
+  );
   return (
     <Box
       w={'100%'}

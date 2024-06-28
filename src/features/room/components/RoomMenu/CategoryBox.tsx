@@ -18,7 +18,7 @@ const CategoryBox = ({
   const [isOpen, setIsOpen] = useState<boolean>(true);
   const { isOpen: isChannelModalOpen, onOpen, onClose } = useDisclosure();
 
-  const roomId = useRoomStore((state) => state.currentRoomId);
+  const roomId = useRoomStore((state) => state.currentChannelPath.roomId);
   return (
     <>
       <Box

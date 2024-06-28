@@ -8,10 +8,15 @@ import RoomMenu from '../components/RoomMenu/RoomMenu';
 const RoomPage = () => {
   const { id: roomId } = useParams<{ id: string }>();
 
-  const setCurrentRoom = useRoomStore((state) => state.setCurrentRoom);
+  const { setCurrentChannel } = useRoomStore();
   useEffect(() => {
-    if (roomId) setCurrentRoom(parseInt(roomId, 10));
-  }, [roomId, setCurrentRoom]);
+    if (roomId)
+      setCurrentChannel({
+        roomId: parseInt(roomId, 10),
+        categoryId: 0,
+        channelId: 0,
+      });
+  }, [roomId, setCurrentChannel]);
 
   return (
     <MainContainer>

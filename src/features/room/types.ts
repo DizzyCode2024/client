@@ -34,3 +34,9 @@ export interface IChannel {
 export interface ICatwChannel extends ICategoryBase {
   channels: IChannel[] | null;
 }
+
+export interface IChannelPath {
+  roomId: RoomId;
+  categoryId: CategoryId;
+  channelId: ChannelId;
+}

@@ -8,7 +8,7 @@ import useHandleRoom from '../../hooks/useHandleRoom';
 import AddCategoryModal from '../RoomMenu/AddCategoryModal';
 
 const RoomMenuItems = () => {
-  const roomId = useRoomStore((state) => state.currentRoomId);
+  const roomId = useRoomStore((state) => state.currentChannelPath.roomId);
   const { leaveRoomMutation, deleteRoomMutation } = useHandleRoom();
 
   const {

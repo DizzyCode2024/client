@@ -5,13 +5,19 @@ import useRoomStore from '@/stores/useRoomStore';
 import Indicator from './Indicator';
 
 const DMButton = () => {
-  const isSelected = useRoomStore((state) => state.currentRoomId === 0); // DM room의 id는 0
+  const isSelected = useRoomStore(
+    (state) => state.currentChannelPath.roomId === 0,
+  ); // DM room의 id는 0
   const navigate = useNavigate();
-  const setCurrentRoom = useRoomStore((state) => state.setCurrentRoom);
+  const { setCurrentChannel } = useRoomStore();
 
   const handleClick = () => {
     navigate('/chat/main');
-    setCurrentRoom(0);
+    setCurrentChannel({
+      roomId: 0,
+      categoryId: 0,
+      channelId: 0,
+    });
   };
   return (
     <Box
