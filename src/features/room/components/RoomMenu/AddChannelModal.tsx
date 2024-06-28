@@ -30,7 +30,7 @@ const AddChannelModal = ({
   categoryId: CategoryId;
 }) => {
   const [channelName, setChannelName] = useState<string>('');
-  const [channelType, setChannelType] = useState<ChannelType>('text');
+  const [channelType, setChannelType] = useState<ChannelType>('TEXT');
   const handleChannelTypeChange = (value: string) => {
     setChannelType(value as ChannelType);
   };
@@ -78,10 +78,10 @@ const AddChannelModal = ({
             </Text>
             <RadioGroup onChange={handleChannelTypeChange} value={channelType}>
               <Stack>
-                <Radio value={'text'} size={'lg'} colorScheme={'white'}>
+                <Radio value={'TEXT'} size={'lg'} colorScheme={'white'}>
                   {'Text'}
                 </Radio>
-                <Radio value={'voice'} size={'lg'} colorScheme={'white'}>
+                <Radio value={'VOICE'} size={'lg'} colorScheme={'white'}>
                   {'Voice'}
                 </Radio>
               </Stack>

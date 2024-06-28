@@ -1,12 +1,8 @@
-import React, { useEffect, ReactNode } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '@/stores/useAuthStore';
+import { ReactNode, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-interface RedirectIfLogged {
-  children: ReactNode;
-}
-
-const RedirectIfLogged: React.FC<RedirectIfLogged> = ({ children }) => {
+const RedirectIfLogged = ({ children }: { children: ReactNode }) => {
   const navigate = useNavigate();
   const { token } = useAuthStore();
 

@@ -1,7 +1,7 @@
-import { useToast } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
 import axiosInstance from '@/api/axiosInstance';
 import signupAxiosInstance from '@/api/signupAxiosInstance';
+import { useToast } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { useAuthStore } from '../../../stores/useAuthStore';
 
 interface IUseAuth {
@@ -50,7 +50,7 @@ export const useAuthActions = (): IUseAuth => {
     localStorage.removeItem('accessToken');
 
     try {
-      const response = await axiosInstance.post(`/login`, {
+      const response = await signupAxiosInstance.post(`/login`, {
         email,
         password,
       });
@@ -76,6 +76,8 @@ export const useAuthActions = (): IUseAuth => {
   const signout = async () => {
     try {
       localStorage.removeItem('accessToken');
+      document.cookie =
+        'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;';
       useAuthStore.getState().clearUser();
       const response = await axiosInstance.post(`/logout`, {});
       if (response) {

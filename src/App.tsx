@@ -4,7 +4,7 @@ import { ThemeProvider } from 'styled-components';
 import { ChakraProvider } from '@chakra-ui/react';
 import GlobalStyle from '@/styles/GlobalStyle';
 import { chakraTheme, styledTheme } from '@/styles/theme';
-import initializeAuthState from '@/api/initializeAuthState';
+import initializeAuthState from '@/features/auth/utils/initializeAuthState';
 import { useEffect } from 'react';
 import Router from './Router';
 
