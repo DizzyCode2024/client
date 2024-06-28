@@ -20,8 +20,7 @@ const Top = styled.div`
 
 const UserPopoverBox = () => {
   const user = useAuthStore((state) => state.user);
-  const email = useAuthStore((state) => state.email);
-
+  console.log(user);
   return (
     <PopoverContent
       bg={'gray.900'}
@@ -68,9 +67,9 @@ const UserPopoverBox = () => {
           fontSize={'small'}
         >
           <Text fontSize={'2xl'} fontWeight={'bold'}>
-            {user}
+            {user ? user.username : '오프라인'}
           </Text>
-          <Text>{email}</Text>
+          <Text>{user ? user.email : '오프라인'}</Text>
           <Divider borderColor={'gray.500'} w={'100%'} marginBlock={5} />
           <Text fontSize={'xl'} fontWeight={'bold'}>
             {'MEMBER SINCE'}

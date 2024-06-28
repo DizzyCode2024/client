@@ -11,7 +11,7 @@ interface CustomInputProps extends InputProps {
   label: string;
   errorMessage?: string;
   isInvalid?: boolean;
-  onEnterPress?: () => void; // 엔터 키를 처리할 함수
+  onEnterPress?: () => void;
 }
 
 const CustomInput: React.FC<CustomInputProps> = ({
@@ -19,11 +19,11 @@ const CustomInput: React.FC<CustomInputProps> = ({
   errorMessage,
   isInvalid,
   onEnterPress,
-  ...props // onEnterPress를 제외한 나머지 props
+  ...props
 }) => {
   const handleKeyPress = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter' && onEnterPress) {
-      onEnterPress(); // 엔터 키 입력시 onEnterPress 호출
+      onEnterPress();
     }
   };
 
