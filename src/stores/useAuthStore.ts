@@ -19,6 +19,12 @@ export const useAuthStore = create(
     }),
     {
       name: 'auth-storage',
+      onRehydrateStorage: () => (state) => {
+        const token = localStorage.getItem('accessToken');
+        if (token && state) {
+          state.setToken(token);
+        }
+      },
     },
   ),
 );

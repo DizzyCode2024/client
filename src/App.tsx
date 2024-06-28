@@ -4,11 +4,17 @@ import { ThemeProvider } from 'styled-components';
 import { ChakraProvider } from '@chakra-ui/react';
 import GlobalStyle from '@/styles/GlobalStyle';
 import { chakraTheme, styledTheme } from '@/styles/theme';
+import initializeAuthState from '@/api/initializeAuthState';
+import { useEffect } from 'react';
 import Router from './Router';
 
 const queryClient = new QueryClient();
 
 function App() {
+  useEffect(() => {
+    initializeAuthState();
+  }, []);
+
   return (
     <QueryClientProvider client={queryClient}>
       <ChakraProvider theme={chakraTheme}>
