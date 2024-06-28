@@ -8,7 +8,7 @@ const AddRoomButton = () => {
 
   return (
     <>
-      <CustomTooltip label={'서버 추가하기'} placement={'right'}>
+      <CustomTooltip label={'방 추가하기'} placement={'right'}>
         <Button
           onClick={onOpen}
           m={'0.5rem auto'}

@@ -3,14 +3,15 @@ import { StompSubscription } from '@stomp/stompjs';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { Route, Routes } from 'react-router-dom';
-import { getRooms } from './features/chat/api/roomApi';
-import RoomList from './features/chat/components/RoomList/RoomList';
-import useStompClient from './features/chat/hooks/useStompClient';
-import DMPage from './features/chat/pages/DMPage';
-import RoomPage from './features/chat/pages/RoomPage';
-import { ChatMessage, IRoom } from './features/chat/types';
+import { QUERY_KEYS } from './api/queryKeys';
+import ExplorePage from './features/explore/pages/ExplorePage';
+import { getRooms } from './features/room/api/roomApi';
+import RoomList from './features/room/components/RoomList/RoomList';
+import useStompClient from './features/room/hooks/useStompClient';
+import DMPage from './features/room/pages/DMPage';
+import RoomPage from './features/room/pages/RoomPage';
+import { ChatMessage, IRoom } from './features/room/types';
 import { BASE_URL } from './utils/config';
-import { QUERY_KEYS } from './features/chat/api/queryKeys';
 
 const LoggedRouter = () => {
   // get rooms
@@ -81,6 +82,7 @@ const LoggedRouter = () => {
       <Routes>
         <Route path={'/main'} element={<DMPage />} />
         <Route path={'/channels/:id'} element={<RoomPage />} />
+        <Route path={'/explore'} element={<ExplorePage />} />
       </Routes>
     </Box>
   );

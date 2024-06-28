@@ -1,16 +1,9 @@
-import { useParams } from 'react-router-dom';
-import styled from 'styled-components';
 import useRoomStore from '@/stores/useRoomStore';
 import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import ChatSection from '../components/ChatSection/ChatSection';
+import MainContainer from '../../../components/MainContainer';
 import RoomMenu from '../components/RoomMenu/RoomMenu';
-
-const Container = styled.div`
-  /* temporary */
-  width: 100%;
-  display: flex;
-  background-color: ${({ theme }) => theme.colors.textDim};
-`;
 
 const RoomPage = () => {
   const { id: roomId } = useParams<{ id: string }>();
@@ -21,10 +14,10 @@ const RoomPage = () => {
   }, [roomId, setCurrentRoom]);
 
   return (
-    <Container>
+    <MainContainer>
       <RoomMenu />
       <ChatSection />
-    </Container>
+    </MainContainer>
   );
 };
 

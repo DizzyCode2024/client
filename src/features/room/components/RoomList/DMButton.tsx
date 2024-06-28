@@ -27,9 +27,9 @@ const DMButton = () => {
           m={'0.5rem auto'}
           h={'5rem'}
           w={'5rem'}
-          borderRadius={'50%'}
+          borderRadius={isSelected ? '30%' : '50%'}
           transition={'all 0.3s ease-in-out'}
-          bg={'gray.700'}
+          bg={isSelected ? 'purple.600' : 'gray.700'}
           color={'white'}
           fontSize={'1rem'}
           _hover={{

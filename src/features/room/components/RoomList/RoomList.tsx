@@ -1,11 +1,12 @@
 import { Box, Divider, Stack, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/api/queryKeys';
 import { getRooms } from '../../api/roomApi';
 import { IRoom } from '../../types';
 import AddRoomButton from './AddRoomButton';
 import DMButton from './DMButton';
 import RoomButton from './RoomButton';
-import { QUERY_KEYS } from '../../api/queryKeys';
+import ExploreButton from './ExploreButton';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box minWidth={'7.5rem'} height={'100vh'} bg={'gray.800'}>
@@ -47,6 +48,9 @@ const RoomList = () => {
 
         {/* Add Room */}
         <AddRoomButton />
+
+        {/* Explore Rooms */}
+        <ExploreButton />
       </Stack>
     </Container>
   );
