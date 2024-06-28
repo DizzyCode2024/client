@@ -57,8 +57,9 @@ export const useAuthActions = (): IUseAuth => {
 
       if (response.status === 200) {
         const accessToken = response.headers.authorization.split(' ')[1];
+        console.log(response);
         localStorage.setItem('accessToken', accessToken);
-        setUser(response.data.username, response.data.email, accessToken);
+        setUser(response.data, accessToken);
         navigate('/chat/main');
       }
     } catch (error) {

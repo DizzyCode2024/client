@@ -13,7 +13,10 @@ export const getNewAccessToken = async () => {
     if (response.status === 200 && response.headers.authorization) {
       const newAccessToken = response.headers.authorization.split(' ')[1];
       localStorage.setItem('accessToken', newAccessToken);
-      useAuthStore.getState().setToken(newAccessToken);
+      const currentUser = useAuthStore.getState().user;
+      if (currentUser) {
+        useAuthStore.getState().setUser(currentUser, newAccessToken);
+      }
       console.log('accessToken 발급 완료', newAccessToken);
       return newAccessToken;
     }
