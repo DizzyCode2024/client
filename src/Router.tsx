@@ -3,8 +3,8 @@ import WelcomePage from '@/features/auth/pages/WelcomePage';
 import LoggedRouter from './LoggedRouter';
 import LoginPage from './features/auth/pages/LoginPage';
 import SignupPage from './features/auth/pages/SignupPage';
-import RequireAuth from './components/RequireAuth';
-import RedirectIfLogged from './components/RedirectIfLogged';
+import RequireAuth from './features/auth/utils/RequireAuth';
+import RedirectIfLogged from './features/auth/utils/RedirectIfLogged';
 
 const Router = () => {
   return (

@@ -1,7 +1,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCustomToast } from '@/hooks/useCustomToast';
 import { QUERY_KEYS } from '@/api/queryKeys';
-import { createRoom, deleteRoom } from '../api/roomApi';
+import { createRoom, deleteRoom, leaveRoom } from '../api/roomApi';
 import { IRoom, RoomId } from '../types';
 
 const useHandleRoom = () => {
@@ -9,12 +9,12 @@ const useHandleRoom = () => {
   const queryClient = useQueryClient();
 
   //   add room
-  const addRoomMutation = useMutation<
+  const { mutate: addRoomMutation } = useMutation<
     IRoom,
     Error,
     {
       roomName: string;
-      isPrivate: boolean;
+      open: boolean;
     }
   >({
     mutationFn: createRoom,
@@ -38,7 +38,7 @@ const useHandleRoom = () => {
   });
 
   //   delete room
-  const deleteRoomMutation = useMutation<void, Error, RoomId>({
+  const { mutate: deleteRoomMutation } = useMutation<void, Error, RoomId>({
     mutationFn: deleteRoom,
     onSuccess: () => {
       console.log('Room deleted');
@@ -59,7 +59,27 @@ const useHandleRoom = () => {
     },
   });
 
-  return { addRoomMutation, deleteRoomMutation };
+  // leave room
+  const { mutate: leaveRoomMutation } = useMutation<void, Error, RoomId>({
+    mutationFn: leaveRoom,
+    onSuccess: () => {
+      toast({
+        title: '방 나가기 성공',
+        status: 'success',
+      });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ROOMS });
+    },
+    onError: (error) => {
+      console.error('Error leaving room:', error);
+      toast({
+        title: '방 나가기 실패',
+        description: '다시 시도해주세요.',
+        status: 'error',
+      });
+    },
+  });
+
+  return { addRoomMutation, deleteRoomMutation, leaveRoomMutation };
 };
 
 export default useHandleRoom;

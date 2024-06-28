@@ -1,8 +1,7 @@
-import axios, { InternalAxiosRequestConfig } from 'axios';
-import { logout } from '@/utils/auth';
-import { useAuthActions } from '@/features/auth/hooks/useAuthActions';
+import { logout } from '@/features/auth/utils/logout';
 import { BASE_URL } from '@/utils/config';
-import { getNewAccessToken } from '../utils/jwt';
+import axios, { InternalAxiosRequestConfig } from 'axios';
+import { getNewAccessToken } from '../features/auth/utils/getNewAccessToken';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -42,6 +41,7 @@ axiosInstance.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       const newAccessToken = await getNewAccessToken();
+
       if (newAccessToken) {
         return axiosInstance({
           ...originalRequest,
@@ -52,9 +52,7 @@ axiosInstance.interceptors.response.use(
         });
       }
     } else if (error.response.status === 400) {
-      const { signout } = useAuthActions();
       logout();
-      signout();
     }
     return Promise.reject(error);
   },

@@ -7,12 +7,12 @@ export interface ChatMessage {
 export type RoomId = number;
 export type CategoryId = number;
 export type ChannelId = number;
-export type ChannelType = 'text' | 'voice';
+export type ChannelType = 'CHAT' | 'VOICE';
 
 export interface IRoom {
   roomId: RoomId;
   roomName: string;
-  isPrivate: boolean;
+  open: boolean;
 }
 
 // category

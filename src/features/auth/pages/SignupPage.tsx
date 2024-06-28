@@ -1,7 +1,7 @@
 import { useCallback, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Box, Text } from '@chakra-ui/react';
-import CustomInput from '@/components/AuthInput';
+import CustomInput from '@/features/auth/components/AuthInput';
 import Container from '@/components/Container';
 import { useAuthActions } from '@/features/auth/hooks/useAuthActions';
 import useInput from '@/features/auth/hooks/useInput';

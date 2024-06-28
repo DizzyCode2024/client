@@ -1,4 +1,3 @@
-import MenuItemWithIcon from '@/components/MenuItemWithIcon';
 import CustomTooltip from '@/components/Tooltip';
 import useRoomStore from '@/stores/useRoomStore';
 import { handleRightClick } from '@/utils/handleRightClick';
@@ -11,9 +10,9 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import useHandleRoom from '../../hooks/useHandleRoom';
 import { RoomId } from '../../types';
 import Indicator from './Indicator';
+import RoomMenuItems from './RoomMenuItems';
 
 const RoomButton = ({
   label,
@@ -33,13 +32,6 @@ const RoomButton = ({
     navigate(`/chat/channels/${id}`);
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
-
-  // delete room
-  const { deleteRoomMutation } = useHandleRoom();
-  const handleDelete = () => {
-    deleteRoomMutation.mutate(id);
-    onClose();
-  };
 
   return (
     <Box
@@ -75,7 +67,7 @@ const RoomButton = ({
       <Menu isOpen={isOpen} onClose={onClose}>
         <MenuButton as={Box} style={{}} />
         <MenuList mt={'-5rem'} ml={'1rem'}>
-          <MenuItemWithIcon onClick={handleDelete} text={'방 삭제'} isRed />
+          <RoomMenuItems />
         </MenuList>
       </Menu>
     </Box>

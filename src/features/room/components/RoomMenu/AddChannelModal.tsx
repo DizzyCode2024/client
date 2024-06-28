@@ -30,7 +30,7 @@ const AddChannelModal = ({
   categoryId: CategoryId;
 }) => {
   const [channelName, setChannelName] = useState<string>('');
-  const [channelType, setChannelType] = useState<ChannelType>('text');
+  const [channelType, setChannelType] = useState<ChannelType>('CHAT');
   const handleChannelTypeChange = (value: string) => {
     setChannelType(value as ChannelType);
   };
@@ -42,7 +42,7 @@ const AddChannelModal = ({
   const { addChannelMutation } = useHandleChannel(roomId);
 
   const handleSubmit = () => {
-    addChannelMutation.mutate({ roomId, categoryId, channelName, channelType });
+    addChannelMutation({ roomId, categoryId, channelName, channelType });
     onClose();
   };
 
@@ -78,10 +78,10 @@ const AddChannelModal = ({
             </Text>
             <RadioGroup onChange={handleChannelTypeChange} value={channelType}>
               <Stack>
-                <Radio value={'text'} size={'lg'} colorScheme={'white'}>
-                  {'Text'}
+                <Radio value={'CHAT'} size={'lg'} colorScheme={'white'}>
+                  {'Chat'}
                 </Radio>
-                <Radio value={'voice'} size={'lg'} colorScheme={'white'}>
+                <Radio value={'VOICE'} size={'lg'} colorScheme={'white'}>
                   {'Voice'}
                 </Radio>
               </Stack>

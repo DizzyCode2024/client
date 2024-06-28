@@ -9,7 +9,7 @@ const useHandleCategory = () => {
   const queryClient = useQueryClient();
 
   // add category
-  const addCatMutation = useMutation<
+  const { mutate: addCatMutation } = useMutation<
     ICategory,
     Error,
     { roomId: RoomId; categoryName: string }
