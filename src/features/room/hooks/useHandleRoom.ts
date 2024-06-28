@@ -14,7 +14,7 @@ const useHandleRoom = () => {
     Error,
     {
       roomName: string;
-      isPrivate: boolean;
+      open: boolean;
     }
   >({
     mutationFn: createRoom,

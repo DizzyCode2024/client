@@ -3,12 +3,12 @@ import { IRoom, RoomId } from '../types';
 
 export const createRoom = async ({
   roomName,
-  isPrivate,
+  open,
 }: {
   roomName: string;
-  isPrivate: boolean;
+  open: boolean;
 }): Promise<IRoom> => {
-  const response = await axiosInstance.post('/rooms', { roomName, isPrivate });
+  const response = await axiosInstance.post('/rooms', { roomName, open });
   return response.data;
 };
 

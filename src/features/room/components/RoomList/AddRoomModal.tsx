@@ -27,9 +27,9 @@ const AddRoomModal = ({
 }) => {
   const username = useAuthStore((state) => state.user);
   const [roomName, setRoomName] = useState<string>('');
-  const [isPrivate, setIsPrivate] = useState<boolean>(false);
+  const [open, setOpen] = useState<boolean>(false);
   const handlePrivacyChange = (value: string) => {
-    setIsPrivate(value === 'true');
+    setOpen(value === 'true');
   };
 
   useEffect(() => {
@@ -41,7 +41,7 @@ const AddRoomModal = ({
   // add room
   const { addRoomMutation } = useHandleRoom();
   const handleSubmit = () => {
-    addRoomMutation.mutate({ roomName, isPrivate });
+    addRoomMutation.mutate({ roomName, open });
     onClose();
   };
 
@@ -74,15 +74,12 @@ const AddRoomModal = ({
             >
               {'공개 여부'}
             </Text>
-            <RadioGroup
-              onChange={handlePrivacyChange}
-              value={isPrivate.toString()}
-            >
+            <RadioGroup onChange={handlePrivacyChange} value={open.toString()}>
               <Stack>
-                <Radio value={'false'} size={'lg'} colorScheme={'white'}>
+                <Radio value={'true'} size={'lg'} colorScheme={'white'}>
                   {'공개'}
                 </Radio>
-                <Radio value={'true'} size={'lg'} colorScheme={'white'}>
+                <Radio value={'false'} size={'lg'} colorScheme={'white'}>
                   {'비공개'}
                 </Radio>
               </Stack>

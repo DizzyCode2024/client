@@ -7,7 +7,7 @@ import { QUERY_KEYS } from '@/api/queryKeys';
 import { useNavigate } from 'react-router-dom';
 import { enterRoom } from '../api/exploreApi';
 
-const RoomBox = ({ roomId, roomName, isPrivate }: IRoom) => {
+const RoomBox = ({ roomId, roomName, open }: IRoom) => {
   const toast = useCustomToast();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -50,7 +50,7 @@ const RoomBox = ({ roomId, roomName, isPrivate }: IRoom) => {
       onClick={handleClick}
     >
       <h1>{roomName}</h1>
-      <p>{isPrivate ? 'Private' : 'Public'}</p>
+      <p>{open ? 'Public' : 'Private'}</p>
     </Box>
   );
 };

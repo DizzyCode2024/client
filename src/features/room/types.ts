@@ -12,7 +12,7 @@ export type ChannelType = 'TEXT' | 'VOICE';
 export interface IRoom {
   roomId: RoomId;
   roomName: string;
-  isPrivate: boolean;
+  open: boolean;
 }
 
 // category

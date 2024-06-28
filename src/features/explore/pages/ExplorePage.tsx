@@ -2,7 +2,10 @@ import { spacing } from '@/constants/spacing';
 import useRoomStore from '@/stores/useRoomStore';
 import { Box, Input } from '@chakra-ui/react';
 import { useEffect } from 'react';
+import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/api/queryKeys';
 import RoomBox from '../components/RoomBox';
+import { getAllRooms } from '../api/exploreApi';
 
 const ExplorePage = () => {
   const setCurrentRoom = useRoomStore((state) => state.setCurrentRoom);
@@ -10,10 +13,10 @@ const ExplorePage = () => {
     setCurrentRoom(-1);
   }, []);
 
-  // const { data } = useQuery({
-  //   queryKey: QUERY_KEYS.EXPLORE_ROOMS,
-  //   queryFn: getAllRooms,
-  // });
+  const { data: allRooms } = useQuery({
+    queryKey: QUERY_KEYS.EXPLORE_ROOMS,
+    queryFn: getAllRooms,
+  });
 
   return (
     <Box flex={1} bg={'gray.600'}>
@@ -34,11 +37,13 @@ const ExplorePage = () => {
         gap={'1rem'}
         padding={'5rem'}
       >
-        <RoomBox roomId={1} roomName={'Room 1'} isPrivate={false} />
-        <RoomBox roomId={1} roomName={'Room 1'} isPrivate={false} />
-        <RoomBox roomId={1} roomName={'Room 1'} isPrivate={false} />
-        <RoomBox roomId={1} roomName={'Room 1'} isPrivate={false} />
-        <RoomBox roomId={1} roomName={'Room 1'} isPrivate={false} />
+        {allRooms?.map((room) => (
+          <RoomBox
+            roomId={room.roomId}
+            roomName={room.roomName}
+            open={room.open}
+          />
+        ))}
       </Box>
     </Box>
   );
