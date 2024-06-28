@@ -4,6 +4,7 @@ import { Box, Input } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/api/queryKeys';
+import { getRooms } from '@/features/room/api/roomApi';
 import RoomBox from '../components/RoomBox';
 import { getAllRooms } from '../api/exploreApi';
 
@@ -17,6 +18,16 @@ const ExplorePage = () => {
     queryKey: QUERY_KEYS.EXPLORE_ROOMS,
     queryFn: getAllRooms,
   });
+
+  const { data: myRooms } = useQuery({
+    queryKey: QUERY_KEYS.ROOMS,
+    queryFn: getRooms,
+  });
+
+  const allRoomsWithMembership = allRooms?.map((room) => ({
+    ...room,
+    isMember: myRooms?.some((myRoom) => myRoom.roomId === room.roomId),
+  }));
 
   return (
     <Box flex={1} bg={'gray.600'}>
@@ -37,11 +48,13 @@ const ExplorePage = () => {
         gap={'1rem'}
         padding={'5rem'}
       >
-        {allRooms?.map((room) => (
+        {allRoomsWithMembership?.map((room) => (
           <RoomBox
+            key={room.roomId}
             roomId={room.roomId}
             roomName={room.roomName}
             open={room.open}
+            isMember={room.isMember}
           />
         ))}
       </Box>

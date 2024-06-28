@@ -64,7 +64,7 @@ const RoomMenuButton = ({ name }: { name: string }) => {
             <MenuDivider />
             <MenuItemWithIcon text={'알림 on/off'} icon={FaBell} />
             <MenuDivider />
-            <MenuItemWithIcon text={'서버 나가기'} icon={VscSignOut} isRed />
+            <MenuItemWithIcon text={'방 나가기'} icon={VscSignOut} isRed />
           </MenuList>
           <AddCategoryModal
             isOpen={isAddCatModalOpen}
