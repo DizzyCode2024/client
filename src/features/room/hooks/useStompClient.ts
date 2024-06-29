@@ -1,9 +1,10 @@
+import useSocketStore from '@/stores/useSocketStore';
 import { Client, IMessage, StompSubscription } from '@stomp/stompjs';
-import { useRef, useState } from 'react';
+import { useRef } from 'react';
 
 const useStompClient = () => {
   const client = useRef<Client | null>(null);
-  const [isConnected, setIsConnected] = useState(false);
+  const { isConnected } = useSocketStore();
 
   const subscribe = (
     destination: string,
@@ -25,8 +26,6 @@ const useStompClient = () => {
 
   return {
     client,
-    isConnected,
-    setIsConnected,
     subscribe,
     unsubscribe,
     sendMessage,

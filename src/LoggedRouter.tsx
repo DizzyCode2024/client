@@ -13,6 +13,7 @@ import DMPage from './features/room/pages/DMPage';
 import RoomPage from './features/room/pages/RoomPage';
 import { IRoom } from './features/room/types';
 import { BROKER_URL } from './utils/config';
+import useSocketStore from './stores/useSocketStore';
 
 const LoggedRouter = () => {
   // get rooms
@@ -22,8 +23,8 @@ const LoggedRouter = () => {
   });
 
   // 웹소켓 연결
-  const { client, isConnected, setIsConnected, subscribe, unsubscribe } =
-    useStompClient();
+  const { isConnected, setIsConnected } = useSocketStore();
+  const { client, subscribe, unsubscribe } = useStompClient();
   useEffect(() => {
     const socket = new SockJS(BROKER_URL);
     client.current = new Client({
