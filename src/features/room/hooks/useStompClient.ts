@@ -1,17 +1,15 @@
 import useSocketStore from '@/stores/useSocketStore';
-import { Client, IMessage, StompSubscription } from '@stomp/stompjs';
-import { useRef } from 'react';
+import { IMessage, StompSubscription } from '@stomp/stompjs';
 
 const useStompClient = () => {
-  const client = useRef<Client | null>(null);
-  const { isConnected } = useSocketStore();
+  const { client, isConnected } = useSocketStore();
 
   const subscribe = (
     destination: string,
     callback: (message: IMessage) => void,
   ): StompSubscription | null => {
-    if (!client.current || !isConnected) return null;
-    return client.current.subscribe(destination, callback);
+    if (!client || !isConnected) return null;
+    return client.subscribe(destination, callback);
   };
 
   const unsubscribe = (subscription: StompSubscription) => {
@@ -19,13 +17,12 @@ const useStompClient = () => {
   };
 
   const sendMessage = (destination: string, body: string) => {
-    if (client.current && isConnected) {
-      client.current.publish({ destination, body });
+    if (client && isConnected) {
+      client.publish({ destination, body });
     }
   };
 
   return {
-    client,
     subscribe,
     unsubscribe,
     sendMessage,

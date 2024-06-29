@@ -26,20 +26,26 @@ const ChatSection = () => {
     currentChannelPath: { roomId, categoryId, channelId },
   } = useRoomStore();
 
-  // 채팅방 연결 subscribe
-  const { isConnected } = useSocketStore();
+  // 채널 연결 subscribe
+  const { isConnected, client } = useSocketStore();
   const { subscribe, unsubscribe } = useStompClient();
   const subscriptionRef = useRef<StompSubscription | null>(null);
 
   useEffect(() => {
-    if (isConnected && roomId && categoryId && channelId) {
+    if (isConnected && roomId && categoryId && channelId && client) {
       console.log('ChatSection useEffect', isConnected);
       const topic = `/topic/rooms/${roomId}/categories/${categoryId}/channels/${channelId}`;
-      subscriptionRef.current = subscribe(topic, (message) => {
+
+      const subscription = subscribe(topic, (message) => {
         const chatMessage: IChatMessage = JSON.parse(message.body);
         console.log(`Received message in channel ${channelId}:`, chatMessage);
         // TODO: 받은 메시지 처리
       });
+      if (subscription) {
+        subscriptionRef.current = subscription;
+      } else {
+        console.error(`Failed to subscribe to ${topic}`);
+      }
     }
 
     return () => {
