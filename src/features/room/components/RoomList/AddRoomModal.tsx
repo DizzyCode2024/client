@@ -25,7 +25,7 @@ const AddRoomModal = ({
   isOpen: boolean;
   onClose: () => void;
 }) => {
-  const username = useAuthStore((state) => state.user);
+  const username = useAuthStore((state) => state.user?.username);
   const [roomName, setRoomName] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);
   const handlePrivacyChange = (value: string) => {
@@ -34,7 +34,7 @@ const AddRoomModal = ({
 
   useEffect(() => {
     setRoomName(`${username}'s room`);
-  }, []);
+  }, [username]);
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setRoomName(event.target.value);
 

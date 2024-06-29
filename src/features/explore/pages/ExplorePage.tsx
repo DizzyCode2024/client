@@ -1,12 +1,12 @@
+import { QUERY_KEYS } from '@/api/queryKeys';
 import { spacing } from '@/constants/spacing';
+import { IRoom } from '@/features/room/types';
 import useRoomStore from '@/stores/useRoomStore';
 import { Box, Input } from '@chakra-ui/react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/api/queryKeys';
-import { getRooms } from '@/features/room/api/roomApi';
-import RoomBox from '../components/RoomBox';
 import { getAllRooms } from '../api/exploreApi';
+import RoomBox from '../components/RoomBox';
 
 const ExplorePage = () => {
   const { setCurrentChannel } = useRoomStore();
@@ -16,17 +16,15 @@ const ExplorePage = () => {
       categoryId: 0,
       channelId: 0,
     });
-  }, []);
+  }, [setCurrentChannel]);
 
   const { data: allRooms } = useQuery({
     queryKey: QUERY_KEYS.EXPLORE_ROOMS,
     queryFn: getAllRooms,
   });
 
-  const { data: myRooms } = useQuery({
-    queryKey: QUERY_KEYS.ROOMS,
-    queryFn: getRooms,
-  });
+  const queryClient = useQueryClient();
+  const myRooms = queryClient.getQueryData<IRoom[]>(QUERY_KEYS.ROOMS);
 
   const allRoomsWithMembership = allRooms?.map((room) => ({
     ...room,

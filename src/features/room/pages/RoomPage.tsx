@@ -1,12 +1,12 @@
+import { QUERY_KEYS } from '@/api/queryKeys';
 import useRoomStore from '@/stores/useRoomStore';
+import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/api/queryKeys';
-import ChatSection from '../../chat/components/ChatSection';
 import MainContainer from '../../../components/MainContainer';
-import RoomMenu from '../components/RoomMenu/RoomMenu';
+import ChatSection from '../../chat/components/ChatSection';
 import { getCategories } from '../api/categoryApi';
+import RoomMenu from '../components/RoomMenu/RoomMenu';
 import { RoomId } from '../types';
 
 const RoomPage = () => {

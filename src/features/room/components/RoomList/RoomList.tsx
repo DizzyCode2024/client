@@ -1,12 +1,11 @@
-import { Box, Divider, Stack, Text } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/api/queryKeys';
-import { getRooms } from '../../api/roomApi';
+import { Box, Divider, Stack, Text } from '@chakra-ui/react';
+import { useQueryClient } from '@tanstack/react-query';
 import { IRoom } from '../../types';
 import AddRoomButton from './AddRoomButton';
 import DMButton from './DMButton';
-import RoomButton from './RoomButton';
 import ExploreButton from './ExploreButton';
+import RoomButton from './RoomButton';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box minWidth={'7.5rem'} height={'100vh'} bg={'gray.800'}>
@@ -15,11 +14,9 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 );
 
 const RoomList = () => {
-  const { data: rooms = [] } = useQuery<IRoom[], Error>({
-    queryKey: QUERY_KEYS.ROOMS,
-    queryFn: getRooms,
-    initialData: [],
-  });
+  const queryClient = useQueryClient();
+  const rooms: IRoom[] =
+    queryClient.getQueryData<IRoom[]>(QUERY_KEYS.ROOMS) || [];
 
   return (
     <Container>

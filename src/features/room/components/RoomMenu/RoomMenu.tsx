@@ -1,12 +1,11 @@
 import useRoomStore from '@/stores/useRoomStore';
 import { Box } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { QUERY_KEYS } from '@/api/queryKeys';
 import UserBox from '../../../user/components/UserBox/UserBox';
 import { getCategories } from '../../api/categoryApi';
-import { getRooms } from '../../api/roomApi';
-import { IRoom } from '../../types';
+import { ICatwChannel, IRoom } from '../../types';
 import CategoryBox from './CategoryBox';
 import ChannelBox from './ChannelBox';
 import RoomMenuButton from './RoomMenuButton';
@@ -24,26 +23,28 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 );
 
 const RoomMenu = () => {
-  const { data: rooms } = useQuery<IRoom[], Error>({
-    queryKey: QUERY_KEYS.ROOMS,
-    queryFn: getRooms,
-  });
-  const currentRoom = useRoomStore((state) => state.currentChannelPath.roomId);
-
+  const queryClient = useQueryClient();
   const [currentRoomName, setCurrentRoomName] = useState<string>('');
+  const rooms: IRoom[] =
+    queryClient.getQueryData<IRoom[]>(QUERY_KEYS.ROOMS) || [];
+
+  const {
+    currentChannelPath: { roomId },
+  } = useRoomStore();
+
+  const { data: categories } = useQuery<ICatwChannel[]>({
+    queryKey: QUERY_KEYS.CATWCHANNELS(roomId),
+    queryFn: () => getCategories(roomId),
+    enabled: !!roomId,
+  });
 
   useEffect(() => {
     rooms?.forEach((room) => {
-      if (room.roomId === currentRoom) {
+      if (room.roomId === roomId) {
         setCurrentRoomName(room.roomName);
       }
     });
-  }, [currentRoom, rooms]);
-
-  const { data: categories } = useQuery({
-    queryKey: QUERY_KEYS.CATWCHANNELS(currentRoom),
-    queryFn: () => getCategories(currentRoom),
-  });
+  }, [roomId, rooms]);
 
   return (
     <Container>
