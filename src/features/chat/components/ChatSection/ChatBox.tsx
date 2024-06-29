@@ -1,9 +1,9 @@
 import { IChatMessage } from '../../types';
 
-const ChatBox = ({ sender, content }: IChatMessage) => {
+const ChatBox = ({ senderId, content }: IChatMessage) => {
   return (
     <>
-      <div>{sender}</div>
+      <div>{senderId}</div>
       <div>{content}</div>
     </>
   );

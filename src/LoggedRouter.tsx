@@ -13,6 +13,7 @@ import DMPage from './features/room/pages/DMPage';
 import RoomPage from './features/room/pages/RoomPage';
 import { IRoom } from './features/room/types';
 import { BROKER_URL } from './utils/config';
+import useSocketStore from './stores/useSocketStore';
 
 const LoggedRouter = () => {
   // get rooms
@@ -22,11 +23,11 @@ const LoggedRouter = () => {
   });
 
   // 웹소켓 연결
-  const { client, isConnected, setIsConnected, subscribe, unsubscribe } =
-    useStompClient();
+  const { client, setClient, isConnected, setIsConnected } = useSocketStore();
+  const { subscribe, unsubscribe } = useStompClient();
   useEffect(() => {
     const socket = new SockJS(BROKER_URL);
-    client.current = new Client({
+    const stompClient = new Client({
       webSocketFactory: () => socket,
       onConnect: () => {
         setIsConnected(true);
@@ -40,18 +41,19 @@ const LoggedRouter = () => {
         console.log(`STOMP Debug: ${str}`);
       },
     });
-
-    client.current.activate();
+    stompClient.activate();
+    setClient(stompClient);
 
     return () => {
-      client.current?.deactivate();
+      stompClient.deactivate();
+      setClient(null);
     };
   }, []);
 
   // rooms 구독
   const subscriptionsRef = useRef<Map<number, StompSubscription>>(new Map());
   useEffect(() => {
-    if (rooms && isConnected) {
+    if (rooms && isConnected && client) {
       const currentRoomIds = new Set(rooms.map((room) => room.roomId));
       const existingSubscriptions = subscriptionsRef.current;
 
@@ -97,7 +99,7 @@ const LoggedRouter = () => {
     //   });
     //   subscriptionsRef.current.clear();
     // };
-  }, [rooms, isConnected, subscribe, unsubscribe]);
+  }, [rooms, isConnected, subscribe, unsubscribe, client]);
 
   return (
     <Box display={'flex'}>

@@ -1,4 +1,4 @@
 export interface IChatMessage {
-  sender: string;
+  senderId: string;
   content: string;
 }
