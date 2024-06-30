@@ -1,10 +1,9 @@
 import { Box, Tooltip } from '@chakra-ui/react';
 import { useState } from 'react';
-import { StarIcon, ChatIcon } from '@chakra-ui/icons';
-import { HiDotsVertical } from 'react-icons/hi';
+import { CloseIcon, StarIcon } from '@chakra-ui/icons';
 import IconWrapper from '@/components/IconWrapper';
 
-const FriendBox = ({ id, name }: { id: number; name: string }) => {
+const WaitingBox = ({ id, name }: { id: number; name: string }) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -42,7 +41,7 @@ const FriendBox = ({ id, name }: { id: number; name: string }) => {
       </Box>
       <Box display={'flex'} alignItems={'center'}>
         <Tooltip
-          label={'메세지 보내기'}
+          label={'취소'}
           bg={'gray.900'}
           fontSize={'2xl'}
           placement={'top'}
@@ -51,25 +50,7 @@ const FriendBox = ({ id, name }: { id: number; name: string }) => {
         >
           <Box>
             <IconWrapper>
-              <ChatIcon
-                color={'gray.400'}
-                _hover={{ color: '#fff' }}
-                cursor={'pointer'}
-              />
-            </IconWrapper>
-          </Box>
-        </Tooltip>
-        <Tooltip
-          label={'기타'}
-          bg={'gray.900'}
-          fontSize={'2xl'}
-          placement={'top'}
-          hasArrow
-          arrowSize={15}
-        >
-          <Box ml={4}>
-            <IconWrapper>
-              <HiDotsVertical color={'#A0AEC0'} cursor={'pointer'} />
+              <CloseIcon color={'gray.400'} cursor={'pointer'} width={'1rem'} />
             </IconWrapper>
           </Box>
         </Tooltip>
@@ -78,4 +59,4 @@ const FriendBox = ({ id, name }: { id: number; name: string }) => {
   );
 };
 
-export default FriendBox;
+export default WaitingBox;
