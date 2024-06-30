@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
-import TopMenu from './TopMenu';
+import { ReactNode } from 'react';
 
-const Container = ({ children }) => (
+const Container = ({ children }: { children: ReactNode }) => (
   <Box width={'100%'} height={'100vh'} bg={'gray.600'}>
     {children}
   </Box>
@@ -9,7 +9,7 @@ const Container = ({ children }) => (
 const FriendList = () => {
   return (
     <Container>
-      <TopMenu />
+      <Box>{'친구 목록'}</Box>
     </Container>
   );
 };

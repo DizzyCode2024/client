@@ -18,9 +18,15 @@ const Container = ({ children }: { children: React.ReactNode }) => (
   </Box>
 );
 
-const MenuList = ['온라인', '모두', '대기중', '차단 목록', '친구 추가하기'];
+const MenuList = ['모두', '대기중', '친구 추가하기'];
 
-const TopMenu = () => {
+const FriendTopMenu = ({
+  selectedMenu,
+  onSelectMenu,
+}: {
+  selectedMenu: string;
+  onSelectMenu: (menu: string) => void;
+}) => {
   const { signout } = useAuthActions();
   const handleLogout = () => {
     signout();
@@ -55,7 +61,10 @@ const TopMenu = () => {
               borderRadius={'md'}
               fontSize={'2xl'}
               transition={'all 0.2s ease-out'}
-              _hover={{ bg: 'gray.500' }}
+              _hover={{ bg: 'gray.700', color: 'white' }}
+              bg={selectedMenu === menu ? 'gray.800' : 'transparent'}
+              color={selectedMenu === menu ? 'white' : 'inherit'}
+              onClick={() => onSelectMenu(menu)}
             >
               {menu}
             </Box>
@@ -78,4 +87,4 @@ const TopMenu = () => {
   );
 };
 
-export default TopMenu;
+export default FriendTopMenu;
