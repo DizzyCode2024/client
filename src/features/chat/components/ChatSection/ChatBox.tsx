@@ -1,6 +1,6 @@
-import { IChatMessage } from '../../types';
+import { ISendChatPayload } from '../../types';
 
-const ChatBox = ({ senderId, content }: IChatMessage) => {
+const ChatBox = ({ senderId, content }: ISendChatPayload) => {
   return (
     <>
       <div>{senderId}</div>

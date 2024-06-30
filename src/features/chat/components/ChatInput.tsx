@@ -1,27 +1,32 @@
-// import useStompClient from '@/features/room/hooks/useStompClient';
+import useStompClient from '@/features/room/hooks/useStompClient';
 import { Input, Box } from '@chakra-ui/react';
 import { useState } from 'react';
+import { useAuthStore } from '@/stores/useAuthStore';
+import { ISendChatPayload } from '../types';
 
 const ChatInput = ({ destination }: { destination: string }) => {
-  const [message, setMessage] = useState<string>('');
+  const [content, setContent] = useState<string>('');
+  const senderId = useAuthStore((state) => state.user?.id);
 
-  // const { sendMessage } = useStompClient();
+  const { sendMessage } = useStompClient();
 
-  const handleSendMessage = (message: string) => {
+  const handleSendMessage = (payload: ISendChatPayload) => {
     console.log('destination:', destination);
-    console.log('message:', message);
-    // sendMessage(destination, message);
+    console.log('send payload:', payload);
+    sendMessage(destination, payload);
   };
 
   return (
     <Box mt={4}>
       <Input
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
         onKeyPress={(e) => {
           if (e.key === 'Enter') {
-            handleSendMessage(message);
-            setMessage('');
+            if (senderId && content) {
+              handleSendMessage({ senderId, content });
+            }
+            setContent('');
           }
         }}
         variant={'filled'}

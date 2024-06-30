@@ -7,7 +7,7 @@ import useSocketStore from '@/stores/useSocketStore';
 import ChatInput from './ChatInput';
 import Header from './ChatHeader/Header';
 import NoChatUI from './NoChat';
-import { IChatMessage } from '../types';
+import { ISendChatPayload } from '../types';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
@@ -37,7 +37,7 @@ const ChatSection = () => {
       const topic = `/topic/rooms/${roomId}/categories/${categoryId}/channels/${channelId}`;
 
       const subscription = subscribe(topic, (message) => {
-        const chatMessage: IChatMessage = JSON.parse(message.body);
+        const chatMessage: ISendChatPayload = JSON.parse(message.body);
         console.log(`Received message in channel ${channelId}:`, chatMessage);
         // TODO: 받은 메시지 처리
       });
@@ -54,9 +54,17 @@ const ChatSection = () => {
         subscriptionRef.current = null;
       }
     };
-  }, [isConnected, roomId, categoryId, channelId, subscribe, unsubscribe]);
+  }, [
+    isConnected,
+    roomId,
+    categoryId,
+    channelId,
+    subscribe,
+    unsubscribe,
+    client,
+  ]);
 
-  const destination = `app/rooms/${roomId}/categories/${categoryId}/channels/${channelId}`;
+  const destination = `/app/rooms/${roomId}/categories/${categoryId}/channels/${channelId}`;
 
   return (
     <Container>
