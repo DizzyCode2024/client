@@ -19,7 +19,7 @@ const FriendRequest = () => {
         borderRadius={'md'}
         fontSize={'xl'}
       >
-        {'Dizzy Code 아이디를 이용해서 친구요청을 할 수 있어요.'}
+        {'Dizzy Code 아이디나 닉네임을 이용해서 친구요청을 할 수 있어요.'}
       </Box>
       <Box>
         <SearchFriend />

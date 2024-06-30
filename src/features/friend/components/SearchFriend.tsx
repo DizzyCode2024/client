@@ -5,7 +5,7 @@ const SearchFriend = () => {
     <Box marginLeft={5} marginTop={5}>
       <FormControl>
         <Input
-          placeholder={'친구 아이디로 요청하기'}
+          placeholder={'친구 아이디나 닉네임으로 요청하기'}
           // value={friendId}
           // onChange={handleInputChange}
           bg={'gray.800'}
