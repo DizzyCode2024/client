@@ -1,13 +1,14 @@
-import { Box } from '@chakra-ui/react';
-import useRoomStore from '@/stores/useRoomStore';
 import useStompClient from '@/features/room/hooks/useStompClient';
-import { useEffect, useRef } from 'react';
-import { StompSubscription } from '@stomp/stompjs';
+import useRoomStore from '@/stores/useRoomStore';
 import useSocketStore from '@/stores/useSocketStore';
-import ChatInput from './ChatInput';
-import Header from './ChatHeader/Header';
-import NoChatUI from './NoChat';
+import { Box } from '@chakra-ui/react';
+import { StompSubscription } from '@stomp/stompjs';
+import { useEffect, useRef } from 'react';
+import { useDestination } from '../hooks/useDestination';
 import { ISendChatPayload } from '../types';
+import Header from './ChatHeader/Header';
+import ChatInput from './ChatInput';
+import ChatContainer from './ChatSection/ChatContainer';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
@@ -30,11 +31,11 @@ const ChatSection = () => {
   const { isConnected, client } = useSocketStore();
   const { subscribe, unsubscribe } = useStompClient();
   const subscriptionRef = useRef<StompSubscription | null>(null);
+  const { ChannelTopic: topic } = useDestination();
 
   useEffect(() => {
     if (isConnected && roomId && categoryId && channelId && client) {
       console.log('ChatSection useEffect', isConnected);
-      const topic = `/topic/rooms/${roomId}/categories/${categoryId}/channels/${channelId}`;
 
       const subscription = subscribe(topic, (message) => {
         const chatMessage: ISendChatPayload = JSON.parse(message.body);
@@ -64,13 +65,11 @@ const ChatSection = () => {
     client,
   ]);
 
-  const destination = `/app/rooms/${roomId}/categories/${categoryId}/channels/${channelId}`;
-
   return (
     <Container>
       <Header />
-      <NoChatUI />
-      <ChatInput destination={destination} />
+      <ChatContainer />
+      <ChatInput />
     </Container>
   );
 };

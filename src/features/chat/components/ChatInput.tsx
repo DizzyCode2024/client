@@ -1,14 +1,16 @@
 import useStompClient from '@/features/room/hooks/useStompClient';
-import { Input, Box } from '@chakra-ui/react';
-import { useState } from 'react';
 import { useAuthStore } from '@/stores/useAuthStore';
+import { Box, Input } from '@chakra-ui/react';
+import { useState } from 'react';
+import { useDestination } from '../hooks/useDestination';
 import { ISendChatPayload } from '../types';
 
-const ChatInput = ({ destination }: { destination: string }) => {
+const ChatInput = () => {
   const [content, setContent] = useState<string>('');
   const senderId = useAuthStore((state) => state.user?.id);
 
   const { sendMessage } = useStompClient();
+  const { destination } = useDestination();
 
   const handleSendMessage = (payload: ISendChatPayload) => {
     console.log('destination:', destination);
