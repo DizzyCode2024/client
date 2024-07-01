@@ -14,7 +14,7 @@ const DMPage = () => {
     switch (selectedMenu) {
       case '모두':
         return <FriendList />;
-      case '대기중':
+      case '친구 요청':
         return <WaitingList />;
       case '친구 추가하기':
         return <FriendRequest />;

@@ -12,16 +12,12 @@ const SearchFriend = () => {
   };
 
   const handleSendRequest = () => {
-    const senderId = 4;
-
     if (/^\d+$/.test(inputValue)) {
       sendFriendRequestByIdMutation({
-        senderId,
         friendId: Number(inputValue),
       });
     } else {
       sendFriendRequestByNameMutation({
-        senderId,
         friendName: inputValue,
       });
     }

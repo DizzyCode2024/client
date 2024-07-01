@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { useCustomToast } from '@/hooks/useCustomToast';
+import { useAuthStore } from '@/stores/useAuthStore';
 import {
   sendFriendRequestById,
   sendFriendRequestByName,
@@ -16,23 +17,27 @@ import {
 } from '../types';
 
 const useHandleFriend = () => {
+  const { user } = useAuthStore();
   const toast = useCustomToast();
   const queryClient = useQueryClient();
 
+  const userId = Number(user!.id);
+
   const { mutate: sendFriendRequestByIdMutation } = useMutation<
-    any,
+    void,
     Error,
-    IFriendRequestById
+    Omit<IFriendRequestById, 'senderId'>
   >({
-    mutationFn: ({ senderId, friendId }) =>
-      sendFriendRequestById(senderId, friendId),
+    mutationFn: async ({ friendId }) => {
+      await sendFriendRequestById(userId, friendId);
+    },
     onSuccess: () => {
       toast({
         title: '친구 요청 성공',
         description: '친구 요청이 성공적으로 전송되었습니다.',
         status: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: 'friends' });
+      queryClient.invalidateQueries({ queryKey: ['friends'] });
     },
     onError: () => {
       toast({
@@ -44,19 +49,20 @@ const useHandleFriend = () => {
   });
 
   const { mutate: sendFriendRequestByNameMutation } = useMutation<
-    any,
+    void,
     Error,
-    IFriendRequestByName
+    Omit<IFriendRequestByName, 'senderId'>
   >({
-    mutationFn: ({ senderId, friendName }) =>
-      sendFriendRequestByName(senderId, friendName),
+    mutationFn: async ({ friendName }) => {
+      await sendFriendRequestByName(userId, friendName); // senderId에 userId 사용
+    },
     onSuccess: () => {
       toast({
         title: '친구 요청 성공',
         description: '친구 요청이 성공적으로 전송되었습니다.',
         status: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: 'friends' });
+      queryClient.invalidateQueries({ queryKey: ['friends'] }); // queryKey를 배열로 지정
     },
     onError: () => {
       toast({
@@ -70,16 +76,17 @@ const useHandleFriend = () => {
   const { mutate: rejectFriendRequestMutation } = useMutation<
     void,
     Error,
-    IFriendAction
+    Omit<IFriendAction, 'member1Id'>
   >({
-    mutationFn: ({ member1Id, member2Id }) =>
-      rejectFriendRequest(member1Id, member2Id),
+    mutationFn: async ({ member2Id }) => {
+      await rejectFriendRequest(userId, member2Id);
+    },
     onSuccess: () => {
       toast({
         title: '친구 요청 거절 성공',
         status: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: 'friends' });
+      queryClient.invalidateQueries({ queryKey: ['friends'] });
     },
     onError: () => {
       toast({
@@ -93,16 +100,17 @@ const useHandleFriend = () => {
   const { mutate: acceptFriendRequestMutation } = useMutation<
     void,
     Error,
-    IFriendAction
+    Omit<IFriendAction, 'member1Id'>
   >({
-    mutationFn: ({ member1Id, member2Id }) =>
-      acceptFriendRequest(member1Id, member2Id),
+    mutationFn: async ({ member2Id }) => {
+      await acceptFriendRequest(userId, member2Id);
+    },
     onSuccess: () => {
       toast({
         title: '친구 요청 수락 성공',
         status: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: 'friends' });
+      queryClient.invalidateQueries({ queryKey: ['friends'] });
     },
     onError: () => {
       toast({
@@ -116,17 +124,18 @@ const useHandleFriend = () => {
   const { mutate: deleteFriendRequestMutation } = useMutation<
     void,
     Error,
-    IFriendAction
+    Omit<IFriendAction, 'member1Id'>
   >({
-    mutationFn: ({ member1Id, member2Id }) =>
-      deleteFriendRequest(member1Id, member2Id),
+    mutationFn: async ({ member2Id }) => {
+      await deleteFriendRequest(userId, member2Id);
+    },
     onSuccess: () => {
       toast({
         title: '친구 삭제 성공',
         description: '친구가 성공적으로 삭제되었습니다.',
         status: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: 'friends' });
+      queryClient.invalidateQueries({ queryKey: ['friends'] });
     },
     onError: () => {
       toast({
@@ -137,13 +146,17 @@ const useHandleFriend = () => {
     },
   });
 
-  const useGetFriendsListQuery = (memberId: number) =>
-    useQuery(['friends', memberId], () => getFriendsList(memberId));
+  const useGetFriendsListQuery = () =>
+    useQuery({
+      queryKey: ['friends', userId],
+      queryFn: () => getFriendsList(userId),
+    });
 
-  const useGetPendingFriendRequestsQuery = (memberId: number) =>
-    useQuery(['pendingFriends', memberId], () =>
-      getPendingFriendRequests(memberId),
-    );
+  const useGetPendingFriendRequestsQuery = () =>
+    useQuery({
+      queryKey: ['pendingFriends', userId],
+      queryFn: () => getPendingFriendRequests(userId),
+    });
 
   return {
     sendFriendRequestByIdMutation,
