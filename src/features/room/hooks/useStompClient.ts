@@ -1,3 +1,4 @@
+import { ISendChatPayload } from '@/features/chat/types';
 import useSocketStore from '@/stores/useSocketStore';
 import { IMessage, StompSubscription } from '@stomp/stompjs';
 
@@ -16,9 +17,10 @@ const useStompClient = () => {
     subscription.unsubscribe();
   };
 
-  const sendMessage = (destination: string, body: string) => {
+  const sendMessage = (destination: string, body: ISendChatPayload) => {
     if (client && isConnected) {
-      client.publish({ destination, body });
+      const messageBody = JSON.stringify(body);
+      client.publish({ destination, body: messageBody });
     }
   };
 

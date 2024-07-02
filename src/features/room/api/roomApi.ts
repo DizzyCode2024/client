@@ -1,4 +1,4 @@
-import axiosInstance from '../../../api/axiosInstance';
+import axiosInstance from '@/api/axiosInstance';
 import { IRoom, RoomId } from '../types';
 
 export const createRoom = async ({

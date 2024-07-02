@@ -1,5 +1,7 @@
+export type UserId = number;
+
 export interface IUser {
-  id: string;
+  id: UserId;
   email: string;
   username: string;
 }
