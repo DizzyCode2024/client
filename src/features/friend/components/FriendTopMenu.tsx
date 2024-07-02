@@ -18,7 +18,7 @@ const Container = ({ children }: { children: React.ReactNode }) => (
   </Box>
 );
 
-const MenuList = ['모두', '대기중', '친구 추가하기'];
+const MenuList = ['모두', '친구 요청', '친구 추가하기'];
 
 const FriendTopMenu = ({
   selectedMenu,

@@ -1,10 +1,29 @@
 import { Box, Tooltip } from '@chakra-ui/react';
-import { useState } from 'react';
-import { StarIcon, ChatIcon } from '@chakra-ui/icons';
-import { HiDotsVertical } from 'react-icons/hi';
+import { useState, ReactNode } from 'react';
+import { StarIcon } from '@chakra-ui/icons';
 import IconWrapper from '@/components/IconWrapper';
 
-const FriendBox = ({ id, name }: { id: number; name: string }) => {
+interface CommonBoxProps {
+  id: number;
+  name: string;
+  icon1: ReactNode;
+  icon2: ReactNode;
+  tooltipLabel1: string;
+  tooltipLabel2: string;
+  onClickIcon1?: () => void;
+  onClickIcon2?: () => void;
+}
+
+const CommonBox = ({
+  id,
+  name,
+  icon1,
+  icon2,
+  tooltipLabel1,
+  tooltipLabel2,
+  onClickIcon1,
+  onClickIcon2,
+}: CommonBoxProps) => {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -26,7 +45,7 @@ const FriendBox = ({ id, name }: { id: number; name: string }) => {
           <StarIcon color={'gray.100'} />
         </IconWrapper>
         <Box fontWeight={'bold'} color={'white'} ml={4}>
-          {name}{' '}
+          {name}
           {isHovered && (
             <Box
               as={'span'}
@@ -42,35 +61,39 @@ const FriendBox = ({ id, name }: { id: number; name: string }) => {
       </Box>
       <Box display={'flex'} alignItems={'center'}>
         <Tooltip
-          label={'메세지 보내기'}
+          label={tooltipLabel1}
           bg={'gray.900'}
           fontSize={'2xl'}
           placement={'top'}
           hasArrow
           arrowSize={15}
         >
-          <Box>
-            <IconWrapper>
-              <ChatIcon
-                color={'gray.400'}
-                _hover={{ color: '#fff' }}
-                cursor={'pointer'}
-              />
-            </IconWrapper>
+          <Box
+            onClick={onClickIcon1}
+            _hover={{ bg: 'whiteAlpha.300' }}
+            cursor={'pointer'}
+            borderRadius={'full'}
+            p={2}
+          >
+            <IconWrapper>{icon1}</IconWrapper>
           </Box>
         </Tooltip>
         <Tooltip
-          label={'기타'}
+          label={tooltipLabel2}
           bg={'gray.900'}
           fontSize={'2xl'}
           placement={'top'}
           hasArrow
           arrowSize={15}
         >
-          <Box ml={4}>
-            <IconWrapper>
-              <HiDotsVertical color={'#A0AEC0'} cursor={'pointer'} />
-            </IconWrapper>
+          <Box
+            onClick={onClickIcon2}
+            _hover={{ bg: 'whiteAlpha.300' }}
+            cursor={'pointer'}
+            borderRadius={'full'}
+            p={2}
+          >
+            <IconWrapper>{icon2}</IconWrapper>
           </Box>
         </Tooltip>
       </Box>
@@ -78,4 +101,4 @@ const FriendBox = ({ id, name }: { id: number; name: string }) => {
   );
 };
 
-export default FriendBox;
+export default CommonBox;

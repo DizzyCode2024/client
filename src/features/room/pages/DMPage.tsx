@@ -1,11 +1,11 @@
 import { useState } from 'react';
 import { Box } from '@chakra-ui/react';
-import FriendList from '@/features/room/components/Friend/FriendList';
+import FriendList from '@/features/friend/components/FriendList';
 import DMList from '../components/DMList';
 import MainContainer from '../../../components/MainContainer';
-import FriendTopMenu from '../components/Friend/FriendTopMenu';
-import WaitingList from '../components/Friend/WaitingList';
-import FriendRequest from '../components/Friend/FriendRequest';
+import FriendTopMenu from '../../friend/components/FriendTopMenu';
+import WaitingList from '../../friend/components/WaitingList';
+import FriendRequest from '../../friend/components/FriendRequest';
 
 const DMPage = () => {
   const [selectedMenu, setSelectedMenu] = useState('모두');
@@ -14,7 +14,7 @@ const DMPage = () => {
     switch (selectedMenu) {
       case '모두':
         return <FriendList />;
-      case '대기중':
+      case '친구 요청':
         return <WaitingList />;
       case '친구 추가하기':
         return <FriendRequest />;
