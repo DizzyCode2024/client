@@ -10,7 +10,11 @@ const Container = ({ children }: { children: ReactNode }) => (
 );
 
 const WaitingList = () => {
-  const { useGetPendingFriendRequestsQuery } = useHandleFriend();
+  const {
+    useGetPendingFriendRequestsQuery,
+    acceptFriendRequestMutation,
+    rejectFriendRequestMutation,
+  } = useHandleFriend();
   const { data, isLoading, isError } = useGetPendingFriendRequestsQuery();
 
   if (isLoading) {
@@ -24,6 +28,7 @@ const WaitingList = () => {
           flexDirection={'column'}
           justifyContent={'center'}
           alignItems={'center'}
+          color={'white'}
         >
           {'Loading...'}
         </Box>
@@ -42,6 +47,7 @@ const WaitingList = () => {
           flexDirection={'column'}
           justifyContent={'center'}
           alignItems={'center'}
+          color={'white'}
         >
           {'Error loading friends'}
         </Box>
@@ -60,18 +66,28 @@ const WaitingList = () => {
         justifyContent={'center'}
         alignItems={'center'}
       >
-        {data?.map(
-          (friend: {
-            friendId: number;
-            friendName: string;
-            currentStatus: string;
-          }) => (
-            <WaitingBox
-              key={friend.friendId}
-              id={friend.friendId}
-              name={friend.friendName}
-            />
-          ),
+        {data?.length === 0 ? (
+          <Box color={'white'}>{'친구 요청이 없습니다'}</Box>
+        ) : (
+          data?.map(
+            (friend: {
+              friendId: number;
+              friendName: string;
+              currentStatus: string;
+            }) => (
+              <WaitingBox
+                key={friend.friendId}
+                id={friend.friendId}
+                name={friend.friendName}
+                onClickAccept={() =>
+                  acceptFriendRequestMutation({ member2Id: friend.friendId })
+                }
+                onClickReject={() =>
+                  rejectFriendRequestMutation({ member2Id: friend.friendId })
+                }
+              />
+            ),
+          )
         )}
       </Box>
     </Container>

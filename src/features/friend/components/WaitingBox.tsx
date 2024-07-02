@@ -4,13 +4,13 @@ import CommonBox from './CommonBox';
 const WaitingBox = ({
   id,
   name,
-  onClickReject1,
-  onClickReject2,
+  onClickAccept,
+  onClickReject,
 }: {
   id: number;
   name: string;
-  onClickReject1?: () => void;
-  onClickReject2?: () => void;
+  onClickAccept?: () => void;
+  onClickReject?: () => void;
 }) => (
   <CommonBox
     id={id}
@@ -19,8 +19,8 @@ const WaitingBox = ({
     icon2={<CloseIcon color={'gray.400'} width={'1rem'} />}
     tooltipLabel1={'수락'}
     tooltipLabel2={'거절'}
-    onClickIcon1={onClickReject1}
-    onClickIcon2={onClickReject2}
+    onClickIcon1={onClickAccept}
+    onClickIcon2={onClickReject}
   />
 );
 
