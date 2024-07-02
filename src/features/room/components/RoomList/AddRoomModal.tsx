@@ -1,3 +1,4 @@
+import { useAuthStore } from '@/stores/useAuthStore';
 import {
   Box,
   Button,
@@ -15,7 +16,6 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
-import { useAuthStore } from '@/stores/useAuthStore';
 import useHandleRoom from '../../hooks/useHandleRoom';
 
 const AddRoomModal = ({
@@ -35,6 +35,7 @@ const AddRoomModal = ({
   useEffect(() => {
     setRoomName(`${username}'s room`);
   }, [username]);
+
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) =>
     setRoomName(event.target.value);
 
@@ -43,6 +44,7 @@ const AddRoomModal = ({
   const handleSubmit = () => {
     addRoomMutation({ roomName, open });
     onClose();
+    setRoomName(`${username}'s room`);
   };
 
   return (
@@ -59,6 +61,7 @@ const AddRoomModal = ({
             <Input
               value={roomName}
               onChange={handleChange}
+              placeholder={'방 이름을 입력하세요'}
               fontSize={'2xl'}
               bg={'gray.900'}
               border={'none'}

@@ -1,12 +1,14 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useCustomToast } from '@/hooks/useCustomToast';
 import { QUERY_KEYS } from '@/api/queryKeys';
+import { useNavigate } from 'react-router-dom';
 import { createRoom, deleteRoom, leaveRoom } from '../api/roomApi';
 import { IRoom, RoomId } from '../types';
 
 const useHandleRoom = () => {
   const toast = useCustomToast();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   //   add room
   const { mutate: addRoomMutation } = useMutation<
@@ -26,6 +28,7 @@ const useHandleRoom = () => {
         status: 'success',
       });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ROOMS });
+      navigate(`/chat/channels/${data.roomId}`);
     },
     onError: (error) => {
       console.error('Error creating room:', error);
