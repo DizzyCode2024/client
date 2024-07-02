@@ -1,23 +1,32 @@
 import { QUERY_KEYS } from '@/api/queryKeys';
 import useRoomStore from '@/stores/useRoomStore';
 import { Box } from '@chakra-ui/react';
-import { useInfiniteQuery } from '@tanstack/react-query';
+import {
+  QueryFunctionContext,
+  QueryKey,
+  useInfiniteQuery,
+} from '@tanstack/react-query';
 import { useCallback, useEffect, useRef } from 'react';
 import { getChats } from '../../api/chatApi';
-import ChatBox from './ChatBox';
 import { IReceiveChatPayload } from '../../types';
+import ChatBox from './ChatBox';
 
 const ChatContainer = () => {
   const { currentChannelPath } = useRoomStore();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
-  const { data, fetchNextPage, isFetchingNextPage, status, hasNextPage } =
-    useInfiniteQuery({
+  const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
+    useInfiniteQuery<IReceiveChatPayload[], Error>({
       queryKey: QUERY_KEYS.CHATS(currentChannelPath),
-      queryFn: ({ pageParam = null }) =>
-        getChats({ ...currentChannelPath, timestamp: pageParam }),
+      queryFn: ({
+        pageParam = null,
+      }: QueryFunctionContext<QueryKey, unknown>) =>
+        getChats({
+          ...currentChannelPath,
+          timestamp: pageParam as string | null,
+        }),
       initialPageParam: null,
-      getNextPageParam: (lastPage) => {
+      getNextPageParam: (lastPage: IReceiveChatPayload[]) => {
         if (lastPage.length > 0) {
           const lastMessage = lastPage[lastPage.length - 1];
           console.log('lastMessage', lastMessage, lastPage.length);
@@ -57,14 +66,6 @@ const ChatContainer = () => {
       }
     };
   }, [handleScroll]);
-
-  if (status === 'pending') {
-    return <p>{'Loading...'}</p>;
-  }
-
-  if (status === 'error') {
-    return <p>{'Error loading messages'}</p>;
-  }
 
   return (
     <Box mt={'auto'} color={'white'} overflow={'hidden'}>
