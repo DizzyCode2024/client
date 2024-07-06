@@ -1,5 +1,5 @@
 import { spacing } from '@/constants/spacing';
-import { Button } from '@chakra-ui/react';
+import { Box } from '@chakra-ui/react';
 
 interface PopoverButtonProps {
   onClick: () => void;
@@ -18,7 +18,7 @@ const PopoverBtn = ({
   hoverTextColor = 'white',
 }: PopoverButtonProps) => {
   return (
-    <Button
+    <Box
       bg={bgColor}
       fontSize={'small'}
       p={spacing.padding}
@@ -31,7 +31,7 @@ const PopoverBtn = ({
       onClick={onClick}
     >
       {label}
-    </Button>
+    </Box>
   );
 };
 
