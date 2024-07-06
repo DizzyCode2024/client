@@ -21,6 +21,7 @@ const SearchFriend = () => {
         friendName: inputValue,
       });
     }
+    setInputValue('');
   };
 
   return (

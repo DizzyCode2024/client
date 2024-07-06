@@ -20,7 +20,6 @@ const Top = styled.div`
 
 const UserPopoverBox = () => {
   const user = useAuthStore((state) => state.user);
-  // console.log(user);
   return (
     <PopoverContent
       bg={'gray.900'}

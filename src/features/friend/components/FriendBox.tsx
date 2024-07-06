@@ -1,28 +1,49 @@
 import { ChatIcon } from '@chakra-ui/icons';
+import { Box, Popover, PopoverTrigger } from '@chakra-ui/react';
 import { HiDotsVertical } from 'react-icons/hi';
+import { useRef, useState } from 'react';
+import EtcPopoverBox from '@/features/friend/components/EtcPopoverBox';
 import CommonBox from './CommonBox';
 
-const FriendBox = ({
-  id,
-  name,
-  onClickDM,
-  onClickOptions,
-}: {
+interface FriendBoxProps {
   id: number;
   name: string;
   onClickDM?: () => void;
-  onClickOptions?: () => void;
-}) => (
-  <CommonBox
-    id={id}
-    name={name}
-    icon1={<ChatIcon color={'#A0AEC0'} />}
-    icon2={<HiDotsVertical color={'#A0AEC0'} />}
-    tooltipLabel1={'DM'}
-    tooltipLabel2={'기타'}
-    onClickIcon1={onClickDM}
-    onClickIcon2={onClickOptions}
-  />
-);
+}
+
+const FriendBox = ({ id, name, onClickDM }: FriendBoxProps) => {
+  const [isOpen, setIsOpen] = useState(false);
+  const initialFocusRef = useRef<HTMLButtonElement>(null);
+  const openPopover = () => setIsOpen(true);
+  const closePopover = () => setIsOpen(false);
+
+  return (
+    <CommonBox
+      id={id}
+      name={name}
+      icon1={<ChatIcon color={'#A0AEC0'} />}
+      icon2={
+        <Popover
+          isOpen={isOpen}
+          initialFocusRef={initialFocusRef}
+          onClose={closePopover}
+          placement={'bottom'}
+          closeOnBlur
+        >
+          <PopoverTrigger>
+            <Box onClick={openPopover}>
+              <HiDotsVertical color={'#A0AEC0'} />
+            </Box>
+          </PopoverTrigger>
+          <EtcPopoverBox onClose={closePopover} id={id} />
+        </Popover>
+      }
+      tooltipLabel1={'DM'}
+      tooltipLabel2={'기타'}
+      onClickIcon1={onClickDM}
+      onClickIcon2={openPopover}
+    />
+  );
+};
 
 export default FriendBox;
