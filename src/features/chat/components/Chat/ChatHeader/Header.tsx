@@ -3,11 +3,11 @@ import ChannelName from './ChannelName';
 import Container from './Container';
 
 const Header = () => {
-  const { currentChannelName } = useRoomStore();
+  const { name } = useRoomStore((state) => state.currentChannelInfo);
 
   return (
     <Container>
-      <ChannelName channelName={currentChannelName} />
+      <ChannelName channelName={name} />
     </Container>
   );
 };
