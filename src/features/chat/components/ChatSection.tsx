@@ -1,5 +1,5 @@
 import { QUERY_KEYS } from '@/api/queryKeys';
-import useStompClient from '@/features/room/hooks/useStompClient';
+import useStompClient from '@/features/chat/hooks/useStompClient';
 import useRoomStore from '@/stores/useRoomStore';
 import useSocketStore from '@/stores/useSocketStore';
 import { Box } from '@chakra-ui/react';

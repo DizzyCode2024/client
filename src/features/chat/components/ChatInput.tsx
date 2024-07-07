@@ -1,4 +1,4 @@
-import useStompClient from '@/features/room/hooks/useStompClient';
+import useStompClient from '@/features/chat/hooks/useStompClient';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { Box, Input } from '@chakra-ui/react';
 import { useState } from 'react';

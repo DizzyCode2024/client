@@ -8,7 +8,7 @@ import { QUERY_KEYS } from './api/queryKeys';
 import ExplorePage from './features/explore/pages/ExplorePage';
 import { getRooms } from './features/room/api/roomApi';
 import RoomList from './features/room/components/RoomList/RoomList';
-import useStompClient from './features/room/hooks/useStompClient';
+import useStompClient from './features/chat/hooks/useStompClient';
 import DMPage from './features/room/pages/DMPage';
 import RoomPage from './features/room/pages/RoomPage';
 import { IRoom } from './features/room/types';
@@ -48,7 +48,7 @@ const LoggedRouter = () => {
       stompClient.deactivate();
       setClient(null);
     };
-  }, []);
+  }, [setClient, setIsConnected]);
 
   // rooms 구독
   const subscriptionsRef = useRef<Map<number, StompSubscription>>(new Map());
