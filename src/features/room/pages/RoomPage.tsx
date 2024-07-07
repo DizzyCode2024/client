@@ -48,6 +48,10 @@ const RoomPage = () => {
     }
   }, [roomId, data, setCurrentChannelPath, setCurrentChannelInfo]);
 
+  useEffect(() => {
+    console.log('여기');
+  }, []);
+
   return (
     <MainContainer>
       <RoomMenu />

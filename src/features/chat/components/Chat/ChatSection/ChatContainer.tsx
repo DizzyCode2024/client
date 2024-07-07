@@ -30,7 +30,7 @@ const ChatContainer = () => {
       getNextPageParam: (lastPage: IReceiveChatPayload[]) => {
         if (lastPage.length > 0) {
           const lastMessage = lastPage[lastPage.length - 1];
-          console.log('lastMessage', lastMessage, lastPage.length);
+          // console.log('lastMessage', lastMessage, lastPage.length);
           return lastMessage.timestamp;
         }
         return undefined;
@@ -39,7 +39,7 @@ const ChatContainer = () => {
 
   const handleScroll = useCallback(() => {
     const scrollContainer = scrollContainerRef.current;
-    console.log(hasNextPage);
+    // console.log(hasNextPage);
     if (scrollContainer) {
       if (
         scrollContainer.scrollHeight -
@@ -67,10 +67,6 @@ const ChatContainer = () => {
       }
     };
   }, [handleScroll]);
-
-  useEffect(() => {
-    console.log(data?.pages[0].length);
-  }, [data?.pages]);
 
   return data?.pages[0].length === 0 ? (
     <NoChatUI />
