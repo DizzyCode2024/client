@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import MainContainer from '../../../components/MainContainer';
-import ChatSection from '../../chat/components/ChatSection';
+import ChatSection from '../../chat/components/Chat';
 import { getCategories } from '../api/categoryApi';
 import RoomMenu from '../components/RoomMenu/RoomMenu';
 import { RoomId } from '../types';
