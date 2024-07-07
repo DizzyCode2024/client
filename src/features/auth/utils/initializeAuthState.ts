@@ -22,7 +22,7 @@ const initializeAuthState = () => {
 export default initializeAuthState;
 
 async function fetchUserDetails(token: string) {
-  const response = await fetch('/api/user/details', {
+  const response = await fetch('/members/detail', {
     headers: {
       Authorization: `Bearer ${token}`,
     },
