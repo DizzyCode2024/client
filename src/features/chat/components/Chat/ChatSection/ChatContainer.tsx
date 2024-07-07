@@ -7,9 +7,10 @@ import {
   useInfiniteQuery,
 } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef } from 'react';
-import { getChats } from '../../api/chatApi';
-import { IReceiveChatPayload } from '../../types';
+import { getChats } from '../../../api/chatApi';
+import { IReceiveChatPayload } from '../../../types';
 import ChatBox from './ChatBox';
+import NoChatUI from './NoChat';
 
 const ChatContainer = () => {
   const { currentChannelPath } = useRoomStore();
@@ -67,7 +68,13 @@ const ChatContainer = () => {
     };
   }, [handleScroll]);
 
-  return (
+  useEffect(() => {
+    console.log(data?.pages[0].length);
+  }, [data?.pages]);
+
+  return data?.pages[0].length === 0 ? (
+    <NoChatUI />
+  ) : (
     <Box mt={'auto'} color={'white'} overflow={'hidden'}>
       <Box
         height={'100%'}

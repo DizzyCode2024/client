@@ -23,20 +23,3 @@ export const getChats = async ({
 
   return response.data;
 };
-
-export const getMoreChats = async ({
-  roomId,
-  categoryId,
-  channelId,
-  timeStamp,
-}: {
-  roomId: RoomId;
-  categoryId: CategoryId;
-  channelId: ChannelId;
-  timeStamp: number;
-}) => {
-  const response = await axiosInstance.get(
-    `/rooms/${roomId}/categories/${categoryId}/channels/${channelId}/messages?last=${timeStamp}`,
-  );
-  return response.data;
-};

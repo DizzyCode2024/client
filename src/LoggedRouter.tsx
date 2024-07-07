@@ -1,7 +1,7 @@
 import { Box } from '@chakra-ui/react';
 import { Client, StompSubscription } from '@stomp/stompjs';
 import { useQuery } from '@tanstack/react-query';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import { QUERY_KEYS } from './api/queryKeys';
@@ -14,8 +14,11 @@ import RoomPage from './features/room/pages/RoomPage';
 import { IRoom } from './features/room/types';
 import { BROKER_URL } from './utils/config';
 import useSocketStore from './stores/useSocketStore';
+import axiosInstance from './api/axiosInstance';
 
 const LoggedRouter = () => {
+  // secondary token
+  const [ST, setST] = useState(null);
   // get rooms
   const { data: rooms } = useQuery<IRoom[], Error>({
     queryKey: QUERY_KEYS.ROOMS,
@@ -25,30 +28,50 @@ const LoggedRouter = () => {
   // 웹소켓 연결
   const { client, setClient, isConnected, setIsConnected } = useSocketStore();
   const { subscribe, unsubscribe } = useStompClient();
-  useEffect(() => {
-    const socket = new SockJS(BROKER_URL);
-    const stompClient = new Client({
-      webSocketFactory: () => socket,
-      onConnect: () => {
-        setIsConnected(true);
-        console.log(`Connected to server ${BROKER_URL}`);
-      },
-      onDisconnect: () => {
-        setIsConnected(false);
-        console.log('Disconnected from server');
-      },
-      debug: (str) => {
-        console.log(`STOMP Debug: ${str}`);
-      },
-    });
-    stompClient.activate();
-    setClient(stompClient);
 
+  // get secondary token
+  const getSecondaryToken = async () => {
+    try {
+      const response = await axiosInstance.get('/secondary-token');
+      setST(response.data.secondaryToken);
+      return response.data.secondaryToken;
+    } catch (e) {
+      console.error('error getting ST', e);
+      return null;
+    }
+  };
+
+  useEffect(() => {
+    getSecondaryToken();
+    if (ST) {
+      const socket = new SockJS(`${BROKER_URL}?token=${ST}`);
+      const stompClient = new Client({
+        webSocketFactory: () => socket,
+        connectHeaders: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        onConnect: () => {
+          setIsConnected(true);
+          console.log(`Connected to server ${BROKER_URL}`);
+        },
+        onDisconnect: () => {
+          setIsConnected(false);
+          console.log('Disconnected from server');
+        },
+        debug: (str) => {
+          console.log(`STOMP Debug: ${str}`);
+        },
+      });
+      stompClient.activate();
+      setClient(stompClient);
+    }
     return () => {
-      stompClient.deactivate();
+      console.log('deactivate');
+      client?.deactivate();
       setClient(null);
+      setST(null);
     };
-  }, [setClient, setIsConnected]);
+  }, [setClient, setIsConnected, ST]);
 
   // rooms 구독
   const subscriptionsRef = useRef<Map<number, StompSubscription>>(new Map());

@@ -2,7 +2,7 @@ import { Box, Flex, Text } from '@chakra-ui/react';
 import styled from 'styled-components';
 import { spacing } from '@/constants/spacing';
 import { convertUTC } from '@/utils/convertUTC';
-import { IReceiveChatPayload } from '../../types';
+import { IReceiveChatPayload } from '../../../types';
 
 const ProfilePic = styled.div`
   width: 4rem;
