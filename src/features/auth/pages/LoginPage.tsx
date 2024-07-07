@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button, Box, Text, useToast } from '@chakra-ui/react';
-import CustomInput from '@/features/auth/components/AuthInput'; // CustomInput 컴포넌트 임포트
-import Container from '@/components/Container'; // Container 컴포넌트 임포트
+import CustomInput from '@/features/auth/components/AuthInput';
+import Container from '@/components/Container';
 import { useAuthActions } from '../hooks/useAuthActions';
 import useInput from '../hooks/useInput';
 

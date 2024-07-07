@@ -36,6 +36,11 @@ const ChatInput = () => {
         height={'5rem'}
         bg={'gray.700'}
         fontSize={'2xl'}
+        borderRadius={'0'}
+        color={'gray.100'}
+        _hover={{
+          bg: 'gray.600',
+        }}
       />
     </Box>
   );
