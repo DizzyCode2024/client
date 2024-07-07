@@ -1,13 +1,13 @@
 import { QUERY_KEYS } from '@/api/queryKeys';
-import useStompClient from '@/features/room/hooks/useStompClient';
+import useStompClient from '@/features/chat/hooks/useStompClient';
 import useRoomStore from '@/stores/useRoomStore';
 import useSocketStore from '@/stores/useSocketStore';
 import { Box } from '@chakra-ui/react';
 import { StompSubscription } from '@stomp/stompjs';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
-import { useDestination } from '../hooks/useDestination';
-import { IReceiveChatPayload } from '../types';
+import { useDestination } from '../../hooks/useDestination';
+import { IReceiveChatPayload } from '../../types';
 import Header from './ChatHeader/Header';
 import ChatInput from './ChatInput';
 import ChatContainer from './ChatSection/ChatContainer';

@@ -7,5 +7,8 @@ export const useDestination = () => {
 
   const ChannelTopic = `/topic/rooms/${roomId}/categories/${categoryId}/channels/${channelId}`;
   const destination = `/app/rooms/${roomId}/categories/${categoryId}/channels/${channelId}`;
-  return { ChannelTopic, destination };
+
+  const VoiceTopic = `/video/call`;
+
+  return { ChannelTopic, destination, VoiceTopic };
 };

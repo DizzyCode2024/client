@@ -1,9 +1,9 @@
-import useStompClient from '@/features/room/hooks/useStompClient';
+import useStompClient from '@/features/chat/hooks/useStompClient';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { Box, Input } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useDestination } from '../hooks/useDestination';
-import { ISendChatPayload } from '../types';
+import { useDestination } from '../../hooks/useDestination';
+import { ISendChatPayload } from '../../types';
 
 const ChatInput = () => {
   const [content, setContent] = useState<string>('');

@@ -1,3 +1,4 @@
+import { RemoteTrackPublication } from 'livekit-client';
 import { UserId } from '../auth/types';
 
 export type Content = string;
@@ -13,3 +14,28 @@ export interface IReceiveChatPayload {
   content: Content;
   timestamp: string;
 }
+
+// VIDEO CALL
+//    OpenVidu
+export type TrackInfo = {
+  trackPublication: RemoteTrackPublication;
+  participantIdentity: string;
+};
+
+//    1:1
+export interface OfferMessage {
+  type: 'offer';
+  offer: RTCSessionDescriptionInit;
+}
+
+export interface AnswerMessage {
+  type: 'answer';
+  answer: RTCSessionDescriptionInit;
+}
+
+export interface CandidateMessage {
+  type: 'candidate';
+  candidate: RTCIceCandidateInit;
+}
+
+export type ISignalingMessage = OfferMessage | AnswerMessage | CandidateMessage;
