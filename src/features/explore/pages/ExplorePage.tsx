@@ -9,14 +9,14 @@ import { getAllRooms } from '../api/exploreApi';
 import RoomBox from '../components/RoomBox';
 
 const ExplorePage = () => {
-  const { setCurrentChannel } = useRoomStore();
+  const { setCurrentChannelPath } = useRoomStore();
   useEffect(() => {
-    setCurrentChannel({
+    setCurrentChannelPath({
       roomId: -1,
       categoryId: 0,
       channelId: 0,
     });
-  }, [setCurrentChannel]);
+  }, [setCurrentChannelPath]);
 
   const { data: allRooms } = useQuery({
     queryKey: QUERY_KEYS.EXPLORE_ROOMS,

@@ -17,24 +17,24 @@ const ChannelBox = ({
 }) => {
   const {
     isSelected,
-    setCurrentChannel,
+    setCurrentChannelPath,
     currentChannelPath,
-    setCurrentChannelName,
+    setCurrentChannelInfo,
   } = useRoomStore((state) => ({
     isSelected: state.currentChannelPath.channelId === channelId,
-    setCurrentChannel: state.setCurrentChannel,
+    setCurrentChannelPath: state.setCurrentChannelPath,
     currentChannelPath: state.currentChannelPath,
-    setCurrentChannelName: state.setCurrentChannelName,
+    setCurrentChannelInfo: state.setCurrentChannelInfo,
   }));
 
   const handleClick = () => {
-    setCurrentChannel({
+    setCurrentChannelPath({
       roomId: currentChannelPath.roomId,
       categoryId,
       channelId,
     });
 
-    setCurrentChannelName(name);
+    setCurrentChannelInfo({ name, type });
   };
   return (
     <Box

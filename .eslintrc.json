@@ -43,6 +43,9 @@
     "react/jsx-pascal-case": "warn",
     // 반복문으로 생성하는 요소에 key 강제
     "react/jsx-key": "warn",
+    "jsx-a11y/click-events-have-key-events": "off",
+    "jsx-a11y/no-static-element-interactions": "off",
+    // "jsx-a11y/no-noninteractive-element-interactions": 0,
     // 디버그 허용
     "no-debugger": "off",
     // [error] Delete `␍` prettier/prettier
@@ -71,7 +74,7 @@
     // 테스트 또는 개발환경을 구성 파일에서는 devDependency 사용 허용
     "import/no-extraneous-dependencies": 0,
     "no-shadow": 0,
-    "jsx-a11y/no-noninteractive-element-interactions": 0,
+
     "react/require-default-props": "off",
     "no-underscore-dangle": "off",
     "@typescript-eslint/no-explicit-any": "off"

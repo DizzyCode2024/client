@@ -9,11 +9,11 @@ const DMButton = () => {
     (state) => state.currentChannelPath.roomId === 0,
   ); // DM room의 id는 0
   const navigate = useNavigate();
-  const { setCurrentChannel } = useRoomStore();
+  const { setCurrentChannelPath } = useRoomStore();
 
   const handleClick = () => {
     navigate('/chat/main');
-    setCurrentChannel({
+    setCurrentChannelPath({
       roomId: 0,
       categoryId: 0,
       channelId: 0,

@@ -2,27 +2,15 @@ import { QUERY_KEYS } from '@/api/queryKeys';
 import useStompClient from '@/features/chat/hooks/useStompClient';
 import useRoomStore from '@/stores/useRoomStore';
 import useSocketStore from '@/stores/useSocketStore';
-import { Box } from '@chakra-ui/react';
 import { StompSubscription } from '@stomp/stompjs';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
 import { useDestination } from '../../hooks/useDestination';
 import { IReceiveChatPayload } from '../../types';
+import Container from '../Container';
 import Header from './ChatHeader/Header';
 import ChatInput from './ChatInput/ChatInput';
-import ChatContainer from './ChatSection/ChatContainer';
-
-const Container = ({ children }: { children: React.ReactNode }) => (
-  <Box
-    width={'100%'}
-    height={'100vh'}
-    bg={'gray.600'}
-    display={'flex'}
-    flexDirection={'column'}
-  >
-    {children}
-  </Box>
-);
+import ChatContainer from './ChatBody/ChatContainer';
 
 const ChatSection = () => {
   const {
@@ -38,7 +26,7 @@ const ChatSection = () => {
 
   useEffect(() => {
     if (isConnected && roomId && categoryId && channelId && client) {
-      console.log('ChatSection useEffect', isConnected);
+      // console.log('ChatSection useEffect', isConnected);
 
       const subscription = subscribe(topic, (message) => {
         const chatMessage: IReceiveChatPayload = JSON.parse(message.body);
