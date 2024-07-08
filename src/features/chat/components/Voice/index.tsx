@@ -1,15 +1,14 @@
+import { spacing } from '@/constants/spacing';
 import useRoomStore from '@/stores/useRoomStore';
-import { Button, Flex } from '@chakra-ui/react';
+import { Button, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import styled from 'styled-components';
+import { BsFillCameraVideoFill } from 'react-icons/bs';
+import { PiPhoneDisconnectFill } from 'react-icons/pi';
 import useVoiceRoom from '../../hooks/Voice/useVoiceRoom';
 import Container from '../Container';
-import UserVideoComponent from './VoiceBody/VideoComponent';
-
-const VideoContainer = styled.div`
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-`;
+import VideoContainer from './VoiceBody/VideoContainer';
+import Controller from './VoiceController/Controller';
+// import { BsFillCameraVideoOffFill } from "react-icons/bs";
 
 const VoiceSection = () => {
   const { name } = useRoomStore((state) => state.currentChannelInfo);
@@ -27,61 +26,59 @@ const VoiceSection = () => {
 
   useEffect(() => {
     console.log('>> SUBSCRIBERS:', subscribers);
-    console.log('>>SESSION:', session);
-  }, [subscribers, session]);
+    console.log('>> SESSION:', session);
+    console.log('>> MAIN STREAM MANAGER:', mainStreamManager);
+    console.log('>> PUBLISHER:', publisher);
+  }, [subscribers, session, mainStreamManager, publisher]);
 
   return (
     <Container>
       {session === undefined ? (
-        <Flex flex={1} justifyContent={'center'} alignItems={'center'}>
-          <Button onClick={joinSession}>{'Join'}</Button>
+        <Flex
+          flex={1}
+          justifyContent={'center'}
+          alignItems={'center'}
+          direction={'column'}
+          gap={spacing.gutter}
+        >
+          <Text color={'white'} fontWeight={900} fontSize={'2rem'}>
+            {name}
+          </Text>
+          <Text color={'white'} fontWeight={200} fontSize={'1.4rem'}>
+            {'No one is currently in voice.'}
+          </Text>
+          <Button onClick={joinSession} fontSize={'1.8rem'} mt={'1rem'}>
+            {'Join Voice'}
+          </Button>
         </Flex>
-      ) : null}
-      {session !== undefined ? (
-        <div>
-          <div id={'session-header'}>
-            <h1 id={'session-title'}>{name}</h1>
-            <input
-              className={'btn btn-large btn-danger'}
-              type={'button'}
-              id={'buttonLeaveSession'}
-              onClick={leaveSession}
-              value={'Leave session'}
+      ) : (
+        <Flex direction={'column'} flex={1} position={'relative'}>
+          {/* {mainStreamManager !== undefined ? (
+              <UserVideoComponent streamManager={mainStreamManager} />
+            ) : null} */}
+
+          {publisher && subscribers && (
+            <VideoContainer
+              publisher={publisher}
+              subscribers={subscribers}
+              handleMainVideoStream={handleMainVideoStream}
             />
-            <input
-              className={'btn btn-large btn-success'}
-              type={'button'}
-              id={'buttonSwitchCamera'}
+          )}
+
+          <Controller>
+            <Controller.Button
               onClick={switchCamera}
-              value={'Switch Camera'}
+              label={'Switch Camera'}
+              icon={BsFillCameraVideoFill}
             />
-          </div>
-          <VideoContainer>
-            {mainStreamManager !== undefined ? (
-              <UserVideoComponent
-                streamManager={mainStreamManager}
-                type={'manager'}
-              />
-            ) : null}
-            <div>
-              {publisher !== undefined ? (
-                <div onClick={() => handleMainVideoStream(publisher)}>
-                  <UserVideoComponent streamManager={publisher} type={'pub'} />
-                </div>
-              ) : null}
-              {subscribers.map((sub) => (
-                <div key={sub.id}>
-                  <div>{'SUB'}</div>
-                  <div onClick={() => handleMainVideoStream(sub)}>
-                    <span>{sub.id}</span>
-                    <UserVideoComponent streamManager={sub} type={'sub'} />
-                  </div>
-                </div>
-              ))}
-            </div>
-          </VideoContainer>
-        </div>
-      ) : null}
+            <Controller.RedButton
+              onClick={leaveSession}
+              label={'Disconnect'}
+              icon={PiPhoneDisconnectFill}
+            />
+          </Controller>
+        </Flex>
+      )}
     </Container>
   );
 };

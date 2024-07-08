@@ -75,9 +75,12 @@ const useVoiceRoom = () => {
     [subscribers],
   );
 
-  const joinSession = () => {
+  const joinSession = useCallback(() => {
+    if (session) {
+      leaveSession(); // 기존 세션을 떠나고 새로운 세션을 초기화
+    }
     const OVInstance = new OpenVidu();
-    // OVInstance.enableProdMode();
+    OVInstance.enableProdMode();
 
     setOV(OVInstance);
 
@@ -87,7 +90,10 @@ const useVoiceRoom = () => {
     // connection 메소드 내부에 이벤트 수신 처리
     //    session에 참여한 사용자 추가
     mySession.on('streamCreated', (event) => {
-      console.log('!!!!!!!STREAM CREATED', event.stream);
+      console.log(
+        '!!!!!!!STREAM CREATED',
+        JSON.parse(event.stream.connection.data).clientData,
+      );
       const newSubscriber = mySession.subscribe(
         event.stream,
         JSON.parse(event.stream.connection.data).clientData,
@@ -139,7 +145,7 @@ const useVoiceRoom = () => {
               publishAudio: true,
               publishVideo: true,
               insertMode: 'APPEND',
-              mirror: true,
+              mirror: false,
               // resolution: '1280x720',
               // frameRate: 10,
             });
@@ -147,6 +153,7 @@ const useVoiceRoom = () => {
             publisherInstance.once('accessAllowed', () => {
               mySession.publish(publisherInstance);
               setPublisher(publisherInstance);
+              setMainStreamManager(publisherInstance);
             });
           });
 
@@ -190,7 +197,7 @@ const useVoiceRoom = () => {
           );
         });
     });
-  };
+  }, [leaveSession, mySessionId, myUserName, session]);
 
   const createSession = async (mySessionId: string) => {
     console.log('CREATE SESSION', mySessionId);

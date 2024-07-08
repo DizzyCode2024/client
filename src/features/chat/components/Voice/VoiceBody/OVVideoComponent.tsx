@@ -22,6 +22,10 @@ const OpenViduVideoComponent = ({
     }
   }, [streamManager]);
 
+  if (!streamManager) {
+    return null; // streamManager가 null인 경우 컴포넌트를 렌더링하지 않음
+  }
+
   return <Video autoPlay ref={videoRef} />;
 };
 

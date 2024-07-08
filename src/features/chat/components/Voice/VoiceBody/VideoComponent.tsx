@@ -2,7 +2,7 @@ import styled from 'styled-components';
 import { StreamManager } from 'openvidu-browser';
 import OpenViduVideoComponent from './OVVideoComponent';
 
-const Stream = styled.div`
+const Name = styled.div`
   position: absolute;
   background: #f8f8f8;
   padding-left: 5px;
@@ -14,27 +14,33 @@ const Stream = styled.div`
 
 const UserVideoComponent = ({
   streamManager,
-  type,
 }: {
   streamManager: StreamManager;
-  type: string;
 }) => {
   const getNicknameTag = () => {
-    // Gets the nickName of the user
-    console.log('====', streamManager.stream.connection.data, type);
-    return JSON.parse(streamManager.stream.connection.data).clientData;
+    if (
+      streamManager &&
+      streamManager.stream &&
+      streamManager.stream.connection &&
+      streamManager.stream.connection.data
+    ) {
+      // 사용자 닉네임을 얻기 위해 connection data를 파싱
+      const nickname = JSON.parse(
+        streamManager.stream.connection.data,
+      ).clientData;
+      return <div>{nickname}</div>;
+    }
+    return <div>{'Unknown'}</div>; // 기본 값 또는 null 체크를 통과하지 못한 경우
   };
+
+  if (!streamManager) {
+    return <div>{'Loading...'}</div>; // streamManager가 null인 경우
+  }
 
   return (
     <div>
-      {streamManager !== undefined ? (
-        <div>
-          <OpenViduVideoComponent streamManager={streamManager} />
-          <Stream>
-            <p style={{ margin: 0 }}>{getNicknameTag()}</p>
-          </Stream>
-        </div>
-      ) : null}
+      <Name>{getNicknameTag()}</Name>
+      <OpenViduVideoComponent streamManager={streamManager} />
     </div>
   );
 };
