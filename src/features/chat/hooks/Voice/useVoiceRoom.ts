@@ -12,12 +12,12 @@ import {
 import { useCallback, useEffect, useState } from 'react';
 
 const useVoiceRoom = () => {
-  const [OV, setOV] = useState<OpenVidu | undefined>(undefined);
-  const [session, setSession] = useState<Session | undefined>(undefined);
+  const [OV, setOV] = useState<OpenVidu>();
+  const [session, setSession] = useState<Session>();
   const [mainStreamManager, setMainStreamManager] = useState<
-    Publisher | undefined
+    StreamManager | undefined
   >(undefined);
-  const [publisher, setPublisher] = useState<Publisher | undefined>(undefined);
+  const [publisher, setPublisher] = useState<Publisher | null>(null);
   const [subscribers, setSubscribers] = useState<StreamManager[]>([]);
   const [currentVideoDevice, setCurrentVideoDevice] = useState<
     Device | undefined
@@ -35,7 +35,7 @@ const useVoiceRoom = () => {
     setSession(undefined);
     setSubscribers([]);
     setMainStreamManager(undefined);
-    setPublisher(undefined);
+    setPublisher(null);
   }, [session]);
 
   useEffect(() => {
@@ -49,34 +49,66 @@ const useVoiceRoom = () => {
     };
   }, [session, leaveSession]);
 
-  const handleMainVideoStream = (stream) => {
+  const handleMainVideoStream = (stream: StreamManager) => {
     if (mainStreamManager !== stream) {
       setMainStreamManager(stream);
     }
   };
 
-  const deleteSubscriber = (streamManager: StreamManager) => {
-    setSubscribers((prevSubscribers) =>
-      prevSubscribers.filter((subscriber) => subscriber !== streamManager),
-    );
-  };
+  const deleteSubscriber = useCallback(
+    (streamManager: StreamManager) => {
+      const prevSubscribers = subscribers;
+      const index = prevSubscribers.indexOf(streamManager, 0);
+      if (index > -1) {
+        prevSubscribers.splice(index, 1);
+        setSubscribers([...prevSubscribers]);
+      }
 
-  const joinSession = useCallback(() => {
+      // setSubscribers((prevSubscribers) =>
+      //   prevSubscribers.filter(
+      //     (subscriber) =>
+      //       subscriber.stream.connection.connectionId !==
+      //       streamManager.stream.connection.connectionId,
+      //   ),
+      // );
+    },
+    [subscribers],
+  );
+
+  const joinSession = () => {
     const OVInstance = new OpenVidu();
+    // OVInstance.enableProdMode();
+
     setOV(OVInstance);
 
     const mySession = OVInstance.initSession();
     setSession(mySession);
 
-    mySession.on('streamCreated', (event: any) => {
-      const subscriber = mySession.subscribe(event.stream, undefined);
-      setSubscribers((prevSubscribers) => [...prevSubscribers, subscriber]);
+    // connection 메소드 내부에 이벤트 수신 처리
+    //    session에 참여한 사용자 추가
+    mySession.on('streamCreated', (event) => {
+      console.log('!!!!!!!STREAM CREATED', event.stream);
+      const newSubscriber = mySession.subscribe(
+        event.stream,
+        JSON.parse(event.stream.connection.data).clientData,
+      );
+
+      setSubscribers((prevSubscribers) => [...prevSubscribers, newSubscriber]);
     });
 
+    //    session에서 disconnect한 사용자 삭제
     mySession.on('streamDestroyed', (event) => {
       deleteSubscriber(event.stream.streamManager);
+
+      // if (event.stream.typeOfVideo === 'CUSTOM') {
+      //   deleteSubscriber(event.stream.streamManager);
+      // } else {
+      //   setDestroyedStream(event.stream.streamManager);
+      //   setCheckMyScreen(true);
+      // }
     });
 
+    //    예외처리
     mySession.on('exception', (exception) => {
       console.warn(exception);
     });
@@ -93,37 +125,62 @@ const useVoiceRoom = () => {
       mySession
         .connect(token, { clientData: myUserName })
         .then(async () => {
-          const publisherInstance = await OVInstance.initPublisherAsync(
-            undefined,
-            {
+          // user media 객체 생성
+          OVInstance.getUserMedia({
+            audioSource: false,
+            videoSource: undefined,
+            resolution: '1280x720',
+            frameRate: 10,
+          }).then((mediaStream) => {
+            const videoTrack = mediaStream.getVideoTracks()[0];
+            const publisherInstance = OVInstance.initPublisher(myUserName, {
               audioSource: undefined,
-              videoSource: undefined,
+              videoSource: videoTrack,
               publishAudio: true,
               publishVideo: true,
-              resolution: '640x480',
-              frameRate: 30,
               insertMode: 'APPEND',
-              mirror: false,
-            },
-          );
+              mirror: true,
+              // resolution: '1280x720',
+              // frameRate: 10,
+            });
+            // publish
+            publisherInstance.once('accessAllowed', () => {
+              mySession.publish(publisherInstance);
+              setPublisher(publisherInstance);
+            });
+          });
 
-          mySession.publish(publisherInstance);
+          // const publisherInstance = await OVInstance.initPublisherAsync(
+          //   undefined,
+          //   {
+          //     audioSource: undefined,
+          //     videoSource: undefined,
+          //     publishAudio: true,
+          //     publishVideo: true,
+          //     resolution: '640x480',
+          //     frameRate: 30,
+          //     insertMode: 'APPEND',
+          //     mirror: false,
+          //   },
+          // );
 
-          const devices = await OVInstance.getDevices();
-          const videoDevices = devices.filter(
-            (device) => device.kind === 'videoinput',
-          );
-          const currentVideoDeviceId = publisherInstance.stream
-            .getMediaStream()
-            .getVideoTracks()[0]
-            .getSettings().deviceId;
-          const currentVideoDevice = videoDevices.find(
-            (device) => device.deviceId === currentVideoDeviceId,
-          );
+          // mySession.publish(publisherInstance);
 
-          setCurrentVideoDevice(currentVideoDevice);
-          setMainStreamManager(publisherInstance);
-          setPublisher(publisherInstance);
+          // const devices = await OVInstance.getDevices();
+          // const videoDevices = devices.filter(
+          //   (device) => device.kind === 'videoinput',
+          // );
+          // const currentVideoDeviceId = publisherInstance.stream
+          //   .getMediaStream()
+          //   .getVideoTracks()[0]
+          //   .getSettings().deviceId;
+          // const currentVideoDevice = videoDevices.find(
+          //   (device) => device.deviceId === currentVideoDeviceId,
+          // );
+
+          // setCurrentVideoDevice(currentVideoDevice);
+          // setMainStreamManager(publisherInstance);
+          // setPublisher(publisherInstance);
         })
         .catch((error) => {
           console.log(
@@ -133,34 +190,42 @@ const useVoiceRoom = () => {
           );
         });
     });
-  }, [myUserName, mySessionId]);
+  };
 
   const createSession = async (mySessionId: string) => {
-    const response = await axios.post(
-      `${BASE_URL}/api/sessions`,
-
-      { customSessionId: mySessionId },
-      {
-        headers: { 'Content-Type': 'application/json' },
-      },
-    );
-
-    console.log('CREATE SESSION', response.data);
-
-    return response.data; // The sessionId
+    console.log('CREATE SESSION', mySessionId);
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/sessions`,
+        { customSessionId: mySessionId },
+        {
+          headers: { 'Content-Type': 'application/json' },
+        },
+      );
+      console.log('CREATE SESSION', response.data);
+      return response.data; // The sessionId
+    } catch (e) {
+      console.log('ERROR AT CREATING SESSION', e);
+      return null;
+    }
   };
 
   const createToken = async (sessionId: any) => {
-    const response = await axios.post(
-      `${BASE_URL}/api/sessions/${sessionId}/connections`,
-      {},
-      {
-        headers: { 'Content-Type': 'application/json' },
-      },
-    );
+    try {
+      const response = await axios.post(
+        `${BASE_URL}/api/sessions/${sessionId}/connections`,
+        {},
+        {
+          headers: { 'Content-Type': 'application/json' },
+        },
+      );
 
-    console.log('CREATE TOKEN', response.data);
-    return response.data; // The token
+      console.log('CREATE TOKEN', response.data);
+      return response.data; // The token
+    } catch (e) {
+      console.log('ERROR AT CREATING TOKEN', e);
+      return null;
+    }
   };
 
   const switchCamera = useCallback(async () => {
@@ -185,7 +250,9 @@ const useVoiceRoom = () => {
             mirror: true,
           });
 
-          await session?.unpublish(mainStreamManager!);
+          if (mainStreamManager instanceof Publisher) {
+            await session?.unpublish(mainStreamManager);
+          }
           await session?.publish(newPublisher);
           setCurrentVideoDevice(newVideoDevice[0]);
           setMainStreamManager(newPublisher);
@@ -198,6 +265,7 @@ const useVoiceRoom = () => {
   }, [OV, currentVideoDevice, mainStreamManager, session]);
 
   return {
+    session,
     joinSession,
     switchCamera,
     leaveSession,

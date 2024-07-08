@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import styled from 'styled-components';
+import { StreamManager } from 'openvidu-browser';
 
 const Video = styled.video`
   width: 100%;
@@ -8,8 +9,12 @@ const Video = styled.video`
   cursor: pointer;
 `;
 
-const OpenViduVideoComponent = ({ streamManager }) => {
-  const videoRef = useRef();
+const OpenViduVideoComponent = ({
+  streamManager,
+}: {
+  streamManager: StreamManager;
+}) => {
+  const videoRef = useRef<HTMLVideoElement>(null);
 
   useEffect(() => {
     if (streamManager && videoRef.current) {

@@ -1,4 +1,5 @@
 import styled from 'styled-components';
+import { StreamManager } from 'openvidu-browser';
 import OpenViduVideoComponent from './OVVideoComponent';
 
 const Stream = styled.div`
@@ -11,10 +12,16 @@ const Stream = styled.div`
   border-bottom-right-radius: 4px;
 `;
 
-const UserVideoComponent = ({ streamManager }) => {
+const UserVideoComponent = ({
+  streamManager,
+  type,
+}: {
+  streamManager: StreamManager;
+  type: string;
+}) => {
   const getNicknameTag = () => {
     // Gets the nickName of the user
-    console.log('====', streamManager.stream.connection.data);
+    console.log('====', streamManager.stream.connection.data, type);
     return JSON.parse(streamManager.stream.connection.data).clientData;
   };
 

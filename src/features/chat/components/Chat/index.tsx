@@ -10,7 +10,7 @@ import { IReceiveChatPayload } from '../../types';
 import Container from '../Container';
 import Header from './ChatHeader/Header';
 import ChatInput from './ChatInput';
-import ChatContainer from './ChatSection/ChatContainer';
+import ChatContainer from './ChatBody/ChatContainer';
 
 const ChatSection = () => {
   const {
