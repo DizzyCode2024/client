@@ -2,16 +2,11 @@ import MenuItemWithIcon from '@/components/MenuItemWithIcon';
 import CustomTooltip from '@/components/Tooltip';
 import { useAuthActions } from '@/features/auth/hooks/useAuthActions';
 import { SettingsIcon } from '@chakra-ui/icons';
-import { Menu, MenuButton, MenuList, keyframes } from '@chakra-ui/react';
+import { Menu, MenuButton, MenuList } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { VscSignOut } from 'react-icons/vsc';
 
 const UserSettingsButton = () => {
-  const spin = keyframes`
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
-`;
-
   const MotionSettingsIcon = motion(SettingsIcon);
 
   const { signout } = useAuthActions();
@@ -26,9 +21,13 @@ const UserSettingsButton = () => {
             alignItems: 'center',
             justifyContent: 'center',
           }}
-          _hover={{ animation: `${spin} 1s linear infinite` }}
         >
-          <MotionSettingsIcon mr={5} color={'gray.400'} />
+          <MotionSettingsIcon
+            mr={5}
+            color={'gray.400'}
+            whileHover={{ rotate: 360 }}
+            transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}
+          />
         </MenuButton>
       </CustomTooltip>
       <MenuList ml={'-3rem'} mb={'1rem'}>
