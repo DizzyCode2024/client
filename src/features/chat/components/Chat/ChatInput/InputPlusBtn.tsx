@@ -9,8 +9,8 @@ const InputPlusBtn = () => {
       backgroundColor={'gray.500'}
       aria-label={'file-add'}
       icon={<AddIcon />}
-      ml={2}
-      mr={2}
+      ml={4}
+      mr={4}
     />
   );
 };

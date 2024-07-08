@@ -2,8 +2,8 @@ import useStompClient from '@/features/chat/hooks/useStompClient';
 import { useAuthStore } from '@/stores/useAuthStore';
 import { Box, Input, HStack } from '@chakra-ui/react';
 import { useState } from 'react';
-import { useDestination } from '../../hooks/useDestination';
-import { ISendChatPayload } from '../../types';
+import { useDestination } from '../../../hooks/useDestination';
+import { ISendChatPayload } from '../../../types';
 import InputPlusBtn from './InputPlusBtn';
 
 const ChatInput = () => {

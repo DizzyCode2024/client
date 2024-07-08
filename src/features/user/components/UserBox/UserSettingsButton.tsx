@@ -35,7 +35,7 @@ const UserSettingsButton = () => {
         <MenuItemWithIcon
           text={'로그아웃'}
           icon={VscSignOut}
-          isRed
+          colorScheme={'red'}
           onClick={() => signout()}
         />
       </MenuList>

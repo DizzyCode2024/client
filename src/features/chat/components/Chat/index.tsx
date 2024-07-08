@@ -9,7 +9,7 @@ import { useEffect, useRef } from 'react';
 import { useDestination } from '../../hooks/useDestination';
 import { IReceiveChatPayload } from '../../types';
 import Header from './ChatHeader/Header';
-import ChatInput from './ChatInput';
+import ChatInput from './ChatInput/ChatInput';
 import ChatContainer from './ChatSection/ChatContainer';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
