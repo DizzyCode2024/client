@@ -3,6 +3,7 @@ import useRoomStore from '@/stores/useRoomStore';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import VoiceSection from '@/features/chat/components/Voice';
 import MainContainer from '../../../components/MainContainer';
 import ChatSection from '../../chat/components/Chat';
 import { getCategories } from '../api/categoryApi';
@@ -13,7 +14,11 @@ const RoomPage = () => {
   const { id } = useParams<{ id: string }>();
   const roomId: RoomId = id ? Number(id) : 0;
 
-  const { setCurrentChannel, setCurrentChannelName } = useRoomStore();
+  const {
+    setCurrentChannelPath,
+    setCurrentChannelInfo,
+    currentChannelInfo: { type },
+  } = useRoomStore();
 
   const { data } = useQuery({
     queryKey: QUERY_KEYS.CATWCHANNELS(roomId),
@@ -24,6 +29,7 @@ const RoomPage = () => {
           categoryId: data[0].categoryId,
           channelId: data[0].channels[0].channelId,
           channelName: data[0].channels[0].channelName,
+          channelType: data[0].channels[0].channelType,
         };
       }
       return null;
@@ -33,19 +39,23 @@ const RoomPage = () => {
 
   useEffect(() => {
     if (roomId && data) {
-      setCurrentChannel({
+      setCurrentChannelPath({
         roomId,
         categoryId: data.categoryId,
         channelId: data.channelId,
       });
-      setCurrentChannelName(data.channelName);
+      setCurrentChannelInfo({ name: data.channelName, type: data.channelType });
     }
-  }, [roomId, data, setCurrentChannel, setCurrentChannelName]);
+  }, [roomId, data, setCurrentChannelPath, setCurrentChannelInfo]);
+
+  useEffect(() => {
+    console.log('여기');
+  }, []);
 
   return (
     <MainContainer>
       <RoomMenu />
-      <ChatSection />
+      {type === 'CHAT' ? <ChatSection /> : <VoiceSection />}
     </MainContainer>
   );
 };
