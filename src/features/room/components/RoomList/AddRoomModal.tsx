@@ -18,13 +18,12 @@ import {
 import { useEffect, useState } from 'react';
 import useHandleRoom from '../../hooks/useHandleRoom';
 
-const AddRoomModal = ({
-  isOpen,
-  onClose,
-}: {
+interface AddRoomModalProps {
   isOpen: boolean;
   onClose: () => void;
-}) => {
+}
+
+const AddRoomModal = ({ isOpen, onClose }: AddRoomModalProps) => {
   const username = useAuthStore((state) => state.user?.username);
   const [roomName, setRoomName] = useState<string>('');
   const [open, setOpen] = useState<boolean>(false);

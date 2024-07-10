@@ -9,6 +9,16 @@ export interface IRoom {
   open: boolean;
 }
 
+export interface CreateRoomResponse extends IRoom {
+  categories: AboutCat[];
+}
+
+interface AboutCat {
+  categoryId: CategoryId;
+  categoryName: string;
+  channels: Omit<IChannel, 'categoryId'>[];
+}
+
 // category
 export interface ICategoryBase {
   roomId: RoomId;

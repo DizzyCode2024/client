@@ -1,5 +1,5 @@
 import axiosInstance from '@/api/axiosInstance';
-import { IRoom, RoomId } from '../types';
+import { CreateRoomResponse, IRoom, RoomId } from '../types';
 
 export const createRoom = async ({
   roomName,
@@ -7,7 +7,7 @@ export const createRoom = async ({
 }: {
   roomName: string;
   open: boolean;
-}): Promise<IRoom> => {
+}): Promise<CreateRoomResponse> => {
   const response = await axiosInstance.post('/rooms', { roomName, open });
   return response.data;
 };
