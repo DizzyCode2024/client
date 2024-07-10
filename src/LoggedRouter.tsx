@@ -71,7 +71,7 @@ const LoggedRouter = () => {
       setClient(null);
       setST(null);
     };
-  }, [setClient, setIsConnected, ST]);
+  }, [client, setClient, setIsConnected, ST]);
 
   // rooms 구독
   const subscriptionsRef = useRef<Map<number, StompSubscription>>(new Map());
@@ -129,7 +129,8 @@ const LoggedRouter = () => {
       <RoomList />
       <Routes>
         <Route path={'/main'} element={<DMPage />} />
-        <Route path={'/channels/:id'} element={<RoomPage />} />
+        {/* <Route path={'/channels/:id'} element={<RoomPage />} /> */}
+        <Route path={'/channels/:roomId/:channelId'} element={<RoomPage />} />
         <Route path={'/explore'} element={<ExplorePage />} />
       </Routes>
     </Box>

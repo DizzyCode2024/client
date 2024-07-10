@@ -10,7 +10,7 @@ import {
   Session,
   StreamManager,
 } from 'openvidu-browser';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const useVoiceRoom = () => {
   const [OV, setOV] = useState<OpenVidu>();
@@ -42,17 +42,6 @@ const useVoiceRoom = () => {
     setPublisher(null);
   }, [session]);
 
-  useEffect(() => {
-    const onbeforeunload = () => {
-      leaveSession();
-    };
-
-    window.addEventListener('beforeunload', onbeforeunload);
-    return () => {
-      window.removeEventListener('beforeunload', onbeforeunload);
-    };
-  }, [session, leaveSession]);
-
   const handleMainVideoStream = (stream: StreamManager) => {
     if (mainStreamManager !== stream) {
       setMainStreamManager(stream);
@@ -80,6 +69,7 @@ const useVoiceRoom = () => {
   );
 
   const joinSession = useCallback(() => {
+    console.log('=========JOIN=========');
     if (session) {
       leaveSession(); // 기존 세션을 떠나고 새로운 세션을 초기화
     }
@@ -109,6 +99,11 @@ const useVoiceRoom = () => {
     //    session에서 disconnect한 사용자 삭제
     mySession.on('streamDestroyed', (event) => {
       deleteSubscriber(event.stream.streamManager);
+      console.log(
+        '>>> DISCONNECT: ',
+        event.stream.typeOfVideo,
+        event.stream.streamManager,
+      );
 
       // if (event.stream.typeOfVideo === 'CUSTOM') {
       //   deleteSubscriber(event.stream.streamManager);

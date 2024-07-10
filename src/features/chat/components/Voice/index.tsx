@@ -31,6 +31,17 @@ const VoiceSection = () => {
   } = useVoiceRoom();
 
   useEffect(() => {
+    console.log('=======MOUNT=======');
+    // window.addEventListener('beforeunload', onbeforeunload);
+    return () => {
+      console.log('=======UNMOUNT=======');
+      if (session) {
+        leaveSession();
+      }
+    };
+  }, [session, leaveSession]);
+
+  useEffect(() => {
     console.log('>> SUBSCRIBERS:', subscribers);
     console.log('>> SESSION:', session);
     console.log('>> MAIN STREAM MANAGER:', mainStreamManager);

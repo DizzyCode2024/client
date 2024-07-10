@@ -2,19 +2,18 @@ import { ChatIcon } from '@chakra-ui/icons';
 import { Box, Icon, Text } from '@chakra-ui/react';
 import { MdKeyboardVoice } from 'react-icons/md';
 import useRoomStore from '@/stores/useRoomStore';
+import { useNavigate } from 'react-router-dom';
 import { CategoryId, ChannelId, ChannelType } from '../../types';
 
-const ChannelBox = ({
-  channelId,
-  name,
-  type,
-  categoryId,
-}: {
+interface ChannelBoxProps {
   channelId: ChannelId;
   name: string;
   type: ChannelType;
   categoryId: CategoryId;
-}) => {
+}
+
+const ChannelBox = ({ channelId, name, type, categoryId }: ChannelBoxProps) => {
+  const navigate = useNavigate();
   const {
     isSelected,
     setCurrentChannelPath,
@@ -33,9 +32,10 @@ const ChannelBox = ({
       categoryId,
       channelId,
     });
-
     setCurrentChannelInfo({ name, type });
+    navigate(`/chat/channels/${currentChannelPath.roomId}/${channelId}`);
   };
+
   return (
     <Box
       onClick={handleClick}

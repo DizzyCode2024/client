@@ -10,26 +10,59 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
+import { useQuery } from '@tanstack/react-query';
+import { QUERY_KEYS } from '@/api/queryKeys';
 import { RoomId } from '../../types';
 import Indicator from './Indicator';
 import RoomMenuItems from './RoomMenuItems';
+import { getCategories } from '../../api/categoryApi';
 
-const RoomButton = ({
-  label,
-  id,
-  thumbnail,
-}: {
+interface RoomButtonProps {
   label: string;
-  id: RoomId;
+  roomId: RoomId;
   thumbnail: JSX.Element;
-}) => {
+}
+
+const RoomButton = ({ label, roomId, thumbnail }: RoomButtonProps) => {
   const navigate = useNavigate();
-  const isSelected = useRoomStore(
-    (state) => state.currentChannelPath.roomId === id,
+  const isRoomSelected = useRoomStore(
+    (state) => state.currentChannelPath.roomId === roomId,
   );
+  const { setCurrentChannelPath, setCurrentChannelInfo } = useRoomStore();
+
+  // 방 클릭했을 때, 최근 방문한 채널 기록이 없다면 ? 첫 번째 채널로 이동 : 해당 채널로 이동
+  const { data } = useQuery({
+    queryKey: QUERY_KEYS.CATWCHANNELS(roomId),
+    queryFn: () => getCategories(roomId),
+    select: (data) => {
+      if (data && data[0] && data[0].channels && data[0].channels[0]) {
+        return {
+          firstCategoryId: data[0].categoryId,
+          firstChannelId: data[0].channels[0].channelId,
+
+          firstChannelName: data[0].channels[0].channelName,
+          firstChannelType: data[0].channels[0].channelType,
+        };
+      }
+      return null;
+    },
+    enabled: roomId !== 0,
+  });
 
   const handleClick = () => {
-    navigate(`/chat/channels/${id}`);
+    if (!data) return;
+    console.log('>>>>>', data);
+    setCurrentChannelPath({
+      roomId,
+      categoryId: data.firstCategoryId,
+      channelId: data.firstChannelId,
+    });
+
+    setCurrentChannelInfo({
+      name: data.firstChannelName,
+      type: data.firstChannelType,
+    });
+    navigate(`/chat/channels/${roomId}/${data.firstChannelId}`);
   };
   const { isOpen, onOpen, onClose } = useDisclosure();
 
@@ -41,7 +74,7 @@ const RoomButton = ({
       position={'relative'}
       onContextMenu={(e) => handleRightClick(e, onOpen)}
     >
-      {isSelected && <Indicator />}
+      {isRoomSelected && <Indicator />}
 
       <CustomTooltip label={label} placement={'right'}>
         <Button
@@ -49,9 +82,9 @@ const RoomButton = ({
           m={'0.5rem auto'}
           h={'5rem'}
           w={'5rem'}
-          borderRadius={isSelected ? '30%' : '50%'}
+          borderRadius={isRoomSelected ? '30%' : '50%'}
           transition={'all 0.3s ease-in-out'}
-          bg={isSelected ? 'purple.600' : 'gray.700'}
+          bg={isRoomSelected ? 'purple.600' : 'gray.700'}
           color={'white'}
           fontSize={'1rem'}
           _hover={{
