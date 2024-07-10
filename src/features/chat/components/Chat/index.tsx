@@ -9,7 +9,7 @@ import { useDestination } from '../../hooks/useDestination';
 import { IReceiveChatPayload } from '../../types';
 import Container from '../Container';
 import Header from './ChatHeader/Header';
-import ChatInput from './ChatInput';
+import ChatInput from './ChatInput/ChatInput';
 import ChatContainer from './ChatBody/ChatContainer';
 
 const ChatSection = () => {

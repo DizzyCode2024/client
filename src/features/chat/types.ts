@@ -1,11 +1,26 @@
-import { RemoteTrackPublication } from 'livekit-client';
+// import { RemoteTrackPublication } from 'livekit-client';
 import { UserId } from '../auth/types';
 
 export type Content = string;
 
+export interface IFile {
+  name: string;
+  type: string;
+  size: number;
+  preview: string;
+}
+
+export interface IFileState {
+  files: IFile[];
+  addFiles: (newFiles: File[]) => void;
+  removeFile: (fileToRemove: IFile) => void;
+  clearFiles: () => void;
+}
+
 export interface ISendChatPayload {
   senderId: UserId;
   content: Content;
+  files?: IFile[];
 }
 
 export interface IReceiveChatPayload {
@@ -18,7 +33,7 @@ export interface IReceiveChatPayload {
 // VIDEO CALL
 //    OpenVidu
 export type TrackInfo = {
-  trackPublication: RemoteTrackPublication;
+  // trackPublication: RemoteTrackPublication;
   participantIdentity: string;
 };
 

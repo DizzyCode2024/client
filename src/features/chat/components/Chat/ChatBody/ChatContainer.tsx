@@ -1,5 +1,3 @@
-import { QUERY_KEYS } from '@/api/queryKeys';
-import useRoomStore from '@/stores/useRoomStore';
 import { Box } from '@chakra-ui/react';
 import {
   QueryFunctionContext,
@@ -7,6 +5,8 @@ import {
   useInfiniteQuery,
 } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef } from 'react';
+import { QUERY_KEYS } from '@/api/queryKeys';
+import useRoomStore from '@/stores/useRoomStore';
 import { getChats } from '../../../api/chatApi';
 import { IReceiveChatPayload } from '../../../types';
 import ChatBox from './ChatBox';

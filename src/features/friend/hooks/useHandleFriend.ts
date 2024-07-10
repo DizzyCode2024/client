@@ -87,7 +87,7 @@ const useHandleFriend = () => {
         title: '친구 요청 거절 성공',
         status: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: ['friends'] });
+      queryClient.invalidateQueries({ queryKey: ['pendingFriends'] });
     },
     onError: () => {
       toast({
@@ -111,7 +111,7 @@ const useHandleFriend = () => {
         title: '친구 요청 수락 성공',
         status: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: ['friends'] });
+      queryClient.invalidateQueries({ queryKey: ['pendingFriends'] });
     },
     onError: () => {
       toast({
