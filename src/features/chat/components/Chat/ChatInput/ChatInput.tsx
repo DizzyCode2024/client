@@ -77,10 +77,11 @@ const ChatInput = () => {
           <Button
             onClick={handleSendMessage}
             colorScheme={'gray'}
-            mr={4}
+            ml={2}
+            mr={2}
             borderRadius={50}
           >
-            <ArrowUpIcon />
+            <ArrowUpIcon height={'15px'} width={'15px'} />
           </Button>
         )}
       </HStack>
