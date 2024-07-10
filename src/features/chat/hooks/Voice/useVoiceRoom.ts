@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/stores/useAuthStore';
 import useRoomStore from '@/stores/useRoomStore';
+import useVideoStore from '@/stores/useVideoStore';
 import { BASE_URL } from '@/utils/config';
 import axios from 'axios';
 import {
@@ -27,6 +28,7 @@ const useVoiceRoom = () => {
   const mySessionId = useRoomStore(
     (state) => state.currentChannelPath.channelId,
   );
+  const { videoOn, audioOn, setVideoOn, setAudioOn } = useVideoStore();
 
   const leaveSession = useCallback(() => {
     if (session) {
@@ -144,8 +146,8 @@ const useVoiceRoom = () => {
             const publisherInstance = OVInstance.initPublisher(myUserName, {
               audioSource: undefined,
               videoSource: videoTrack,
-              publishAudio: true,
-              publishVideo: true,
+              publishAudio: audioOn,
+              publishVideo: videoOn,
               insertMode: 'APPEND',
               mirror: false,
               // resolution: '1280x720',
@@ -200,6 +202,20 @@ const useVoiceRoom = () => {
         });
     });
   }, [leaveSession, mySessionId, myUserName, session]);
+
+  const toggleVideo = useCallback(() => {
+    if (publisher) {
+      publisher.publishVideo(!videoOn);
+      setVideoOn(!videoOn);
+    }
+  }, [publisher, videoOn]);
+
+  const toggleAudio = useCallback(() => {
+    if (publisher) {
+      publisher.publishAudio(!audioOn);
+      setAudioOn(!audioOn);
+    }
+  }, [publisher, audioOn]);
 
   const createSession = async (mySessionId: string) => {
     console.log('CREATE SESSION', mySessionId);
@@ -282,6 +298,8 @@ const useVoiceRoom = () => {
     publisher,
     mainStreamManager,
     handleMainVideoStream,
+    toggleVideo,
+    toggleAudio,
   };
 };
 

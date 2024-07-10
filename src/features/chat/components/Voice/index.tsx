@@ -2,26 +2,32 @@ import { spacing } from '@/constants/spacing';
 import useRoomStore from '@/stores/useRoomStore';
 import { Button, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import { BsFillCameraVideoFill } from 'react-icons/bs';
+import {
+  BsFillCameraVideoFill,
+  BsFillCameraVideoOffFill,
+} from 'react-icons/bs';
 import { PiPhoneDisconnectFill } from 'react-icons/pi';
+import useVideoStore from '@/stores/useVideoStore';
+import { BiSolidMicrophone, BiSolidMicrophoneOff } from 'react-icons/bi';
 import useVoiceRoom from '../../hooks/Voice/useVoiceRoom';
 import Container from '../Container';
 import VideoContainer from './VoiceBody/VideoContainer';
 import Controller from './VoiceController/Controller';
-// import { BsFillCameraVideoOffFill } from "react-icons/bs";
 
 const VoiceSection = () => {
   const { name } = useRoomStore((state) => state.currentChannelInfo);
+  const { videoOn, audioOn } = useVideoStore();
 
   const {
     session,
     joinSession,
     leaveSession,
-    switchCamera,
     mainStreamManager,
     publisher,
     handleMainVideoStream,
     subscribers,
+    toggleVideo,
+    toggleAudio,
   } = useVoiceRoom();
 
   useEffect(() => {
@@ -67,9 +73,16 @@ const VoiceSection = () => {
 
           <Controller>
             <Controller.Button
-              onClick={switchCamera}
-              label={'Switch Camera'}
-              icon={BsFillCameraVideoFill}
+              onClick={toggleVideo}
+              isOn={videoOn}
+              label={videoOn ? 'Turn Off Camera' : 'Turn On Camera'}
+              icon={videoOn ? BsFillCameraVideoFill : BsFillCameraVideoOffFill}
+            />
+            <Controller.Button
+              onClick={toggleAudio}
+              isOn={audioOn}
+              label={audioOn ? 'Turn Off Microphone' : 'Turn On Microphone'}
+              icon={audioOn ? BiSolidMicrophone : BiSolidMicrophoneOff}
             />
             <Controller.RedButton
               onClick={leaveSession}
