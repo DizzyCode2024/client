@@ -1,9 +1,9 @@
-import { spacing } from '@/constants/spacing';
-import useRoomStore from '@/stores/useRoomStore';
 import { Button, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { BsFillCameraVideoFill } from 'react-icons/bs';
 import { PiPhoneDisconnectFill } from 'react-icons/pi';
+import { spacing } from '@/constants/spacing';
+import useRoomStore from '@/stores/useRoomStore';
 import useVoiceRoom from '../../hooks/Voice/useVoiceRoom';
 import Container from '../Container';
 import VideoContainer from './VoiceBody/VideoContainer';
