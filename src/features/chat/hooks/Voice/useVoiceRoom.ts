@@ -24,7 +24,9 @@ const useVoiceRoom = () => {
   >(undefined);
 
   const myUserName = useAuthStore((state) => state.user?.username);
-  const mySessionId = useRoomStore((state) => state.currentChannelInfo.name);
+  const mySessionId = useRoomStore(
+    (state) => state.currentChannelPath.channelId,
+  );
 
   const leaveSession = useCallback(() => {
     if (session) {
@@ -120,8 +122,8 @@ const useVoiceRoom = () => {
     });
 
     const getToken = async () => {
-      const sessionId = await createSession(mySessionId);
-      console.log('>>>>>>SESSION ID', sessionId, mySessionId);
+      const sessionId = await createSession(mySessionId.toString());
+      console.log('>>SESSION ID: ', sessionId, mySessionId);
 
       const token = await createToken(sessionId);
       return token;
