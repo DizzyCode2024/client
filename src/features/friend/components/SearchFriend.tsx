@@ -24,6 +24,12 @@ const SearchFriend = () => {
     setInputValue('');
   };
 
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter') {
+      handleSendRequest();
+    }
+  };
+
   return (
     <Box marginLeft={5} marginTop={5}>
       <FormControl>
@@ -31,6 +37,7 @@ const SearchFriend = () => {
           placeholder={'친구 아이디나 닉네임으로 요청하기'}
           value={inputValue}
           onChange={handleInputChange}
+          onKeyPress={handleKeyPress}
           bg={'gray.800'}
           color={'gray.100'}
           width={'50vw'}

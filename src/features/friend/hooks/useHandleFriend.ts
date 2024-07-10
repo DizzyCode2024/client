@@ -55,7 +55,7 @@ const useHandleFriend = () => {
     Omit<IFriendRequestByName, 'senderId'>
   >({
     mutationFn: async ({ friendName }) => {
-      await sendFriendRequestByName(userId, friendName); // senderId에 userId 사용
+      await sendFriendRequestByName(userId, friendName);
     },
     onSuccess: () => {
       toast({
@@ -63,12 +63,19 @@ const useHandleFriend = () => {
         description: '친구 요청이 성공적으로 전송되었습니다.',
         status: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: ['friends'] }); // queryKey를 배열로 지정
+      queryClient.invalidateQueries({ queryKey: ['friends'] });
     },
-    onError: () => {
+    onError: (error: any) => {
+      const errorMessage =
+        error.response?.status === 422
+          ? '자기 자신에게 친구 요청을 할 수 없습니다.'
+          : error.response?.status === 409
+            ? '이미 친구이거나 친구 요청을 받았거나 이전에 거절한 친구입니다.'
+            : '다시 시도해주세요.';
+
       toast({
         title: '친구 요청 실패',
-        description: '다시 시도해주세요.',
+        description: errorMessage,
         status: 'error',
       });
     },
