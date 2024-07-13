@@ -11,6 +11,7 @@ const useHandleRoom = () => {
   const queryClient = useQueryClient();
   const navigate = useNavigate();
   const { setCurrentChannelPath, setCurrentChannelInfo } = useRoomStore();
+
   //   add room
   const { mutate: addRoomMutation } = useMutation<
     CreateRoomResponse,
@@ -22,7 +23,6 @@ const useHandleRoom = () => {
   >({
     mutationFn: createRoom,
     onSuccess: async (data) => {
-      console.log('Room created:', data);
       toast({
         title: '방 생성 성공',
         description: '새로운 방이 생성되었습니다.',
@@ -30,6 +30,7 @@ const useHandleRoom = () => {
       });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ROOMS });
 
+      // 해당 방으로 이동
       setCurrentChannelPath({
         roomId: data.roomId,
         categoryId: data.categories[0].categoryId,
@@ -65,6 +66,7 @@ const useHandleRoom = () => {
         status: 'success',
       });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ROOMS });
+      // navigate(`/chat/channels/${}/${}`)
     },
     onError: (error) => {
       console.error('Error deleting room:', error);
