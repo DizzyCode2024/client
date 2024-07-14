@@ -8,6 +8,7 @@ export interface IFile {
   type: string;
   size: number;
   preview: string;
+  file: File;
 }
 
 export interface IFileState {
