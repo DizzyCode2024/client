@@ -22,7 +22,6 @@ const ChatInput = () => {
 
     if (files.length > 0) {
       formData.append('file', files[0].file);
-      console.log('formData', formData);
 
       try {
         const response = await fetch('http://localhost:8080/upload', {
@@ -61,7 +60,6 @@ const ChatInput = () => {
   };
 
   const onDrop = (acceptedFiles: File[]) => {
-    console.log('Accepted Files: ', acceptedFiles);
     const newFiles = acceptedFiles.map((file) => ({
       file,
       name: file.name,
@@ -69,7 +67,6 @@ const ChatInput = () => {
       type: file.type,
       preview: URL.createObjectURL(file),
     }));
-    console.log('new files', newFiles);
     addFiles(newFiles);
   };
 
