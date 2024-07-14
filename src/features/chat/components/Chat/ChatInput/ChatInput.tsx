@@ -12,14 +12,39 @@ import FilePreview from './FilePreview';
 
 const ChatInput = () => {
   const { files, addFiles, removeFile, clearFiles } = useFilesStore();
-
   const [content, setContent] = useState('');
   const senderId = useAuthStore((state) => state.user?.id);
 
   const { sendMessage } = useStompClient();
   const { destination } = useDestination();
+  const uploadFiles = async () => {
+    const formData = new FormData();
 
-  const handleSendMessage = () => {
+    if (files.length > 0) {
+      formData.append('file', files[0].file);
+      console.log('formData', formData);
+
+      try {
+        const response = await fetch('http://localhost:8080/upload', {
+          method: 'POST',
+          body: formData,
+        });
+        if (response.ok) {
+          const result = await response.json();
+          console.log('Upload successful:', result);
+          clearFiles();
+        } else {
+          console.log('Upload failed with status:', response.status);
+        }
+      } catch (error) {
+        console.error('Error uploading files:', error);
+      }
+    } else {
+      console.log('No files to upload.');
+    }
+  };
+
+  const handleSendMessage = async () => {
     if (senderId && (content.trim() || files.length)) {
       const payload: ISendChatPayload = {
         senderId,
@@ -29,16 +54,22 @@ const ChatInput = () => {
       console.log('Sending message:', payload);
       sendMessage(destination, payload);
       setContent('');
-      clearFiles();
+      if (files.length > 0) {
+        await uploadFiles();
+      }
     }
   };
 
   const onDrop = (acceptedFiles: File[]) => {
+    console.log('Accepted Files: ', acceptedFiles);
     const newFiles = acceptedFiles.map((file) => ({
-      ...file,
+      file,
+      name: file.name,
+      size: file.size,
+      type: file.type,
       preview: URL.createObjectURL(file),
     }));
-    console.log('nf', newFiles);
+    console.log('new files', newFiles);
     addFiles(newFiles);
   };
 

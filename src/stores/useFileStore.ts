@@ -9,6 +9,7 @@ const useFilesStore = create<IFileState>((set) => ({
         try {
           const preview = URL.createObjectURL(file);
           return {
+            file,
             name: file.name,
             size: file.size,
             type: file.type,
@@ -23,7 +24,6 @@ const useFilesStore = create<IFileState>((set) => ({
 
     set((state) => {
       const updatedFiles = [...state.files, ...filesWithPreview];
-      console.log('Adding new files, updated list:', updatedFiles);
       return { files: updatedFiles };
     });
   },
