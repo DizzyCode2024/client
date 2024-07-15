@@ -1,5 +1,4 @@
-import { ButtonProps } from '@chakra-ui/react';
-import BaseButton from './BaseButton';
+import BaseButton, { ButtonProps } from './BaseButton';
 
 export const Button = (
   props: Omit<ButtonProps, 'bgColor' | 'hoverBgColor' | 'bgColorOn'>,

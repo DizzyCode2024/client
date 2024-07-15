@@ -1,4 +1,4 @@
-import { Id as UserId } from './user';
+import { UserId } from './user';
 
 export type Content = string;
 

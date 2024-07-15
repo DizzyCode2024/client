@@ -8,7 +8,7 @@ import ExploreButton from './ExploreButton';
 import RoomButton from './RoomButton';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
-  <Box minWidth={'7.5rem'} height={'100vh'} bg={'gray.800'}>
+  <Box minWidth={'4rem'} height={'100vh'} bg={'gray.800'}>
     {children}
   </Box>
 );
@@ -36,9 +36,7 @@ const RoomList = () => {
           <RoomButton
             key={room.roomId}
             roomId={room.roomId}
-            thumbnail={
-              <Text fontSize={'2xl'}>{room.roomName.slice(0, 2)}</Text>
-            }
+            thumbnail={<Text fontSize={'md'}>{room.roomName.slice(0, 2)}</Text>}
             label={room.roomName}
           />
         ))}

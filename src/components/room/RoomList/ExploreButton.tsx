@@ -24,8 +24,8 @@ const ExploreButton = () => {
             navigate('/chat/explore');
           }}
           m={'0.5rem auto'}
-          h={'5rem'}
-          w={'5rem'}
+          h={'3rem'}
+          w={'3rem'}
           borderRadius={'30%'}
           transition={'all 0.3s ease-in-out'}
           bg={isSelected ? 'green' : 'gray.700'}
@@ -36,7 +36,7 @@ const ExploreButton = () => {
             color: 'white',
           }}
         >
-          <Icon as={FaCompass} boxSize={8} />
+          <Icon as={FaCompass} boxSize={5} />
         </Button>
       </CustomTooltip>
     </Box>

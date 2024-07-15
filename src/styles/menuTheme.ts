@@ -24,7 +24,7 @@ const baseStyle = definePartsStyle({
     borderRadius: 'xl',
     border: 'none',
     bg: 'gray.900',
-    fontSize: 'xl',
+    fontSize: 'sm',
   },
   item: {
     // this will style the MenuItem and MenuItemOption components
@@ -32,7 +32,7 @@ const baseStyle = definePartsStyle({
     borderRadius: 'md',
     bg: 'transparent',
     fontWeight: 'bold',
-    py: '3',
+    py: '1',
     _hover: {
       bg: 'purple.600',
     },

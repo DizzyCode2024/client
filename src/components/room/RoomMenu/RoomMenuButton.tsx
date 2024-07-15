@@ -14,12 +14,11 @@ const RoomMenuButton = ({ name }: { name: string }) => {
             display={'flex'}
             justifyContent={'space-between'}
             alignItems={'center'}
-            h={'4rem'}
-            w={'23rem'}
+            h={'3rem'}
             color={'gray.200'}
             textAlign={'left'}
             pl={2}
-            fontSize={'2xl'}
+            fontSize={'md'}
             transition={'all 0.2s ease-in'}
             boxShadow={'base'}
             bg={'transparent'}

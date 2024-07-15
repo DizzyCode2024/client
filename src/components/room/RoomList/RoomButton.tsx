@@ -10,7 +10,6 @@ import {
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-
 import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
 import { getCategories } from '@/lib/api/afterLogin/roomApi';
 import CustomTooltip from '@/components/shared/Tooltip';
@@ -80,9 +79,9 @@ const RoomButton = ({ label, roomId, thumbnail }: RoomButtonProps) => {
       <CustomTooltip label={label} placement={'right'}>
         <Button
           onClick={handleClick}
-          m={'0.5rem auto'}
-          h={'5rem'}
-          w={'5rem'}
+          m={'0.2rem auto'}
+          h={'3rem'}
+          w={'3rem'}
           borderRadius={isRoomSelected ? '30%' : '50%'}
           transition={'all 0.3s ease-in-out'}
           bg={isRoomSelected ? 'purple.600' : 'gray.700'}

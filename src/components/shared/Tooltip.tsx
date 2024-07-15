@@ -10,7 +10,7 @@ const CustomTooltip = ({
   [key: string]: any;
 }) => {
   return (
-    <Tooltip label={label} fontSize={'2xl'} bg={'gray.900'} {...props}>
+    <Tooltip label={label} fontSize={'md'} bg={'gray.900'} {...props}>
       {children}
     </Tooltip>
   );

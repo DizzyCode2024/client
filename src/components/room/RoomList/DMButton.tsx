@@ -31,8 +31,8 @@ const DMButton = () => {
         <Button
           onClick={handleClick}
           m={'0.5rem auto'}
-          h={'5rem'}
-          w={'5rem'}
+          h={'3rem'}
+          w={'3rem'}
           borderRadius={isSelected ? '30%' : '50%'}
           transition={'all 0.3s ease-in-out'}
           bg={isSelected ? 'purple.600' : 'gray.700'}
@@ -44,7 +44,7 @@ const DMButton = () => {
             color: 'white',
           }}
         >
-          <Text fontSize={'2xl'}>{'DM'}</Text>
+          <Text fontSize={'md'}>{'DM'}</Text>
         </Button>
       </CustomTooltip>
     </Box>
