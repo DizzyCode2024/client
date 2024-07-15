@@ -7,9 +7,8 @@ const ChannelName = ({ channelName }: { channelName: string }) => {
       <Box
         color={'white'}
         textAlign={'left'}
-        pl={2}
         pr={7}
-        fontSize={'2xl'}
+        fontSize={'md'}
         fontWeight={'bold'}
       >
         <ChatIcon marginRight={2} color={'gray.200'} />

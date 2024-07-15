@@ -36,6 +36,7 @@ const InputPlusBtn = () => {
         icon={<AddIcon />}
         ml={4}
         mr={4}
+        boxSize={7}
         onClick={onOpen}
       />
       <MenuList>

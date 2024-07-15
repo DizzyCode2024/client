@@ -56,15 +56,15 @@ const VoiceSection = () => {
           justifyContent={'center'}
           alignItems={'center'}
           direction={'column'}
-          gap={spacing.gutter}
+          gap={spacing.padding}
         >
-          <Text color={'white'} fontWeight={900} fontSize={'2rem'}>
+          <Text color={'white'} fontWeight={900} fontSize={'1.4rem'}>
             {name}
           </Text>
-          <Text color={'white'} fontWeight={200} fontSize={'1.4rem'}>
+          <Text color={'white'} fontWeight={200} fontSize={'1.2rem'}>
             {'No one is currently in voice.'}
           </Text>
-          <Button onClick={joinSession} fontSize={'1.8rem'} mt={'1rem'}>
+          <Button onClick={joinSession} fontSize={'1.3rem'} mt={'1rem'}>
             {'Join Voice'}
           </Button>
         </Flex>

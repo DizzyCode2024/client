@@ -1,12 +1,10 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { ArrowUpIcon } from '@chakra-ui/icons';
-import { Box, Button, HStack, Input } from '@chakra-ui/react';
+import { Box, Button, Flex, HStack, Input } from '@chakra-ui/react';
 import { useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import useFilesStore from '@/lib/stores/useFileStore';
-
 import useFileHandler from '@/lib/hooks/useFileHandler';
 import useStompClient from '@/lib/hooks/useStompClient';
 import { useDestination } from '../../../lib/hooks/useDestination';
@@ -58,8 +56,8 @@ const ChatInput = () => {
   });
 
   return (
-    <Box {...getRootProps()} mt={4} bg={'gray.700'}>
-      <HStack gap={'0'}>
+    <Box {...getRootProps()} mt={4} bg={'gray.700'} h={'3.2rem'}>
+      <Flex alignItems={'center'} justifyContent={'center'} h={'100%'}>
         <InputPlusBtn />
         <Input
           value={content}
@@ -72,14 +70,11 @@ const ChatInput = () => {
           }}
           variant={'filled'}
           placeholder={'#일반채팅에 메시지 보내기'}
-          height={'5rem'}
           bg={'gray.700'}
-          fontSize={'2xl'}
+          _hover={{ bg: 'gray.700' }}
+          fontSize={'sm'}
           borderRadius={'0'}
           color={'gray.100'}
-          _hover={{
-            bg: 'gray.600',
-          }}
           flexGrow={1}
         />
         {files.length > 0 && (
@@ -93,7 +88,7 @@ const ChatInput = () => {
             <ArrowUpIcon height={'15px'} width={'15px'} />
           </Button>
         )}
-      </HStack>
+      </Flex>
       <input {...getInputProps()} style={{ display: 'none' }} />
       <HStack spacing={2}>
         {files.map((file) => (

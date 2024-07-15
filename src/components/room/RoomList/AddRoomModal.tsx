@@ -47,30 +47,30 @@ const AddRoomModal = ({ isOpen, onClose }: AddRoomModalProps) => {
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={'xl'} isCentered>
+    <Modal isOpen={isOpen} onClose={onClose} size={'md'} isCentered>
       <ModalOverlay />
       <ModalContent p={'0.5rem'}>
         <ModalHeader />
-        <ModalCloseButton size={'xl'} />
+        <ModalCloseButton size={'md'} />
         <ModalBody pt={'2rem'}>
           <Box>
-            <Text fontWeight={'bold'} fontSize={'xl'} color={'gray.300'}>
+            <Text fontWeight={'bold'} fontSize={'sm'} color={'gray.300'}>
               {'ROOM NAME'}
             </Text>
             <Input
               value={roomName}
               onChange={handleChange}
               placeholder={'방 이름을 입력하세요'}
-              fontSize={'2xl'}
+              fontSize={'sm'}
               bg={'gray.900'}
               border={'none'}
-              py={'10'}
+              py={'3'}
             />
           </Box>
-          <Box pt={'2rem'}>
+          <Box pt={'1.5rem'}>
             <Text
               fontWeight={'bold'}
-              fontSize={'xl'}
+              fontSize={'sm'}
               color={'gray.300'}
               pb={'1rem'}
             >
@@ -78,10 +78,10 @@ const AddRoomModal = ({ isOpen, onClose }: AddRoomModalProps) => {
             </Text>
             <RadioGroup onChange={handlePrivacyChange} value={open.toString()}>
               <Stack>
-                <Radio value={'true'} size={'lg'} colorScheme={'white'}>
+                <Radio value={'true'} size={'sm'} colorScheme={'white'}>
                   {'공개'}
                 </Radio>
-                <Radio value={'false'} size={'lg'} colorScheme={'white'}>
+                <Radio value={'false'} size={'sm'} colorScheme={'white'}>
                   {'비공개'}
                 </Radio>
               </Stack>
@@ -95,7 +95,7 @@ const AddRoomModal = ({ isOpen, onClose }: AddRoomModalProps) => {
             onClick={onClose}
             bg={'transparent'}
             color={'white'}
-            fontSize={'xl'}
+            fontSize={'sm'}
             _hover={{
               bg: 'transparent',
               color: 'white',
@@ -103,7 +103,7 @@ const AddRoomModal = ({ isOpen, onClose }: AddRoomModalProps) => {
           >
             {'취소'}
           </Button>
-          <Button fontSize={'xl'} onClick={handleSubmit}>
+          <Button fontSize={'sm'} onClick={handleSubmit}>
             {'방 만들기'}
           </Button>
         </ModalFooter>

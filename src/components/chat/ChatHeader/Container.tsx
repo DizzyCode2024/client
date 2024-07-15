@@ -3,7 +3,7 @@ import { Box } from '@chakra-ui/react';
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
     width={'100%'}
-    height={'4rem'}
+    height={'3rem'}
     display={'flex'}
     justifyContent={'space-between'}
     alignItems={'center'}

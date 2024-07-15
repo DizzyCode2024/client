@@ -9,7 +9,7 @@ interface ControllerProps {
 
 const Controller = ({ children }: ControllerProps) => (
   <Flex
-    gap={spacing.gutter}
+    gap={spacing.padding}
     margin={'auto'}
     position={'absolute'}
     bottom={10}

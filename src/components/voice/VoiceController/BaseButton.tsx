@@ -1,5 +1,4 @@
 import CustomTooltip from '@/components/shared/Tooltip';
-import { spacing } from '@/lib/constants/spacing';
 import { Flex, Icon } from '@chakra-ui/react';
 import { IconType } from 'react-icons';
 
@@ -27,13 +26,13 @@ const BaseButton = ({
       borderRadius={'50%'}
       bg={isOn ? bgColorOn : bgColor}
       color={isOn ? 'black' : 'white'}
-      p={spacing.gutter}
+      p={'1rem'}
       justifyContent={'center'}
       alignItems={'center'}
       _hover={{ bg: isOn ? 'white' : hoverBgColor }}
       onClick={onClick}
     >
-      <Icon as={icon} boxSize={8} />
+      <Icon as={icon} boxSize={5} />
     </Flex>
   </CustomTooltip>
 );

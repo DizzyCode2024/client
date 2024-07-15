@@ -37,23 +37,23 @@ const AddCategoryModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={'xl'} isCentered>
+    <Modal isOpen={isOpen} onClose={onClose} size={'md'} isCentered>
       <ModalOverlay />
-      <ModalContent p={'0.5rem'}>
+      <ModalContent p={'0.2rem'}>
         <ModalHeader />
-        <ModalCloseButton size={'xl'} />
+        <ModalCloseButton size={'md'} />
         <ModalBody pt={'2rem'}>
-          <Text fontWeight={'bold'} fontSize={'xl'} color={'gray.300'}>
+          <Text fontWeight={'bold'} fontSize={'sm'} color={'gray.300'}>
             {'CATEGORY NAME'}
           </Text>
           <Input
             value={catName}
             onChange={handleChange}
             placeholder={'카테고리 이름을 입력하세요.'}
-            fontSize={'2xl'}
+            fontSize={'sm'}
             bg={'gray.900'}
             border={'none'}
-            py={'10'}
+            py={'5'}
           />
         </ModalBody>
 
@@ -63,7 +63,7 @@ const AddCategoryModal = ({
             onClick={onClose}
             bg={'transparent'}
             color={'white'}
-            fontSize={'xl'}
+            fontSize={'sm'}
             _hover={{
               bg: 'transparent',
               color: 'white',
@@ -71,7 +71,7 @@ const AddCategoryModal = ({
           >
             {'취소'}
           </Button>
-          <Button fontSize={'xl'} onClick={handleSubmit}>
+          <Button fontSize={'sm'} onClick={handleSubmit}>
             {'카테고리 만들기'}
           </Button>
         </ModalFooter>
