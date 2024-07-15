@@ -1,10 +1,10 @@
 import axios from 'axios';
 import { BASE_URL } from '@/lib/utils/config';
 
-const axiosInstance = axios.create({
+const signupAxiosInstance = axios.create({
   baseURL: BASE_URL,
   timeout: 1000,
   withCredentials: true,
 });
 
-export default axiosInstance;
+export default signupAxiosInstance;

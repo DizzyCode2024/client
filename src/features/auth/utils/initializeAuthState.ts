@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useAuthStore } from '@/lib/stores/useAuthStore';
 
 const initializeAuthState = () => {
   const token = localStorage.getItem('accessToken');

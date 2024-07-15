@@ -4,18 +4,22 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import SockJS from 'sockjs-client';
-import { QUERY_KEYS } from './api/queryKeys';
-import ExplorePage from './features/explore/pages/ExplorePage';
-import { getRooms } from './features/room/api/roomApi';
-import RoomList from './features/room/components/RoomList/RoomList';
-import useStompClient from './features/chat/hooks/useStompClient';
-import DMPage from './features/room/pages/DMPage';
-import RoomPage from './features/room/pages/RoomPage';
-import { IRoom } from './features/room/types';
-import { BROKER_URL } from './utils/config';
-import useSocketStore from './stores/useSocketStore';
-import axiosInstance from './api/axiosInstance';
-import FriendPage from './features/friend';
+
+import ExplorePage from './pages/ExplorePage';
+
+import RoomList from './components/room/RoomList/RoomList';
+
+import DMPage from './pages/DMPage';
+
+import { IRoom } from './types/room';
+import { BROKER_URL } from './lib/utils/config';
+import useSocketStore from './lib/stores/useSocketStore';
+import axiosInstance from './lib/api/afterLogin/axiosInstance';
+import FriendPage from './pages/FriendPage';
+import { QUERY_KEYS } from './lib/api/afterLogin/queryKeys';
+import { getRooms } from './lib/api/afterLogin/roomApi';
+import useStompClient from './lib/hooks/useStompClient';
+import RoomPage from './pages/RoomPage';
 
 const LoggedRouter = () => {
   // secondary token

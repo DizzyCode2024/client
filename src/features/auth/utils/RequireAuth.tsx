@@ -1,6 +1,6 @@
 import { useEffect, ReactNode } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '@/stores/useAuthStore';
+import { useAuthStore } from '@/lib/stores/useAuthStore';
 import { useToast } from '@chakra-ui/react';
 
 const RequireAuth = ({ children }: { children: ReactNode }) => {

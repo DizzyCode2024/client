@@ -1,10 +1,10 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
-import WelcomePage from '@/features/auth/pages/WelcomePage';
 import LoggedRouter from './LoggedRouter';
-import LoginPage from './features/auth/pages/LoginPage';
-import SignupPage from './features/auth/pages/SignupPage';
-import RequireAuth from './features/auth/utils/RequireAuth';
+import LoginPage from './pages/LoginPage';
 import RedirectIfLogged from './features/auth/utils/RedirectIfLogged';
+import RequireAuth from './features/auth/utils/RequireAuth';
+import SignupPage from './pages/SignupPage';
+import WelcomePage from './pages/WelcomePage';
 
 const Router = () => {
   return (

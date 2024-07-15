@@ -1,7 +1,7 @@
 import { DefaultTheme } from 'styled-components';
 import { extendTheme } from '@chakra-ui/react';
-import { palette } from '@/constants/palette';
-import { spacing } from '@/constants/spacing';
+import { palette } from '@/lib/constants/palette';
+import { spacing } from '@/lib/constants/spacing';
 import { menuTheme } from './menuTheme';
 import { modalTheme } from './modalTheme';
 

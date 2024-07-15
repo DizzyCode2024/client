@@ -1,6 +1,6 @@
 import axios from 'axios';
-import { BASE_URL } from '@/utils/config';
-import { useAuthStore } from '@/stores/useAuthStore';
+import { BASE_URL } from '@/lib/utils/config';
+import { useAuthStore } from '@/lib/stores/useAuthStore';
 
 export const getNewAccessToken = async () => {
   try {
