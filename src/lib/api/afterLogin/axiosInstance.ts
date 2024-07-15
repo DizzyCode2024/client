@@ -1,7 +1,8 @@
 import axios, { InternalAxiosRequestConfig } from 'axios';
 import { BASE_URL } from '@/lib/utils/config';
-import { accessTokenApi } from './accessTokenApi';
+
 import { logout } from './logout';
+import { accessTokenApi } from './token';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
