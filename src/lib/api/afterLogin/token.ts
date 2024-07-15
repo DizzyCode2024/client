@@ -19,7 +19,6 @@ export const accessTokenApi = async () => {
       if (currentUser) {
         useAuthStore.getState().setUser(currentUser, newAccessToken);
       }
-      console.log('accessToken 발급 완료', newAccessToken);
       return newAccessToken;
     }
   } catch (error) {
