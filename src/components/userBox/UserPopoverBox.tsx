@@ -13,9 +13,9 @@ import EditProfile from './EditButton';
 
 const Top = styled.div`
   background-color: green;
-  height: 7rem;
+  height: 6rem;
   position: relative;
-  margin-bottom: 3rem;
+  margin-bottom: 1rem;
 `;
 
 const UserPopoverBox = () => {
@@ -37,12 +37,12 @@ const UserPopoverBox = () => {
           <EditProfile />
           <Box
             bg={'gray.900'}
-            w={'8rem'}
-            h={'8rem'}
+            w={'6rem'}
+            h={'6rem'}
             borderRadius={'50%'}
             position={'absolute'}
             bottom={-35}
-            left={10}
+            left={5}
             p={3}
           >
             <Box
@@ -63,14 +63,14 @@ const UserPopoverBox = () => {
           borderRadius={10}
           p={spacing.padding}
           m={spacing.gutter}
-          fontSize={'small'}
+          fontSize={'sm'}
         >
-          <Text fontSize={'2xl'} fontWeight={'bold'}>
+          <Text fontSize={'sm'} fontWeight={'bold'}>
             {user ? user.username : '오프라인'}
           </Text>
           <Text>{user ? user.email : '오프라인'}</Text>
           <Divider borderColor={'gray.500'} w={'100%'} marginBlock={5} />
-          <Text fontSize={'xl'} fontWeight={'bold'}>
+          <Text fontSize={'sm'} fontWeight={'bold'}>
             {'MEMBER SINCE'}
           </Text>
           <Text>{'May 27, 2024'}</Text>

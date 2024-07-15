@@ -16,7 +16,7 @@ const EditProfile = () => (
       borderRadius={'50%'}
       _hover={{ bg: 'rgba(0, 0, 0, 0.7)' }}
     >
-      <EditIcon boxSize={7} />
+      <EditIcon boxSize={5} />
     </Box>
   </CustomTooltip>
 );

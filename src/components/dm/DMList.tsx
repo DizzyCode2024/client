@@ -4,7 +4,7 @@ import UserBox from '../userBox/UserBox';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
-    minWidth={'23rem'}
+    minWidth={'10rem'}
     height={'100vh'}
     bg={'gray.700'}
     display={'flex'}

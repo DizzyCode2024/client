@@ -6,8 +6,8 @@ import UserPopoverBox from './UserPopoverBox';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
-    minWidth={'10rem'}
-    height={'5rem'}
+    width={'full'}
+    height={'3.2rem'}
     bg={'gray.800'}
     display={'flex'}
     justifyContent={'space-between'}
@@ -29,8 +29,8 @@ const UserBox = () => {
             display={'flex'}
             alignItems={'center'}
             cursor={'pointer'}
-            minWidth={'15rem'}
-            height={'2rem'}
+            height={'2.8rem'}
+            width={'11rem'}
             transition={'all 0.2s ease-in'}
             borderRadius={'3px'}
             _hover={{ bg: 'gray.700', color: 'white' }}
@@ -45,10 +45,10 @@ const UserBox = () => {
               height={'2rem'}
               borderRadius={'50%'}
             >
-              <StarIcon color={'white'} width={'2rem'} />
+              <StarIcon color={'white'} width={'1rem'} />
             </Box>
             <Box
-              ml={4}
+              ml={2}
               display={'flex'}
               flexDirection={'column'}
               alignItems={'center'}
@@ -65,7 +65,6 @@ const UserBox = () => {
         </PopoverTrigger>
         <UserPopoverBox />
       </Popover>
-
       <UserSettingsButton />
     </Container>
   );

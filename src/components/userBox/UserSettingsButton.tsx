@@ -12,16 +12,9 @@ const UserSettingsButton = () => {
   const { signout } = useAuthActions();
 
   return (
-    <Menu>
+    <Menu ml={2}>
       <CustomTooltip label={'사용자 설정'}>
-        <MenuButton
-          as={'button'}
-          display={'flex'}
-          style={{
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
+        <MenuButton as={'button'}>
           <MotionSettingsIcon
             mr={5}
             color={'gray.400'}
