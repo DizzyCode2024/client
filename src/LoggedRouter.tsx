@@ -84,7 +84,7 @@ const LoggedRouter = () => {
       rooms.forEach((room) => {
         if (!existingSubscriptions.has(room.roomId)) {
           const subscription = subscribe(
-            `/topic/rooms/${room.roomId}`,
+            `/topic/rooms.${room.roomId}`,
             (message) => {
               const chatMessage = JSON.parse(message.body);
               console.log(
