@@ -28,13 +28,13 @@ const CustomInput: React.FC<CustomInputProps> = ({
   };
 
   return (
-    <FormControl mt={5} isInvalid={isInvalid}>
-      <FormLabel>{label}</FormLabel>
+    <FormControl mt={3} isInvalid={isInvalid}>
+      <FormLabel fontSize={'xs'}>{label}</FormLabel>
       <Input
         rounded={'none'}
         variant={'filled'}
         bg={'gray.700'}
-        size={'lg'}
+        size={'md'}
         transition={'0.5s ease-in'}
         _hover={{ bg: 'gray.600' }}
         onKeyPress={handleKeyPress}

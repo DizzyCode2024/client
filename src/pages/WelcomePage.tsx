@@ -30,9 +30,8 @@ const CustomButton: React.FC<CustomButtonProps> = ({ children, ...props }) => {
     <Button
       as={motion.button}
       colorScheme={'purple'}
-      size={'xl'}
-      width={'10rem'}
-      height={'3rem'}
+      width={'7rem'}
+      height={'2.5rem'}
       transition={'0.3s ease-in'}
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
@@ -54,7 +53,7 @@ const WelcomePage = () => {
         <Text
           bgGradient={'linear(to-l, purple.400, purple.200)'}
           bgClip={'text'}
-          fontSize={'8xl'}
+          fontSize={'5xl'}
           fontWeight={'bold'}
           mb={5}
         >
@@ -66,13 +65,13 @@ const WelcomePage = () => {
           animation={animation}
           padding={'2'}
           bgGradient={'linear(to-l, purple.800, purple.400)'}
-          width={'8rem'}
-          height={'8rem'}
+          width={'3rem'}
+          height={'3rem'}
           display={'flex'}
         />
         <Stack
           direction={'row'}
-          mt={'7rem'}
+          mt={'3rem'}
           spacing={10}
           align={'center'}
           justifyContent={'center'}

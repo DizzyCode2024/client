@@ -56,9 +56,8 @@ const SignupPage = () => {
   return (
     <Container>
       <Box
-        w={['full', 'lg']}
-        p={[15, 12]}
-        mt={[20, '8vh']}
+        w={['full', 'sm']}
+        p={[15, 10]}
         mx={'auto'}
         bg={'gray.900'}
         border={['none', '1px']}
@@ -69,7 +68,7 @@ const SignupPage = () => {
         <Text
           bgGradient={'linear(to-l, purple.400, purple.300)'}
           bgClip={'text'}
-          fontSize={'7xl'}
+          fontSize={'4xl'}
           fontWeight={'bold'}
           onClick={goToMain}
           _hover={{ cursor: 'pointer' }}
@@ -112,33 +111,21 @@ const SignupPage = () => {
           errorMessage={'Passwords do not match'}
           onEnterPress={handleSubmit}
         />
-        <Button
-          colorScheme={'purple'}
-          w={'full'}
-          mt={10}
-          onClick={handleSubmit}
-          size={'lg'}
-        >
+        <Button colorScheme={'purple'} w={'full'} mt={6} onClick={handleSubmit}>
           {'회원가입'}
         </Button>
-        <Button
-          colorScheme={'purple'}
-          w={'full'}
-          mt={5}
-          variant={'outline'}
-          size={'lg'}
-        >
-          {'Google Login'}
+        <Button colorScheme={'purple'} w={'full'} mt={5} variant={'outline'}>
+          {'Naver Login'}
         </Button>
       </Box>
       <Box display={'flex'} alignItems={'center'} mt={5}>
-        <Text color={'purple.600'} fontSize={'xl'}>
+        <Text color={'purple.600'} fontSize={'sm'}>
           {'have account?'}
         </Text>
         <Box
           borderColor={['', 'purple.400']}
           color={'purple.400'}
-          fontSize={'xl'}
+          fontSize={'sm'}
           ml={2}
           cursor={'pointer'}
           onClick={gotoLogin}
