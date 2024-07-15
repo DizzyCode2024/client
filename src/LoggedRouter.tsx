@@ -15,6 +15,7 @@ import { IRoom } from './features/room/types';
 import { BROKER_URL } from './utils/config';
 import useSocketStore from './stores/useSocketStore';
 import axiosInstance from './api/axiosInstance';
+import FriendPage from './features/friend';
 
 const LoggedRouter = () => {
   // secondary token
@@ -128,7 +129,8 @@ const LoggedRouter = () => {
     <Box display={'flex'}>
       <RoomList />
       <Routes>
-        <Route path={'/main'} element={<DMPage />} />
+        <Route path={'/main'} element={<FriendPage />} />
+        <Route path={'/main/:id'} element={<DMPage />} />
         <Route path={'/channels/:roomId/:channelId'} element={<RoomPage />} />
         <Route path={'/explore'} element={<ExplorePage />} />
       </Routes>
