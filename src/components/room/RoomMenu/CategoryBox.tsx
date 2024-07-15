@@ -24,7 +24,7 @@ const CategoryBox = ({
     <>
       <Box
         color={'gray.400'}
-        fontSize={'xl'}
+        fontSize={'sm'}
         fontWeight={'bold'}
         m={'10px'}
         mb={'2px'}
@@ -46,7 +46,7 @@ const CategoryBox = ({
         </Box>
         <CustomTooltip label={'채널 만들기'} placement={'top'}>
           <AddIcon
-            boxSize={4}
+            boxSize={3}
             _hover={{ bg: 'gray.600', color: 'white', cursor: 'pointer' }}
             onClick={onOpen}
           />

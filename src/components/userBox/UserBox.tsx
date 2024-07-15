@@ -6,7 +6,7 @@ import UserPopoverBox from './UserPopoverBox';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
-    minWidth={'23rem'}
+    minWidth={'10rem'}
     height={'5rem'}
     bg={'gray.800'}
     display={'flex'}
@@ -29,8 +29,8 @@ const UserBox = () => {
             display={'flex'}
             alignItems={'center'}
             cursor={'pointer'}
-            minWidth={'19rem'}
-            height={'4rem'}
+            minWidth={'15rem'}
+            height={'2rem'}
             transition={'all 0.2s ease-in'}
             borderRadius={'3px'}
             _hover={{ bg: 'gray.700', color: 'white' }}
@@ -41,8 +41,8 @@ const UserBox = () => {
               justifyContent={'center'}
               alignItems={'center'}
               marginLeft={2}
-              width={'3rem'}
-              height={'3rem'}
+              width={'2rem'}
+              height={'2rem'}
               borderRadius={'50%'}
             >
               <StarIcon color={'white'} width={'2rem'} />
@@ -54,10 +54,10 @@ const UserBox = () => {
               alignItems={'center'}
               lineHeight={'short'}
             >
-              <Box color={'gray.200'} fontSize={'2xl'} fontWeight={'bold'}>
+              <Box color={'gray.200'} fontSize={'md'} fontWeight={'bold'}>
                 {user ? user.username : 'Guest'}
               </Box>
-              <Box color={'gray.400'} fontSize={'xl'} mr={'auto'} mt={'-2px'}>
+              <Box color={'gray.400'} fontSize={'sm'} mr={'auto'} mt={'-2px'}>
                 {user ? '온라인' : '오프라인'}
               </Box>
             </Box>

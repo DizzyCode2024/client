@@ -54,14 +54,14 @@ const ChannelBox = ({ channelId, name, type, categoryId }: ChannelBoxProps) => {
         justifyContent={'center'}
         alignItems={'center'}
         marginLeft={2}
-        width={'3rem'}
-        height={'3rem'}
+        width={'2rem'}
+        height={'2rem'}
         color={isSelected ? 'white' : 'gray.400'}
       >
         {type === 'CHAT' ? (
-          <ChatIcon width={'2rem'} />
+          <ChatIcon width={'1rem'} />
         ) : (
-          <Icon as={MdKeyboardVoice} width={'2rem'} />
+          <Icon as={MdKeyboardVoice} width={'1rem'} />
         )}
       </Box>
       <Text

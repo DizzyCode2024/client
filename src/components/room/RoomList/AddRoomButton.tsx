@@ -12,8 +12,8 @@ const AddRoomButton = () => {
         <Button
           onClick={onOpen}
           m={'0.5rem auto'}
-          h={'5rem'}
-          w={'5rem'}
+          h={'3rem'}
+          w={'3rem'}
           borderRadius={'50%'}
           transition={'all 0.3s ease-in-out'}
           bg={'gray.700'}
@@ -25,7 +25,7 @@ const AddRoomButton = () => {
             color: 'white',
           }}
         >
-          <AddIcon boxSize={6} />
+          <AddIcon boxSize={3} />
         </Button>
       </CustomTooltip>
       <AddRoomModal isOpen={isOpen} onClose={onClose} />

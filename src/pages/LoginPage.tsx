@@ -57,7 +57,7 @@ const LoginPage = () => {
         <Text
           bgGradient={'linear(to-l, purple.400, purple.300)'}
           bgClip={'text'}
-          fontSize={'6xl'}
+          fontSize={'xl'}
           fontWeight={'bold'}
           onClick={goToMain}
           _hover={{ cursor: 'pointer' }}

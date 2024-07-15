@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import ExplorePage from './pages/ExplorePage';
-import RoomList from './components/room/RoomList/RoomList';
+import RoomList from './components/room/RoomList';
 import DMPage from './pages/DMPage';
 import { IRoom } from './types/room';
 import { BROKER_URL } from './lib/utils/config';

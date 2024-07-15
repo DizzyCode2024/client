@@ -18,7 +18,6 @@ const MenuItemWithIcon = ({
       display={'flex'}
       justifyContent={'space-between'}
       alignItems={'center'}
-      w={'20rem'}
       color={`${colorScheme}.600`}
       _hover={{
         bg: `${colorScheme}.600`,
@@ -30,7 +29,7 @@ const MenuItemWithIcon = ({
       }}
     >
       <Text>{text}</Text>
-      {icon && <Icon as={icon} boxSize={7} />}
+      {icon && <Icon as={icon} boxSize={4} />}
     </MenuItem>
   );
 };
