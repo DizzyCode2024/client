@@ -2,11 +2,11 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 import { ThemeProvider } from 'styled-components';
 import { ChakraProvider } from '@chakra-ui/react';
+import { useEffect } from 'react';
 import GlobalStyle from '@/styles/GlobalStyle';
 import { chakraTheme, styledTheme } from '@/styles/theme';
-import initializeAuthState from '@/features/auth/utils/initializeAuthState';
-import { useEffect } from 'react';
 import Router from './Router';
+import initializeAuthState from './lib/api/afterLogin/initializeAuthState';
 
 const queryClient = new QueryClient();
 

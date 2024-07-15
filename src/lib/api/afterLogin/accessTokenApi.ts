@@ -1,8 +1,8 @@
-import axios from 'axios';
-import { BASE_URL } from '@/lib/utils/config';
 import { useAuthStore } from '@/lib/stores/useAuthStore';
+import { BASE_URL } from '@/lib/utils/config';
+import axios from 'axios';
 
-export const getNewAccessToken = async () => {
+export const accessTokenApi = async () => {
   try {
     const response = await axios.post(
       `${BASE_URL}/reissue`,

@@ -1,6 +1,5 @@
-// hooks/useFileHandler.js
-import useFilesStore from '@/lib/stores/useFileStore';
-import axiosInstance from '@/features/friend/api/axiosInstance';
+import axiosInstance from '../api/afterLogin/axiosInstance';
+import useFilesStore from '../stores/useFileStore';
 
 const useFileHandler = () => {
   const { files, clearFiles } = useFilesStore();
