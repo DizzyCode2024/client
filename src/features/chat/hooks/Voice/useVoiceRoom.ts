@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/stores/useAuthStore';
 import useRoomStore from '@/stores/useRoomStore';
+import useVideoStore from '@/stores/useVideoStore';
 import { BASE_URL } from '@/utils/config';
 import axios from 'axios';
 import {
@@ -9,7 +10,7 @@ import {
   Session,
   StreamManager,
 } from 'openvidu-browser';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 
 const useVoiceRoom = () => {
   const [OV, setOV] = useState<OpenVidu>();
@@ -24,7 +25,10 @@ const useVoiceRoom = () => {
   >(undefined);
 
   const myUserName = useAuthStore((state) => state.user?.username);
-  const mySessionId = useRoomStore((state) => state.currentChannelInfo.name);
+  const mySessionId = useRoomStore(
+    (state) => state.currentChannelPath.channelId,
+  );
+  const { videoOn, audioOn, setVideoOn, setAudioOn } = useVideoStore();
 
   const leaveSession = useCallback(() => {
     if (session) {
@@ -37,17 +41,6 @@ const useVoiceRoom = () => {
     setMainStreamManager(undefined);
     setPublisher(null);
   }, [session]);
-
-  useEffect(() => {
-    const onbeforeunload = () => {
-      leaveSession();
-    };
-
-    window.addEventListener('beforeunload', onbeforeunload);
-    return () => {
-      window.removeEventListener('beforeunload', onbeforeunload);
-    };
-  }, [session, leaveSession]);
 
   const handleMainVideoStream = (stream: StreamManager) => {
     if (mainStreamManager !== stream) {
@@ -76,6 +69,7 @@ const useVoiceRoom = () => {
   );
 
   const joinSession = useCallback(() => {
+    console.log('=========JOIN=========');
     if (session) {
       leaveSession(); // 기존 세션을 떠나고 새로운 세션을 초기화
     }
@@ -105,6 +99,11 @@ const useVoiceRoom = () => {
     //    session에서 disconnect한 사용자 삭제
     mySession.on('streamDestroyed', (event) => {
       deleteSubscriber(event.stream.streamManager);
+      console.log(
+        '>>> DISCONNECT: ',
+        event.stream.typeOfVideo,
+        event.stream.streamManager,
+      );
 
       // if (event.stream.typeOfVideo === 'CUSTOM') {
       //   deleteSubscriber(event.stream.streamManager);
@@ -120,8 +119,8 @@ const useVoiceRoom = () => {
     });
 
     const getToken = async () => {
-      const sessionId = await createSession(mySessionId);
-      console.log('>>>>>>SESSION ID', sessionId, mySessionId);
+      const sessionId = await createSession(mySessionId.toString());
+      console.log('>>SESSION ID: ', sessionId, mySessionId);
 
       const token = await createToken(sessionId);
       return token;
@@ -142,8 +141,8 @@ const useVoiceRoom = () => {
             const publisherInstance = OVInstance.initPublisher(myUserName, {
               audioSource: undefined,
               videoSource: videoTrack,
-              publishAudio: true,
-              publishVideo: true,
+              publishAudio: audioOn,
+              publishVideo: videoOn,
               insertMode: 'APPEND',
               mirror: false,
               // resolution: '1280x720',
@@ -198,6 +197,20 @@ const useVoiceRoom = () => {
         });
     });
   }, [leaveSession, mySessionId, myUserName, session]);
+
+  const toggleVideo = useCallback(() => {
+    if (publisher) {
+      publisher.publishVideo(!videoOn);
+      setVideoOn(!videoOn);
+    }
+  }, [publisher, videoOn]);
+
+  const toggleAudio = useCallback(() => {
+    if (publisher) {
+      publisher.publishAudio(!audioOn);
+      setAudioOn(!audioOn);
+    }
+  }, [publisher, audioOn]);
 
   const createSession = async (mySessionId: string) => {
     console.log('CREATE SESSION', mySessionId);
@@ -280,6 +293,8 @@ const useVoiceRoom = () => {
     publisher,
     mainStreamManager,
     handleMainVideoStream,
+    toggleVideo,
+    toggleAudio,
   };
 };
 

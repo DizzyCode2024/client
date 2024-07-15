@@ -8,7 +8,9 @@ export interface ButtonProps {
   label: string;
   icon: IconType;
   bgColor: string;
+  bgColorOn?: string;
   hoverBgColor: string;
+  isOn: boolean;
 }
 
 const BaseButton = ({
@@ -16,17 +18,19 @@ const BaseButton = ({
   label,
   icon,
   bgColor,
+  bgColorOn,
   hoverBgColor,
+  isOn,
 }: ButtonProps) => (
   <CustomTooltip label={label} placement={'top'}>
     <Flex
       borderRadius={'50%'}
-      bg={bgColor}
-      color={'white'}
+      bg={isOn ? bgColorOn : bgColor}
+      color={isOn ? 'black' : 'white'}
       p={spacing.gutter}
       justifyContent={'center'}
       alignItems={'center'}
-      _hover={{ bg: hoverBgColor }}
+      _hover={{ bg: isOn ? 'white' : hoverBgColor }}
       onClick={onClick}
     >
       <Icon as={icon} boxSize={8} />

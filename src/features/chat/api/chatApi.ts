@@ -1,17 +1,19 @@
 import axiosInstance from '@/api/axiosInstance';
 import { CategoryId, ChannelId, RoomId } from '@/features/room/types';
 
+interface getChatsProps {
+  roomId: RoomId;
+  categoryId: CategoryId;
+  channelId: ChannelId;
+  timestamp: string | null;
+}
+
 export const getChats = async ({
   roomId,
   categoryId,
   channelId,
   timestamp,
-}: {
-  roomId: RoomId;
-  categoryId: CategoryId;
-  channelId: ChannelId;
-  timestamp: string | null;
-}) => {
+}: getChatsProps) => {
   const params = timestamp ? { last: timestamp } : {};
 
   const response = await axiosInstance.get(
@@ -19,7 +21,7 @@ export const getChats = async ({
     { params },
   );
 
-  console.log('==', params, response.data);
+  // console.log('==', params, response.data);
 
   return response.data;
 };

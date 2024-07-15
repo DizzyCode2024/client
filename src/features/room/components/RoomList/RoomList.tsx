@@ -35,7 +35,7 @@ const RoomList = () => {
         {rooms?.map((room) => (
           <RoomButton
             key={room.roomId}
-            id={room.roomId}
+            roomId={room.roomId}
             thumbnail={
               <Text fontSize={'2xl'}>{room.roomName.slice(0, 2)}</Text>
             }

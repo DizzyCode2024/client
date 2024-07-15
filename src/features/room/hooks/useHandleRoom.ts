@@ -1,18 +1,20 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { useCustomToast } from '@/hooks/useCustomToast';
 import { QUERY_KEYS } from '@/api/queryKeys';
+import { useCustomToast } from '@/hooks/useCustomToast';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
+import useRoomStore from '@/stores/useRoomStore';
 import { createRoom, deleteRoom, leaveRoom } from '../api/roomApi';
-import { IRoom, RoomId } from '../types';
+import { CreateRoomResponse, RoomId } from '../types';
 
 const useHandleRoom = () => {
   const toast = useCustomToast();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { setCurrentChannelPath, setCurrentChannelInfo } = useRoomStore();
 
   //   add room
   const { mutate: addRoomMutation } = useMutation<
-    IRoom,
+    CreateRoomResponse,
     Error,
     {
       roomName: string;
@@ -20,15 +22,28 @@ const useHandleRoom = () => {
     }
   >({
     mutationFn: createRoom,
-    onSuccess: (data) => {
-      console.log('Room created:', data);
+    onSuccess: async (data) => {
       toast({
         title: '방 생성 성공',
         description: '새로운 방이 생성되었습니다.',
         status: 'success',
       });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ROOMS });
-      navigate(`/chat/channels/${data.roomId}`);
+
+      // 해당 방으로 이동
+      setCurrentChannelPath({
+        roomId: data.roomId,
+        categoryId: data.categories[0].categoryId,
+        channelId: data.categories[0].channels[0].channelId,
+      });
+
+      setCurrentChannelInfo({
+        name: data.categories[0].channels[0].channelName,
+        type: data.categories[0].channels[0].channelType,
+      });
+      navigate(
+        `/chat/channels/${data.roomId}/${data.categories[0].channels[0].channelId}`,
+      );
     },
     onError: (error) => {
       console.error('Error creating room:', error);
@@ -51,6 +66,7 @@ const useHandleRoom = () => {
         status: 'success',
       });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ROOMS });
+      // navigate(`/chat/channels/${}/${}`)
     },
     onError: (error) => {
       console.error('Error deleting room:', error);
