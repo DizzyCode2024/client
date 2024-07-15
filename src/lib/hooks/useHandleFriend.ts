@@ -9,7 +9,7 @@ import {
   getFriendsList,
   getPendingFriendRequests,
   deleteFriendRequest,
-} from '../../features/friend/api/friendApi';
+} from '../api/afterLogin/friendApi';
 import {
   IFriendRequestById,
   IFriendRequestByName,

@@ -1,7 +1,7 @@
-import { logout } from '@/features/auth/utils/logout';
-import { BASE_URL } from '@/lib/utils/config';
 import axios, { InternalAxiosRequestConfig } from 'axios';
-import { getNewAccessToken } from '@/features/auth/utils/getNewAccessToken';
+import { BASE_URL } from '@/lib/utils/config';
+import { accessTokenApi } from './accessTokenApi';
+import { logout } from './logout';
 
 const axiosInstance = axios.create({
   baseURL: BASE_URL,
@@ -40,7 +40,7 @@ axiosInstance.interceptors.response.use(
     };
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
-      const newAccessToken = await getNewAccessToken();
+      const newAccessToken = await accessTokenApi();
 
       if (newAccessToken) {
         return axiosInstance({
