@@ -1,10 +1,10 @@
+import { StompSubscription } from '@stomp/stompjs';
+import { InfiniteData, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useRef } from 'react';
 import { QUERY_KEYS } from '@/api/queryKeys';
 import useStompClient from '@/features/chat/hooks/useStompClient';
 import useRoomStore from '@/stores/useRoomStore';
 import useSocketStore from '@/stores/useSocketStore';
-import { StompSubscription } from '@stomp/stompjs';
-import { InfiniteData, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useRef } from 'react';
 import { useDestination } from '../../hooks/useDestination';
 import { IReceiveChatPayload } from '../../types';
 import Container from '../Container';
