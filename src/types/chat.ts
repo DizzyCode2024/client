@@ -1,4 +1,4 @@
-import { UserId } from './user';
+import { Id as UserId } from './user';
 
 export type Content = string;
 
@@ -23,7 +23,7 @@ export interface ISendChatPayload {
   files?: IFile[];
 }
 
-export interface IReceiveChatPayload {
+export interface IChat {
   messageId?: string;
   senderUsername: string;
   content: Content;

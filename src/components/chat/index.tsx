@@ -1,17 +1,16 @@
 import { StompSubscription } from '@stomp/stompjs';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef } from 'react';
-
 import useRoomStore from '@/lib/stores/useRoomStore';
 import useSocketStore from '@/lib/stores/useSocketStore';
 import useStompClient from '@/lib/hooks/useStompClient';
 import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
 import { useDestination } from '../../lib/hooks/useDestination';
-import { IReceiveChatPayload } from '../../types/chat';
+import { IChat } from '../../types/chat';
 import Container from './DragFileContainer';
 import Header from './ChatHeader/Header';
-import ChatInput from './ChatInput/ChatInput';
 import ChatContainer from './ChatBody/ChatContainer';
+import ChatInput from './ChatInput/ChatInput';
 
 const ChatSection = () => {
   const {
@@ -27,13 +26,11 @@ const ChatSection = () => {
 
   useEffect(() => {
     if (isConnected && roomId && categoryId && channelId && client) {
-      // console.log('ChatSection useEffect', isConnected);
-
       const subscription = subscribe(topic, (message) => {
-        const chatMessage: IReceiveChatPayload = JSON.parse(message.body);
+        const chatMessage: IChat = JSON.parse(message.body);
         console.log(`Received message in channel ${channelId}:`, chatMessage);
         // TODO: 받은 메시지 처리
-        queryClient.setQueryData<InfiniteData<IReceiveChatPayload[]>>(
+        queryClient.setQueryData<InfiniteData<IChat[]>>(
           QUERY_KEYS.CHATS({ roomId, categoryId, channelId }),
           (oldData) => {
             if (!oldData) return oldData;

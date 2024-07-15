@@ -4,26 +4,22 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import SockJS from 'sockjs-client';
-
 import ExplorePage from './pages/ExplorePage';
-
 import RoomList from './components/room/RoomList/RoomList';
-
 import DMPage from './pages/DMPage';
-
 import { IRoom } from './types/room';
 import { BROKER_URL } from './lib/utils/config';
 import useSocketStore from './lib/stores/useSocketStore';
-import axiosInstance from './lib/api/afterLogin/axiosInstance';
 import FriendPage from './pages/FriendPage';
 import { QUERY_KEYS } from './lib/api/afterLogin/queryKeys';
 import { getRooms } from './lib/api/afterLogin/roomApi';
 import useStompClient from './lib/hooks/useStompClient';
 import RoomPage from './pages/RoomPage';
+import { getSecondaryToken } from './lib/api/afterLogin/token';
 
 const LoggedRouter = () => {
   // secondary token
-  const [ST, setST] = useState(null);
+  const [ST, setST] = useState<string | null>(null);
   // get rooms
   const { data: rooms } = useQuery<IRoom[], Error>({
     queryKey: QUERY_KEYS.ROOMS,
@@ -35,19 +31,13 @@ const LoggedRouter = () => {
   const { subscribe, unsubscribe } = useStompClient();
 
   // get secondary token
-  const getSecondaryToken = async () => {
-    try {
-      const response = await axiosInstance.get('/secondary-token');
-      setST(response.data.secondaryToken);
-      return response.data.secondaryToken;
-    } catch (e) {
-      console.error('error getting ST', e);
-      return null;
-    }
+  const getST = async () => {
+    const token = await getSecondaryToken();
+    setST(token);
   };
 
   useEffect(() => {
-    getSecondaryToken();
+    getST();
     if (ST) {
       const socket = new SockJS(`${BROKER_URL}?token=${ST}`);
       const stompClient = new Client({

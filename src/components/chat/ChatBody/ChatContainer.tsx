@@ -8,7 +8,7 @@ import {
 } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef } from 'react';
 import { getChats } from '../../../lib/api/afterLogin/chatApi';
-import { IReceiveChatPayload } from '../../../types/chat';
+import { IChat } from '../../../types/chat';
 import ChatBox from './ChatBox';
 import NoChatUI from './NoChat';
 
@@ -17,7 +17,7 @@ const ChatContainer = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
-    useInfiniteQuery<IReceiveChatPayload[], Error>({
+    useInfiniteQuery<IChat[], Error>({
       queryKey: QUERY_KEYS.CHATS(currentChannelPath),
       queryFn: ({
         pageParam = null,
@@ -27,7 +27,7 @@ const ChatContainer = () => {
           timestamp: pageParam as string | null,
         }),
       initialPageParam: null,
-      getNextPageParam: (lastPage: IReceiveChatPayload[]) => {
+      getNextPageParam: (lastPage: IChat[]) => {
         if (lastPage.length > 0) {
           const lastMessage = lastPage[lastPage.length - 1];
           // console.log('lastMessage', lastMessage, lastPage.length);
@@ -83,7 +83,7 @@ const ChatContainer = () => {
         }}
       >
         {data?.pages.flatMap((page) =>
-          page.map((chat: IReceiveChatPayload) => (
+          page.map((chat: IChat) => (
             <ChatBox
               key={chat.messageId}
               content={chat.content}
