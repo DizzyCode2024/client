@@ -34,7 +34,7 @@ const CommonBox = ({
       justifyContent={'space-between'}
       borderColor={'#5b697b'}
       width={'95%'}
-      p={4}
+      p={1}
       transition={'background-color 0.3s ease-in'}
       _hover={{ bg: 'gray.500', cursor: 'pointer' }}
       onMouseEnter={() => setIsHovered(true)}
@@ -50,8 +50,8 @@ const CommonBox = ({
             <Box
               as={'span'}
               color={'gray.400'}
-              ml={2}
-              fontSize={'xl'}
+              ml={1}
+              fontSize={'sm'}
               transition={'background-color 0.3s ease-in'}
             >
               {id}
@@ -63,7 +63,7 @@ const CommonBox = ({
         <Tooltip
           label={tooltipLabel1}
           bg={'gray.900'}
-          fontSize={'2xl'}
+          fontSize={'md'}
           placement={'top'}
           hasArrow
           arrowSize={15}
@@ -81,7 +81,7 @@ const CommonBox = ({
         <Tooltip
           label={tooltipLabel2}
           bg={'gray.900'}
-          fontSize={'2xl'}
+          fontSize={'md'}
           placement={'top'}
           hasArrow
           arrowSize={15}

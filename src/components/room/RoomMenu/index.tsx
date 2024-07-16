@@ -1,26 +1,14 @@
 import useRoomStore from '@/lib/stores/useRoomStore';
-import { Box } from '@chakra-ui/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
 import { getCategories } from '@/lib/api/afterLogin/roomApi';
 import UserBox from '@/components/userBox/UserBox';
+import MenuContainer from '@/components/shared/MenuContainer';
 import { ICatwChannel, IRoom } from '../../../types/room';
 import CategoryBox from './CategoryBox';
 import ChannelBox from './ChannelBox';
 import RoomMenuButton from './RoomMenuButton';
-
-const Container = ({ children }: { children: React.ReactNode }) => (
-  <Box
-    minWidth={'14rem'}
-    height={'100vh'}
-    bg={'gray.700'}
-    display={'flex'}
-    flexDirection={'column'}
-  >
-    {children}
-  </Box>
-);
 
 const RoomMenu = () => {
   const queryClient = useQueryClient();
@@ -47,7 +35,7 @@ const RoomMenu = () => {
   }, [roomId, rooms]);
 
   return (
-    <Container>
+    <MenuContainer>
       <RoomMenuButton name={currentRoomName} />
       {categories?.map((category) => (
         <CategoryBox
@@ -67,7 +55,7 @@ const RoomMenu = () => {
         </CategoryBox>
       ))}
       <UserBox />
-    </Container>
+    </MenuContainer>
   );
 };
 

@@ -10,14 +10,14 @@ const Container = ({ children }: { children: ReactNode }) => (
 const FriendRequest = () => {
   return (
     <Container>
-      <Box fontWeight={'bold'} color={'white'} m={5} borderRadius={'md'}>
+      <Box fontWeight={'bold'} color={'white'} m={4} fontSize={'sm'}>
         {'친구 추가하기'}
       </Box>
       <Box
         color={'gray.400'}
-        marginLeft={5}
+        marginLeft={4}
         borderRadius={'md'}
-        fontSize={'xl'}
+        fontSize={'sm'}
       >
         {'Dizzy Code 아이디나 닉네임을 이용해서 친구요청을 할 수 있어요.'}
       </Box>

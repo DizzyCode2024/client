@@ -1,15 +1,38 @@
-import { Box } from '@chakra-ui/react';
-import { ReactNode } from 'react';
+import React, { useState } from 'react';
+import { Box, Text } from '@chakra-ui/react';
 import useHandleFriend from '@/lib/hooks/useHandleFriend';
 import { IFriendRequest } from '@/types/friend';
 import FriendBox from './FriendBox';
 
-const Container = ({ children }: { children: ReactNode }) => (
+// Container for layout styling
+const Container = ({ children }: { children: React.ReactNode }) => (
   <Box width={'100%'} height={'100vh'} bg={'gray.600'}>
     {children}
   </Box>
 );
 
+// Manages which popover is open
+const PopoverManager = ({ children }: { children: React.ReactNode }) => {
+  const [openPopoverId, setOpenPopoverId] = useState(null);
+
+  const handleOpenPopover = (id: React.SetStateAction<null>) => {
+    setOpenPopoverId(openPopoverId === id ? null : id);
+  };
+
+  const childrenWithProps = React.Children.map(children, (child) =>
+    React.isValidElement(child)
+      ? React.cloneElement(child, {
+          openPopoverId,
+          onOpenPopover: handleOpenPopover,
+        })
+      : child,
+  );
+
+  // eslint-disable-next-line react/jsx-no-useless-fragment
+  return <>{childrenWithProps}</>;
+};
+
+// Displays a list of friends
 const FriendList = () => {
   const { useGetFriendsListQuery } = useHandleFriend();
   const { data, isLoading, isError } = useGetFriendsListQuery();
@@ -17,18 +40,9 @@ const FriendList = () => {
   if (isLoading) {
     return (
       <Container>
-        <Box fontWeight={'bold'} color={'white'} m={5}>
-          {'친구 목록'}
-        </Box>
-        <Box
-          display={'flex'}
-          flexDirection={'column'}
-          justifyContent={'center'}
-          alignItems={'center'}
-          color={'white'}
-        >
-          {'Loading...'}
-        </Box>
+        <Text fontWeight={'bold'} color={'white'} m={5}>
+          {'Loading friends list...'}
+        </Text>
       </Container>
     );
   }
@@ -36,43 +50,39 @@ const FriendList = () => {
   if (isError) {
     return (
       <Container>
-        <Box fontWeight={'bold'} color={'white'} m={5}>
-          {'친구 목록'}
-        </Box>
-        <Box
-          display={'flex'}
-          flexDirection={'column'}
-          justifyContent={'center'}
-          alignItems={'center'}
-          color={'white'}
-        >
+        <Text fontWeight={'bold'} color={'white'} m={4} fontSize={'sm'}>
           {'Error loading friends'}
-        </Box>
+        </Text>
       </Container>
     );
   }
 
   return (
     <Container>
-      <Box fontWeight={'bold'} color={'white'} m={5}>
-        {'친구 목록'}
-      </Box>
+      <Text fontWeight={'bold'} color={'white'} m={4} fontSize={'sm'}>
+        {'Friends List'}
+      </Text>
       <Box
         display={'flex'}
         flexDirection={'column'}
         justifyContent={'center'}
         alignItems={'center'}
       >
-        {(data as IFriendRequest[])?.length === 0 ? (
-          <Box color={'white'}>{'등록된 친구가 없습니다'}</Box>
+        {data?.length === 0 ? (
+          <Text color={'white'}>{'No friends registered'}</Text>
         ) : (
-          (data as IFriendRequest[])?.map((friend: IFriendRequest) => (
-            <FriendBox
-              key={friend.friendId}
-              id={friend.friendId}
-              name={friend.friendName}
-            />
-          ))
+          <PopoverManager>
+            {data.map((friend: IFriendRequest) => (
+              <FriendBox
+                key={friend.friendId}
+                id={friend.friendId}
+                name={friend.friendName}
+                onClickDM={() =>
+                  console.log('DM clicked for', friend.friendName)
+                }
+              />
+            ))}
+          </PopoverManager>
         )}
       </Box>
     </Container>
