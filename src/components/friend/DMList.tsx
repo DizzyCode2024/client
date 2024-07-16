@@ -4,7 +4,7 @@ import UserBox from '../userBox/UserBox';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
-    minWidth={'23rem'}
+    width={'14rem'}
     height={'100vh'}
     bg={'gray.700'}
     display={'flex'}
@@ -25,13 +25,12 @@ const DMList = () => {
         <Box
           as={'button'}
           bg={'gray.800'}
-          width={'21rem'}
-          height={'2.5rem'}
-          marginTop={'0.5rem'}
+          width={'13rem'}
+          height={'1.5rem'}
           color={'gray.400'}
           textAlign={'left'}
           paddingLeft={2}
-          fontSize={'2xl'}
+          fontSize={'sm'}
           borderRadius={'3px'}
           transition={'all 0.2s ease-in'}
           _hover={{ bg: 'gray.900', color: 'white' }}
@@ -43,24 +42,23 @@ const DMList = () => {
           bg={'gray.800'}
           display={'flex'}
           alignItems={'center'}
-          width={'21rem'}
-          height={'4rem'}
-          marginTop={'0.5rem'}
+          width={'13rem'}
+          height={'2rem'}
           color={'gray.400'}
           textAlign={'left'}
-          paddingLeft={2}
-          fontSize={'2xl'}
+          paddingLeft={1}
+          fontSize={'md'}
           borderRadius={'3px'}
           transition={'all 0.2s ease-in'}
           _hover={{ bg: 'gray.500', color: 'white' }}
         >
-          <StarIcon marginRight={2} width={'2rem'} />
+          <StarIcon width={'0.7rem'} mr={1} />
           {'친구'}
         </Box>
       </Stack>
       <Box
         color={'gray.400'}
-        fontSize={'xl'}
+        fontSize={'xs'}
         fontWeight={'bold'}
         margin={'10px'}
         display={'flex'}
@@ -83,23 +81,23 @@ const DMList = () => {
         as={'button'}
         display={'flex'}
         alignItems={'center'}
-        width={'21rem'}
-        height={'4rem'}
-        marginLeft={4}
+        width={'13rem'}
+        height={'2rem'}
+        ml={1}
         color={'gray.300'}
         borderRadius={'3px'}
         transition={'all 0.2s ease-in'}
         _hover={{ bg: 'gray.600', color: 'white' }}
       >
         <Box
-          backgroundColor={'teal.500'}
+          backgroundColor={'gray.500'}
           display={'flex'}
           justifyContent={'center'}
           alignItems={'center'}
           marginLeft={2}
-          width={'3rem'}
-          height={'3rem'}
-          borderRadius={'50%'}
+          width={'1.5rem'}
+          height={'1.5rem'}
+          borderRadius={'full'}
         >
           <StarIcon color={'white'} width={'2rem'} />
         </Box>

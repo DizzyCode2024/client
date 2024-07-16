@@ -1,21 +1,11 @@
 import { Box, Stack, Text, Tooltip } from '@chakra-ui/react';
 import { SmallAddIcon, StarIcon } from '@chakra-ui/icons';
 import UserBox from '../userBox/UserBox';
+import MenuContainer from '../shared/MenuContainer';
 
-const Container = ({ children }: { children: React.ReactNode }) => (
-  <Box
-    minWidth={'10rem'}
-    height={'100vh'}
-    bg={'gray.700'}
-    display={'flex'}
-    flexDirection={'column'}
-  >
-    {children}
-  </Box>
-);
 const DMList = () => {
   return (
-    <Container>
+    <MenuContainer>
       <Stack
         display={'flex'}
         justifyContent={'center'}
@@ -25,7 +15,7 @@ const DMList = () => {
         <Box
           as={'button'}
           bg={'gray.800'}
-          width={'21rem'}
+          width={'14rem'}
           height={'2.5rem'}
           marginTop={'0.5rem'}
           color={'gray.400'}
@@ -106,7 +96,7 @@ const DMList = () => {
         <Text marginLeft={'1rem'}>{'하루단백바'}</Text>
       </Box>
       <UserBox />
-    </Container>
+    </MenuContainer>
   );
 };
 

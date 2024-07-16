@@ -8,8 +8,8 @@ const IconWrapper = ({ children }: { children: ReactNode }) => (
     justifyContent={'center'}
     borderRadius={'50%'}
     bg={'gray.900'}
-    width={'3rem'}
-    height={'3rem'}
+    width={'2rem'}
+    height={'2rem'}
     mx={1}
     as={'button'}
   >

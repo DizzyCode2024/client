@@ -29,8 +29,8 @@ const UserBox = () => {
             display={'flex'}
             alignItems={'center'}
             cursor={'pointer'}
-            height={'2.8rem'}
-            width={'12rem'}
+            height={'2.5rem'}
+            width={'11rem'}
             transition={'all 0.2s ease-in'}
             borderRadius={'3px'}
             _hover={{ bg: 'gray.700', color: 'white' }}
@@ -41,8 +41,8 @@ const UserBox = () => {
               justifyContent={'center'}
               alignItems={'center'}
               marginLeft={2}
-              width={'2rem'}
-              height={'2rem'}
+              width={'1.5rem'}
+              height={'1.5rem'}
               borderRadius={'50%'}
             >
               <StarIcon color={'white'} width={'1rem'} />
@@ -54,10 +54,10 @@ const UserBox = () => {
               alignItems={'center'}
               lineHeight={'short'}
             >
-              <Box color={'gray.200'} fontSize={'md'} fontWeight={'bold'}>
+              <Box color={'gray.200'} fontSize={'sm'} fontWeight={'bold'}>
                 {user ? user.username : 'Guest'}
               </Box>
-              <Box color={'gray.400'} fontSize={'sm'} mr={'auto'} mt={'-2px'}>
+              <Box color={'gray.400'} fontSize={'xs'} mr={'auto'} mt={'-2px'}>
                 {user ? '온라인' : '오프라인'}
               </Box>
             </Box>

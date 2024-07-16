@@ -20,7 +20,7 @@ const WaitingList = () => {
   if (isLoading) {
     return (
       <Container>
-        <Box fontWeight={'bold'} color={'white'} m={5}>
+        <Box fontWeight={'bold'} color={'white'} m={4} fontSize={'sm'}>
           {'친구 대기 목록'}
         </Box>
         <Box
@@ -39,7 +39,7 @@ const WaitingList = () => {
   if (isError) {
     return (
       <Container>
-        <Box fontWeight={'bold'} color={'white'} m={5}>
+        <Box fontWeight={'bold'} color={'white'} m={4} fontSize={'sm'}>
           {'친구 대기 목록'}
         </Box>
         <Box
@@ -57,7 +57,7 @@ const WaitingList = () => {
 
   return (
     <Container>
-      <Box fontWeight={'bold'} color={'white'} m={5}>
+      <Box fontWeight={'bold'} color={'white'} m={4} fontSize={'sm'}>
         {'친구 대기 목록'}
       </Box>
       <Box
