@@ -56,8 +56,8 @@ const ChatInput = () => {
   });
 
   return (
-    <Box {...getRootProps()} mt={4} bg={'gray.700'} h={'3.2rem'}>
-      <Flex alignItems={'center'} justifyContent={'center'} h={'100%'}>
+    <Box {...getRootProps()} mt={4} bg={'gray.700'}>
+      <Flex alignItems={'center'} justifyContent={'center'} height={'3.2rem'}>
         <InputPlusBtn />
         <Input
           value={content}

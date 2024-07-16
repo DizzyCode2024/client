@@ -12,11 +12,11 @@ const UserSettingsButton = () => {
   const { signout } = useAuthActions();
 
   return (
-    <Menu ml={2}>
+    <Menu m={2}>
       <CustomTooltip label={'사용자 설정'}>
         <MenuButton as={'button'}>
           <MotionSettingsIcon
-            mr={5}
+            mr={2}
             color={'gray.400'}
             whileHover={{ rotate: 360 }}
             transition={{ duration: 1, repeat: Infinity, ease: 'linear' }}

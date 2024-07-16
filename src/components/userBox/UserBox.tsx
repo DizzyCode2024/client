@@ -30,7 +30,7 @@ const UserBox = () => {
             alignItems={'center'}
             cursor={'pointer'}
             height={'2.8rem'}
-            width={'11rem'}
+            width={'12rem'}
             transition={'all 0.2s ease-in'}
             borderRadius={'3px'}
             _hover={{ bg: 'gray.700', color: 'white' }}
