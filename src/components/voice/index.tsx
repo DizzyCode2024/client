@@ -12,6 +12,7 @@ import useRoomStore from '@/lib/stores/useRoomStore';
 import { MdScreenShare, MdStopScreenShare } from 'react-icons/md';
 import useVoiceStateStore from '@/lib/stores/voice/useVoiceStateStore';
 import useHandleController from '@/lib/hooks/voice/useHandleController';
+import useScreenShare from '@/lib/hooks/voice/useScreenShare';
 import useVoiceRoom from '../../lib/hooks/voice/useVoiceRoom';
 import Container from '../chat/DragFileContainer';
 import VideoContainer from './VoiceBody/VideoContainer';
@@ -27,6 +28,7 @@ const VoiceSection = () => {
     useVoiceStateStore();
 
   const { toggleAudio, toggleVideo, leaveSession } = useHandleController();
+  const { startScreenShare, stopScreenShare } = useScreenShare();
 
   useEffect(() => {
     console.log('=======MOUNT=======');
@@ -94,9 +96,9 @@ const VoiceSection = () => {
               icon={audioOn ? BiSolidMicrophone : BiSolidMicrophoneOff}
             />
             <Controller.Button
-              onClick={() => {}}
+              onClick={screenShareOn ? stopScreenShare : startScreenShare}
               isOn={screenShareOn}
-              label={'Screen Share'}
+              label={screenShareOn ? 'Stop Screen Share' : 'Screen Share'}
               icon={screenShareOn ? MdScreenShare : MdStopScreenShare}
             />
             <Controller.RedButton

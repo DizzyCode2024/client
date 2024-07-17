@@ -83,7 +83,8 @@ const useVoiceRoom = () => {
         JSON.parse(event.stream.connection.data).clientData,
       );
 
-      setSubscribers((prevSubscribers) => [...prevSubscribers, newSubscriber]);
+      const prevSubscribers = subscribers;
+      setSubscribers([...prevSubscribers, newSubscriber]);
     });
 
     //    session에서 disconnect한 사용자 삭제
