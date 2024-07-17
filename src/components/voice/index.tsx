@@ -5,30 +5,30 @@ import {
   BsFillCameraVideoOffFill,
 } from 'react-icons/bs';
 import { PiPhoneDisconnectFill } from 'react-icons/pi';
-import useVideoStore from '@/lib/stores/useVideoStore';
+import useVoiceStore from '@/lib/stores/voice/useVoiceStore';
 import { BiSolidMicrophone, BiSolidMicrophoneOff } from 'react-icons/bi';
 import { spacing } from '@/lib/constants/spacing';
 import useRoomStore from '@/lib/stores/useRoomStore';
-import useVoiceRoom from '../../lib/hooks/useVoiceRoom';
+import { MdScreenShare, MdStopScreenShare } from 'react-icons/md';
+import useVoiceStateStore from '@/lib/stores/voice/useVoiceStateStore';
+import useHandleController from '@/lib/hooks/voice/useHandleController';
+import useScreenShare from '@/lib/hooks/voice/useScreenShare';
+import useVoiceRoom from '../../lib/hooks/voice/useVoiceRoom';
 import Container from '../chat/DragFileContainer';
 import VideoContainer from './VoiceBody/VideoContainer';
 import Controller from './VoiceController/Controller';
 
 const VoiceSection = () => {
   const { name } = useRoomStore((state) => state.currentChannelInfo);
-  const { videoOn, audioOn } = useVideoStore();
+  const { videoOn, audioOn, screenShareOn } = useVoiceStore();
 
-  const {
-    session,
-    joinSession,
-    leaveSession,
-    mainStreamManager,
-    publisher,
-    handleMainVideoStream,
-    subscribers,
-    toggleVideo,
-    toggleAudio,
-  } = useVoiceRoom();
+  const { joinSession, handleMainVideoStream } = useVoiceRoom();
+
+  const { session, publisher, mainStreamManager, subscribers } =
+    useVoiceStateStore();
+
+  const { toggleAudio, toggleVideo, leaveSession } = useHandleController();
+  const { startScreenShare, stopScreenShare } = useScreenShare();
 
   useEffect(() => {
     console.log('=======MOUNT=======');
@@ -94,6 +94,12 @@ const VoiceSection = () => {
               isOn={audioOn}
               label={audioOn ? 'Turn Off Microphone' : 'Turn On Microphone'}
               icon={audioOn ? BiSolidMicrophone : BiSolidMicrophoneOff}
+            />
+            <Controller.Button
+              onClick={screenShareOn ? stopScreenShare : startScreenShare}
+              isOn={screenShareOn}
+              label={screenShareOn ? 'Stop Screen Share' : 'Screen Share'}
+              icon={screenShareOn ? MdScreenShare : MdStopScreenShare}
             />
             <Controller.RedButton
               onClick={leaveSession}
