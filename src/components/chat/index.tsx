@@ -1,16 +1,18 @@
-import { StompSubscription } from '@stomp/stompjs';
-import { InfiniteData, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useRef } from 'react';
+import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
+import useStompClient from '@/lib/hooks/useStompClient';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import useSocketStore from '@/lib/stores/useSocketStore';
-import useStompClient from '@/lib/hooks/useStompClient';
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
+import { Flex } from '@chakra-ui/react';
+import { StompSubscription } from '@stomp/stompjs';
+import { InfiniteData, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 import { useDestination } from '../../lib/hooks/useDestination';
 import { IChat } from '../../types/chat';
-import Container from './DragFileContainer';
-import Header from './ChatHeader/Header';
+import MemberList from '../memberList';
 import ChatContainer from './ChatBody/ChatContainer';
+import Header from './ChatHeader/Header';
 import ChatInput from './ChatInput/ChatInput';
+import Container from './DragFileContainer';
 
 const ChatSection = () => {
   const {
@@ -74,11 +76,20 @@ const ChatSection = () => {
     topic,
   ]);
 
+  const [isMembersOpen, setIsMembersOpen] = useState<boolean>(false);
   return (
     <Container>
-      <Header />
-      <ChatContainer />
-      <ChatInput />
+      <Header
+        isMembersOpen={isMembersOpen}
+        setIsMembersOpen={setIsMembersOpen}
+      />
+      <Flex flex={1}>
+        <Flex flex={1} direction={'column'}>
+          <ChatContainer />
+          <ChatInput />
+        </Flex>
+        {isMembersOpen && <MemberList />}
+      </Flex>
     </Container>
   );
 };

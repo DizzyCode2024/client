@@ -71,7 +71,7 @@ const ChatContainer = () => {
   return data?.pages[0].length === 0 ? (
     <NoChatUI />
   ) : (
-    <Box mt={'auto'} color={'white'} overflow={'hidden'}>
+    <Box mt={'auto'} color={'white'} overflow={'hidden'} flex={1}>
       <Box
         height={'100%'}
         overflowY={'auto'}
