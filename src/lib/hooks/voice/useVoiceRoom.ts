@@ -1,25 +1,26 @@
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import useRoomStore from '@/lib/stores/useRoomStore';
-import useVideoStore from '@/lib/stores/useVideoStore';
+import useVoiceStateStore from '@/lib/stores/voice/useVoiceStateStore';
+import useVoiceStore from '@/lib/stores/voice/useVoiceStore';
 import { BASE_URL } from '@/lib/utils/config';
 import axios from 'axios';
-import {
-  Device,
-  OpenVidu,
-  Publisher,
-  Session,
-  StreamManager,
-} from 'openvidu-browser';
+import { Device, OpenVidu, Publisher, StreamManager } from 'openvidu-browser';
 import { useCallback, useState } from 'react';
+import useHandleController from './useHandleController';
 
 const useVoiceRoom = () => {
-  const [OV, setOV] = useState<OpenVidu>();
-  const [session, setSession] = useState<Session>();
-  const [mainStreamManager, setMainStreamManager] = useState<
-    StreamManager | undefined
-  >(undefined);
-  const [publisher, setPublisher] = useState<Publisher | null>(null);
-  const [subscribers, setSubscribers] = useState<StreamManager[]>([]);
+  const {
+    OV,
+    setOV,
+    session,
+    setSession,
+    setPublisher,
+    subscribers,
+    setSubscribers,
+    mainStreamManager,
+    setMainStreamManager,
+  } = useVoiceStateStore();
+
   const [currentVideoDevice, setCurrentVideoDevice] = useState<
     Device | undefined
   >(undefined);
@@ -28,19 +29,8 @@ const useVoiceRoom = () => {
   const mySessionId = useRoomStore(
     (state) => state.currentChannelPath.channelId,
   );
-  const { videoOn, audioOn, setVideoOn, setAudioOn } = useVideoStore();
-
-  const leaveSession = useCallback(() => {
-    if (session) {
-      session.disconnect();
-    }
-
-    setOV(undefined);
-    setSession(undefined);
-    setSubscribers([]);
-    setMainStreamManager(undefined);
-    setPublisher(null);
-  }, [session]);
+  const { videoOn, audioOn, screenShareOn } = useVoiceStore();
+  const { leaveSession } = useHandleController();
 
   const handleMainVideoStream = (stream: StreamManager) => {
     if (mainStreamManager !== stream) {
@@ -140,7 +130,7 @@ const useVoiceRoom = () => {
             const videoTrack = mediaStream.getVideoTracks()[0];
             const publisherInstance = OVInstance.initPublisher(myUserName, {
               audioSource: undefined,
-              videoSource: videoTrack,
+              videoSource: screenShareOn ? 'screen' : videoTrack,
               publishAudio: audioOn,
               publishVideo: videoOn,
               insertMode: 'APPEND',
@@ -155,38 +145,6 @@ const useVoiceRoom = () => {
               setMainStreamManager(publisherInstance);
             });
           });
-
-          // const publisherInstance = await OVInstance.initPublisherAsync(
-          //   undefined,
-          //   {
-          //     audioSource: undefined,
-          //     videoSource: undefined,
-          //     publishAudio: true,
-          //     publishVideo: true,
-          //     resolution: '640x480',
-          //     frameRate: 30,
-          //     insertMode: 'APPEND',
-          //     mirror: false,
-          //   },
-          // );
-
-          // mySession.publish(publisherInstance);
-
-          // const devices = await OVInstance.getDevices();
-          // const videoDevices = devices.filter(
-          //   (device) => device.kind === 'videoinput',
-          // );
-          // const currentVideoDeviceId = publisherInstance.stream
-          //   .getMediaStream()
-          //   .getVideoTracks()[0]
-          //   .getSettings().deviceId;
-          // const currentVideoDevice = videoDevices.find(
-          //   (device) => device.deviceId === currentVideoDeviceId,
-          // );
-
-          // setCurrentVideoDevice(currentVideoDevice);
-          // setMainStreamManager(publisherInstance);
-          // setPublisher(publisherInstance);
         })
         .catch((error) => {
           console.log(
@@ -197,20 +155,6 @@ const useVoiceRoom = () => {
         });
     });
   }, [leaveSession, mySessionId, myUserName, session]);
-
-  const toggleVideo = useCallback(() => {
-    if (publisher) {
-      publisher.publishVideo(!videoOn);
-      setVideoOn(!videoOn);
-    }
-  }, [publisher, videoOn]);
-
-  const toggleAudio = useCallback(() => {
-    if (publisher) {
-      publisher.publishAudio(!audioOn);
-      setAudioOn(!audioOn);
-    }
-  }, [publisher, audioOn]);
 
   const createSession = async (mySessionId: string) => {
     console.log('CREATE SESSION', mySessionId);
@@ -285,16 +229,9 @@ const useVoiceRoom = () => {
   }, [OV, currentVideoDevice, mainStreamManager, session]);
 
   return {
-    session,
     joinSession,
     switchCamera,
-    leaveSession,
-    subscribers,
-    publisher,
-    mainStreamManager,
     handleMainVideoStream,
-    toggleVideo,
-    toggleAudio,
   };
 };
 
