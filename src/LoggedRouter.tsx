@@ -4,18 +4,20 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import SockJS from 'sockjs-client';
-import ExplorePage from './pages/ExplorePage';
 import RoomList from './components/room/RoomList';
-import DMPage from './pages/DMPage';
-import { IRoom } from './types/room';
-import { BROKER_URL } from './lib/utils/config';
-import useSocketStore from './lib/stores/useSocketStore';
-import FriendPage from './pages/FriendPage';
 import { QUERY_KEYS } from './lib/api/afterLogin/queryKeys';
 import { getRooms } from './lib/api/afterLogin/roomApi';
-import useStompClient from './lib/hooks/useStompClient';
-import RoomPage from './pages/RoomPage';
 import { getSecondaryToken } from './lib/api/afterLogin/token';
+import useStompClient from './lib/hooks/useStompClient';
+import { useAuthStore } from './lib/stores/useAuthStore';
+import useSocketStore from './lib/stores/useSocketStore';
+import { BROKER_URL } from './lib/utils/config';
+import DMPage from './pages/DMPage';
+import ExplorePage from './pages/ExplorePage';
+import FriendPage from './pages/FriendPage';
+import RoomPage from './pages/RoomPage';
+import { IMember } from './types/member';
+import { IRoom } from './types/room';
 
 const LoggedRouter = () => {
   // secondary token
@@ -28,7 +30,7 @@ const LoggedRouter = () => {
 
   // 웹소켓 연결
   const { client, setClient, isConnected, setIsConnected } = useSocketStore();
-  const { subscribe, unsubscribe } = useStompClient();
+  const { subscribe, unsubscribe, sendMessage } = useStompClient();
 
   // get secondary token
   const getST = async () => {
@@ -60,6 +62,7 @@ const LoggedRouter = () => {
       stompClient.activate();
       setClient(stompClient);
     }
+
     return () => {
       console.log('deactivate');
       client?.deactivate();
@@ -118,6 +121,33 @@ const LoggedRouter = () => {
     //   subscriptionsRef.current.clear();
     // };
   }, [rooms, isConnected, subscribe, unsubscribe, client]);
+
+  // update online status
+  const username = useAuthStore((state) => state.user?.username);
+
+  useEffect(() => {
+    if (rooms && username && isConnected && client) {
+      const payload: IMember = {
+        username,
+        status: 'online',
+      };
+      rooms.forEach((room) => {
+        sendMessage(`/app/rooms/${room.roomId}/status`, payload);
+      });
+    }
+
+    return () => {
+      if (username) {
+        const payload: IMember = {
+          username,
+          status: 'offline',
+        };
+        rooms?.forEach((room) => {
+          sendMessage(`/app/rooms/${room.roomId}/status`, payload);
+        });
+      }
+    };
+  }, [rooms, isConnected, client, username]);
 
   return (
     <Box display={'flex'}>

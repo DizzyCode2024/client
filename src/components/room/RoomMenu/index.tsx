@@ -1,6 +1,6 @@
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
 import { getCategories } from '@/lib/api/afterLogin/roomApi';
 import UserBox from '@/components/userBox/UserBox';
@@ -9,6 +9,7 @@ import useStompClient from '@/lib/hooks/useStompClient';
 import useSocketStore from '@/lib/stores/useSocketStore';
 import { StompSubscription } from '@stomp/stompjs';
 import { useDestination } from '@/lib/hooks/useDestination';
+import { IMember } from '@/types/member';
 import { ICatwChannel, IRoom } from '../../../types/room';
 import CategoryBox from './CategoryBox';
 import ChannelBox from './ChannelBox';
@@ -17,8 +18,10 @@ import RoomMenuButton from './RoomMenuButton';
 const RoomMenu = () => {
   const queryClient = useQueryClient();
   const [currentRoomName, setCurrentRoomName] = useState<string>('');
-  const rooms: IRoom[] =
-    queryClient.getQueryData<IRoom[]>(QUERY_KEYS.ROOMS) || [];
+
+  const rooms = useMemo(() => {
+    return queryClient.getQueryData<IRoom[]>(QUERY_KEYS.ROOMS) || [];
+  }, [queryClient]);
 
   const {
     currentChannelPath: { roomId },
@@ -48,7 +51,22 @@ const RoomMenu = () => {
     if (isConnected && roomId && client) {
       const subscription = subscribe(StatusTopic, (message) => {
         console.log('Status:', message.body);
-        // const { username, status } = JSON.parse(message.body);
+        const { username, status } = JSON.parse(message.body);
+        queryClient.setQueryData<IMember[]>(
+          QUERY_KEYS.MEMBERS(roomId),
+          (oldData) => {
+            if (!oldData) return oldData;
+
+            const newData = oldData.map((member) => {
+              if (member.username === username) {
+                return { ...member, status };
+              }
+              return member;
+            });
+
+            return newData;
+          },
+        );
       });
       if (subscription) {
         subscriptionRef.current = subscription;
@@ -59,12 +77,11 @@ const RoomMenu = () => {
 
     return () => {
       if (subscriptionRef.current) {
-        console.log('구취구취', subscriptionRef.current);
         unsubscribe(subscriptionRef.current);
         subscriptionRef.current = null;
       }
     };
-  }, [isConnected, roomId, client]);
+  }, [isConnected, roomId, client, StatusTopic]);
 
   return (
     <MenuContainer>
