@@ -19,7 +19,7 @@ const ChatInput = () => {
   const senderId = useAuthStore((state) => state.user?.id);
 
   const { sendMessage } = useStompClient();
-  const { destination } = useDestination();
+  const { ChatDestination } = useDestination();
 
   const handleSendMessage = async () => {
     if (senderId && (content.trim() || files.length)) {
@@ -29,7 +29,7 @@ const ChatInput = () => {
         ...(files.length > 0 && { files }),
       };
       console.log('Sending message:', payload);
-      sendMessage(destination, payload);
+      sendMessage(ChatDestination, payload);
       setContent('');
       if (files.length > 0) {
         await uploadAllFiles();

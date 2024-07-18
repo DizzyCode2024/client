@@ -1,3 +1,6 @@
+import CustomTooltip from '@/components/shared/Tooltip';
+import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
+import { getCategories } from '@/lib/api/afterLogin/roomApi';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { handleRightClick } from '@/lib/utils/handleRightClick';
 import {
@@ -8,11 +11,8 @@ import {
   MenuList,
   useDisclosure,
 } from '@chakra-ui/react';
-import { useNavigate } from 'react-router-dom';
 import { useQuery } from '@tanstack/react-query';
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
-import { getCategories } from '@/lib/api/afterLogin/roomApi';
-import CustomTooltip from '@/components/shared/Tooltip';
+import { useNavigate } from 'react-router-dom';
 import { RoomId } from '../../../types/room';
 import Indicator from './Indicator';
 import RoomMenuItems from './RoomMenuItems';
@@ -62,8 +62,10 @@ const RoomButton = ({ label, roomId, thumbnail }: RoomButtonProps) => {
       name: data.firstChannelName,
       type: data.firstChannelType,
     });
+
     navigate(`/chat/channels/${roomId}/${data.firstChannelId}`);
   };
+
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   return (
