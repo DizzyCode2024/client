@@ -5,4 +5,5 @@ export const QUERY_KEYS = {
   CATWCHANNELS: (roomId: RoomId) => ['catwChannels', roomId],
   EXPLORE_ROOMS: ['exploreRooms'],
   CHATS: (currentChannelPath: IChannelPath) => ['chats', currentChannelPath],
+  MEMBERS: (roomId: RoomId) => ['members', roomId],
 };

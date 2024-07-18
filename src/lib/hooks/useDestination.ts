@@ -6,9 +6,12 @@ export const useDestination = () => {
   } = useRoomStore();
 
   const ChannelTopic = `/topic/rooms.${roomId}.categories.${categoryId}.channels.${channelId}`;
-  const destination = `/app/rooms.${roomId}.categories.${categoryId}.channels.${channelId}`;
+  const ChatDestination = `/app/rooms.${roomId}.categories.${categoryId}.channels.${channelId}`;
 
   const VoiceTopic = `/video/call`;
 
-  return { ChannelTopic, destination, VoiceTopic };
+  const StatusTopic = `/topic/rooms.${roomId}.status`;
+  const StatusSend = `/app/rooms/${roomId}/status`;
+
+  return { ChannelTopic, ChatDestination, VoiceTopic, StatusTopic, StatusSend };
 };

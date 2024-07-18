@@ -1,56 +1,42 @@
 import { Box } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { getMembers } from '@/lib/api/afterLogin/memberApi';
+import useRoomStore from '@/lib/stores/useRoomStore';
+import { IMember } from '@/types/member';
+import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
 import List from './Base';
 
-const dummyData = [
-  {
-    id: 1,
-    name: '김땡땡',
-    status: 'ONLINE',
-  },
-  {
-    id: 2,
-    name: '박땡땡',
-    status: 'OFFLINE',
-  },
-  {
-    id: 3,
-    name: '정땡땡',
-    status: 'ONLINE',
-  },
-  {
-    id: 4,
-    name: '이땡땡',
-    status: 'OFFLINE',
-  },
-  {
-    id: 5,
-    name: '최땡땡',
-    status: 'OFFLINE',
-  },
-];
-
 const MemberList = () => {
-  const onlineMembers = dummyData.filter(
-    (member) => member.status === 'ONLINE',
-  );
+  const {
+    currentChannelPath: { roomId },
+  } = useRoomStore();
 
-  const offlineMembers = dummyData.filter(
-    (member) => member.status === 'OFFLINE',
-  );
+  // get members
+  const { data } = useQuery<IMember[], Error>({
+    queryKey: QUERY_KEYS.MEMBERS(roomId),
+    queryFn: () => getMembers(roomId),
+  });
+
+  const onlineMembers = data?.filter((member) => member.status === 'online');
+
+  const offlineMembers = data?.filter((member) => member.status === 'offline');
 
   return (
     <Box bg={'gray.800'}>
-      <List type={'ONLINE'}>
-        {onlineMembers.map((member) => (
-          <List.Member key={member.id} name={member.name} />
-        ))}
-      </List>
-
-      <List type={'OFFLINE'}>
-        {offlineMembers.map((member) => (
-          <List.Member key={member.id} name={member.name} />
-        ))}
-      </List>
+      {onlineMembers && onlineMembers?.length > 0 && (
+        <List type={'ONLINE'}>
+          {onlineMembers?.map((member) => (
+            <List.Member key={member.username} name={member.username} />
+          ))}
+        </List>
+      )}
+      {offlineMembers && offlineMembers?.length > 0 && (
+        <List type={'OFFLINE'}>
+          {offlineMembers?.map((member) => (
+            <List.Member key={member.username} name={member.username} />
+          ))}
+        </List>
+      )}
     </Box>
   );
 };
