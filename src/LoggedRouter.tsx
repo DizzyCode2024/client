@@ -5,21 +5,24 @@ import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import RoomList from './components/room/RoomList';
+import axiosInstance from './lib/api/afterLogin/axiosInstance';
 import { QUERY_KEYS } from './lib/api/afterLogin/queryKeys';
 import { getRooms } from './lib/api/afterLogin/roomApi';
 import { getSecondaryToken } from './lib/api/afterLogin/token';
+import useStatusPayload from './lib/hooks/status/useStatusPayload';
+import useAxiosInterceptor from './lib/hooks/useAxiosInterceptor';
 import useStompClient from './lib/hooks/useStompClient';
-import { useAuthStore } from './lib/stores/useAuthStore';
 import useSocketStore from './lib/stores/useSocketStore';
 import { BROKER_URL } from './lib/utils/config';
 import DMPage from './pages/DMPage';
 import ExplorePage from './pages/ExplorePage';
 import FriendPage from './pages/FriendPage';
 import RoomPage from './pages/RoomPage';
-import { IMember } from './types/member';
 import { IRoom } from './types/room';
 
 const LoggedRouter = () => {
+  // set up axiosInstance
+  useAxiosInterceptor(axiosInstance);
   // secondary token
   const [ST, setST] = useState<string | null>(null);
   // get rooms
@@ -30,7 +33,8 @@ const LoggedRouter = () => {
 
   // 웹소켓 연결
   const { client, setClient, isConnected, setIsConnected } = useSocketStore();
-  const { subscribe, unsubscribe, sendMessage } = useStompClient();
+  const { subscribe, unsubscribe, sendMessage, deactivateSocket } =
+    useStompClient();
 
   // get secondary token
   const getST = async () => {
@@ -64,9 +68,7 @@ const LoggedRouter = () => {
     }
 
     return () => {
-      console.log('deactivate');
-      client?.deactivate();
-      setClient(null);
+      deactivateSocket();
       setST(null);
     };
   }, [setClient, setIsConnected, ST]);
@@ -114,40 +116,24 @@ const LoggedRouter = () => {
       });
       subscriptionsRef.current.clear();
     }
-    // return () => {
-    //   subscriptionsRef.current.forEach((subscription) => {
-    //     unsubscribe(subscription);
-    //   });
-    //   subscriptionsRef.current.clear();
-    // };
   }, [rooms, isConnected, subscribe, unsubscribe, client]);
 
   // update online status
-  const username = useAuthStore((state) => state.user?.username);
+  const { onlinePayload, offlinePayload } = useStatusPayload();
 
   useEffect(() => {
-    if (rooms && username && isConnected && client) {
-      const payload: IMember = {
-        username,
-        status: 'online',
-      };
+    if (rooms && isConnected && client) {
       rooms.forEach((room) => {
-        sendMessage(`/app/rooms/${room.roomId}/status`, payload);
+        sendMessage(`/app/rooms/${room.roomId}/status`, onlinePayload);
       });
     }
 
     return () => {
-      if (username) {
-        const payload: IMember = {
-          username,
-          status: 'offline',
-        };
-        rooms?.forEach((room) => {
-          sendMessage(`/app/rooms/${room.roomId}/status`, payload);
-        });
-      }
+      rooms?.forEach((room) => {
+        sendMessage(`/app/rooms/${room.roomId}/status`, offlinePayload);
+      });
     };
-  }, [rooms, isConnected, client, username]);
+  }, [rooms, isConnected, client]);
 
   return (
     <Box display={'flex'}>
