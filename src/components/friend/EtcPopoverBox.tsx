@@ -1,6 +1,6 @@
 import { PopoverContent, PopoverBody, Stack } from '@chakra-ui/react';
 import { spacing } from '@/lib/constants/spacing';
-import useHandleFriend from '@/lib/hooks/useHandleFriend';
+import { useHandleFriend } from '@/lib/hooks/handlers';
 import PopoverBtn from './PopoverBtn';
 
 interface EtcPopoverBoxProps {

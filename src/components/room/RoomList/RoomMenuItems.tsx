@@ -4,7 +4,7 @@ import { RiFileAddFill } from 'react-icons/ri';
 import { VscSignOut } from 'react-icons/vsc';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { MenuDivider, useDisclosure } from '@chakra-ui/react';
-import useHandleRoom from '@/lib/hooks/useHandleRoom';
+import { useHandleRoom } from '@/lib/hooks/handlers';
 import AddCategoryModal from '../RoomMenu/AddCategoryModal';
 
 const RoomMenuItems = () => {

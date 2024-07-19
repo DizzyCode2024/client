@@ -1,8 +1,8 @@
+import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
+import { createCategory } from '@/lib/api/afterLogin/roomApi';
 import { useCustomToast } from '@/lib/hooks/useCustomToast';
+import { ICategory, RoomId } from '@/types/room';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { ICategory, RoomId } from '../../types/room';
-import { createCategory } from '../api/afterLogin/roomApi';
-import { QUERY_KEYS } from '../api/afterLogin/queryKeys';
 
 const useHandleCategory = () => {
   const toast = useCustomToast();

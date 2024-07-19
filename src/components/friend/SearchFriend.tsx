@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Box, Input, Button, FormControl } from '@chakra-ui/react';
-import useHandleFriend from '@/lib/hooks/useHandleFriend';
+import { useHandleFriend } from '@/lib/hooks/handlers';
 
 const SearchFriend = () => {
   const { sendFriendRequestByIdMutation, sendFriendRequestByNameMutation } =

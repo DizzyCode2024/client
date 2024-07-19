@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import { ReactNode } from 'react';
-import useHandleFriend from '@/lib/hooks/useHandleFriend';
+import { useHandleFriend } from '@/lib/hooks/handlers';
 import WaitingBox from './WaitingBox';
 
 const Container = ({ children }: { children: ReactNode }) => (

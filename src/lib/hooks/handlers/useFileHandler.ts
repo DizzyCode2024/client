@@ -1,5 +1,5 @@
-import axiosInstance from '../api/afterLogin/axiosInstance';
-import useFilesStore from '../stores/useFileStore';
+import axiosInstance from '../../api/afterLogin/axiosInstance';
+import useFilesStore from '../../stores/useFileStore';
 
 const useFileHandler = () => {
   const { files, clearFiles } = useFilesStore();

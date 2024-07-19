@@ -11,7 +11,8 @@ import {
   Text,
 } from '@chakra-ui/react';
 import { useState } from 'react';
-import useHandleCategory from '../../../lib/hooks/useHandleCategory';
+
+import { useHandleCategory } from '@/lib/hooks/handlers';
 import { RoomId } from '../../../types/room';
 
 const AddCategoryModal = ({
