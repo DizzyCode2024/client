@@ -1,8 +1,8 @@
+import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
+import { createChannel } from '@/lib/api/afterLogin/roomApi';
 import { useCustomToast } from '@/lib/hooks/useCustomToast';
 import { RoomId } from '@/types/room';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { createChannel } from '../api/afterLogin/roomApi';
-import { QUERY_KEYS } from '../api/afterLogin/queryKeys';
 
 const useHandleChannel = (roomId: RoomId) => {
   const toast = useCustomToast();

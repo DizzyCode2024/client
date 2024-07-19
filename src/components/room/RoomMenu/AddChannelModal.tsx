@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 import { useState } from 'react';
 
-import useHandleChannel from '@/lib/hooks/useHandleChannel';
+import { useHandleChannel } from '@/lib/hooks/handlers';
 import { CategoryId, ChannelType, RoomId } from '../../../types/room';
 
 const AddChannelModal = ({

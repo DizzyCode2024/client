@@ -4,7 +4,7 @@ import { IMessage, StompSubscription } from '@stomp/stompjs';
 import { IMember } from '@/types/member';
 
 const useStompClient = () => {
-  const { client, isConnected } = useSocketStore();
+  const { client, isConnected, setClient } = useSocketStore();
 
   const subscribe = (
     destination: string,
@@ -28,10 +28,17 @@ const useStompClient = () => {
     }
   };
 
+  const deactivateSocket = () => {
+    console.log('=========deactivate=========');
+    client?.deactivate();
+    setClient(null);
+  };
+
   return {
     subscribe,
     unsubscribe,
     sendMessage,
+    deactivateSocket,
   };
 };
 

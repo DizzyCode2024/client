@@ -1,6 +1,7 @@
 import { ChatIcon, StarIcon, UnlockIcon } from '@chakra-ui/icons';
 import { Box, Tooltip } from '@chakra-ui/react';
 import { useAuthActions } from '@/lib/hooks/useAuthActions';
+import useStatusPayload from '@/lib/hooks/status/useStatusPayload';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
@@ -26,8 +27,9 @@ const FriendTopMenu = ({
   onSelectMenu: (menu: string) => void;
 }) => {
   const { signout } = useAuthActions();
+  const { offlinePayload } = useStatusPayload();
   const handleLogout = () => {
-    signout();
+    signout(offlinePayload);
   };
 
   return (

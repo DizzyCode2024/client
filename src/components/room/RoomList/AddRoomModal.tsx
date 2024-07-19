@@ -1,4 +1,4 @@
-import useHandleRoom from '@/lib/hooks/useHandleRoom';
+import { useHandleRoom } from '@/lib/hooks/handlers';
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import {
   Box,

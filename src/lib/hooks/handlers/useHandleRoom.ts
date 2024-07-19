@@ -3,8 +3,12 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { CreateRoomResponse, RoomId } from '@/types/room';
-import { createRoom, deleteRoom, leaveRoom } from '../api/afterLogin/roomApi';
-import { QUERY_KEYS } from '../api/afterLogin/queryKeys';
+import {
+  createRoom,
+  deleteRoom,
+  leaveRoom,
+} from '@/lib/api/afterLogin/roomApi';
+import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
 
 const useHandleRoom = () => {
   const toast = useCustomToast();

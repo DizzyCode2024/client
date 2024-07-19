@@ -15,10 +15,3 @@ export interface IUser {
   email: string;
   username: string;
 }
-
-export interface IAuthState {
-  user: IUser | null;
-  token: string | null;
-  setUser: (user: IUser, token: string) => void;
-  clearUser: () => void;
-}

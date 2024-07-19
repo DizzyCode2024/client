@@ -1,13 +1,16 @@
 import signupAxiosInstance from '@/lib/api/beforeLogin/signupAxiosInstance';
+import { IMember } from '@/types/member';
 import { useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { useAuthStore } from '../stores/useAuthStore';
 import axiosInstance from '../api/afterLogin/axiosInstance';
+import { postStatus } from '../api/afterLogin/memberApi';
+import { useAuthStore } from '../stores/useAuthStore';
+import useStompClient from './useStompClient';
 
 interface IUseAuth {
   signin: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string, username: string) => Promise<void>;
-  signout: () => void;
+  signout: (offlinePayload: IMember) => void;
 }
 
 export const useAuthActions = (): IUseAuth => {
@@ -15,6 +18,7 @@ export const useAuthActions = (): IUseAuth => {
   const navigate = useNavigate();
   const setUser = useAuthStore((state) => state.setUser);
   const clearUser = useAuthStore((state) => state.clearUser);
+  const { deactivateSocket } = useStompClient();
 
   const signup = async (email: string, password: string, username: string) => {
     try {
@@ -74,13 +78,16 @@ export const useAuthActions = (): IUseAuth => {
     }
   };
 
-  const signout = async () => {
+  const signout = async (offlinePayload: IMember) => {
     try {
       localStorage.removeItem('accessToken');
       document.cookie =
         'refreshToken=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=/;';
       useAuthStore.getState().clearUser();
       const response = await axiosInstance.post(`/logout`, {});
+      await postStatus(offlinePayload);
+      deactivateSocket();
+
       if (response) {
         localStorage.removeItem('accessToken');
         clearUser();

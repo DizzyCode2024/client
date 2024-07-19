@@ -1,6 +1,13 @@
-import { IAuthState, IUser } from '@/types/user';
+import { IUser } from '@/types/user';
 import { create } from 'zustand';
 import { persist } from 'zustand/middleware';
+
+interface IAuthState {
+  user: IUser | null;
+  token: string | null;
+  setUser: (user: IUser, token: string) => void;
+  clearUser: () => void;
+}
 
 export const useAuthStore = create(
   persist<IAuthState>(

@@ -9,13 +9,13 @@ import {
   getFriendsList,
   getPendingFriendRequests,
   deleteFriendRequest,
-} from '../api/afterLogin/friendApi';
+} from '@/lib/api/afterLogin/friendApi';
 import {
   IFriendRequestById,
   IFriendRequestByName,
   IFriendAction,
   IFriendRequest,
-} from '../../types/friend';
+} from '@/types/friend';
 
 const useHandleFriend = () => {
   const { user } = useAuthStore();

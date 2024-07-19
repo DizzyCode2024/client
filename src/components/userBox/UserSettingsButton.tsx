@@ -4,12 +4,14 @@ import { SettingsIcon } from '@chakra-ui/icons';
 import { Menu, MenuButton, MenuList } from '@chakra-ui/react';
 import { motion } from 'framer-motion';
 import { VscSignOut } from 'react-icons/vsc';
+import useStatusPayload from '@/lib/hooks/status/useStatusPayload';
 import MenuItemWithIcon from '../shared/MenuItemWithIcon';
 
 const UserSettingsButton = () => {
   const MotionSettingsIcon = motion(SettingsIcon);
 
   const { signout } = useAuthActions();
+  const { offlinePayload } = useStatusPayload();
 
   return (
     <Menu m={2}>
@@ -28,7 +30,7 @@ const UserSettingsButton = () => {
           text={'로그아웃'}
           icon={VscSignOut}
           colorScheme={'red'}
-          onClick={() => signout()}
+          onClick={() => signout(offlinePayload)}
         />
       </MenuList>
     </Menu>
