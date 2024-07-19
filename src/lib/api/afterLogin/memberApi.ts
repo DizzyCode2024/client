@@ -4,7 +4,6 @@ import axiosInstance from './axiosInstance';
 
 export const getMembers = async (roomId: RoomId): Promise<IMember[]> => {
   const response = await axiosInstance.get(`/rooms/${roomId}/members`);
-  console.log(response);
   return response.data;
 };
 

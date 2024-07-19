@@ -19,6 +19,7 @@ import ExplorePage from './pages/ExplorePage';
 import FriendPage from './pages/FriendPage';
 import RoomPage from './pages/RoomPage';
 import { IRoom } from './types/room';
+import useHeartbeat from './lib/hooks/status/useHeartbeat';
 
 const LoggedRouter = () => {
   // set up axiosInstance
@@ -134,6 +135,7 @@ const LoggedRouter = () => {
       });
     };
   }, [rooms, isConnected, client]);
+  useHeartbeat(10000);
 
   return (
     <Box display={'flex'}>
