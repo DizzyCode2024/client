@@ -7,7 +7,7 @@ import { StompSubscription } from '@stomp/stompjs';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { useDestination } from '../../lib/hooks/useDestination';
-import { IChat } from '../../types/chat';
+import { IChat } from '../../types';
 import MemberList from '../memberList';
 import ChatContainer from './ChatBody/ChatContainer';
 import Header from './ChatHeader/Header';

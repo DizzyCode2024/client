@@ -18,8 +18,9 @@ import DMPage from './pages/DMPage';
 import ExplorePage from './pages/ExplorePage';
 import FriendPage from './pages/FriendPage';
 import RoomPage from './pages/RoomPage';
-import { IRoom } from './types/room';
+
 import useHeartbeat from './lib/hooks/status/useHeartbeat';
+import { IRoom } from './types';
 
 const LoggedRouter = () => {
   // set up axiosInstance

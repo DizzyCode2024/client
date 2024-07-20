@@ -17,7 +17,7 @@ import {
 import { useState } from 'react';
 
 import { useHandleChannel } from '@/lib/hooks/handlers';
-import { CategoryId, ChannelType, RoomId } from '../../../types/room';
+import { CategoryId, ChannelType, RoomId } from '@/types';
 
 const AddChannelModal = ({
   isOpen,

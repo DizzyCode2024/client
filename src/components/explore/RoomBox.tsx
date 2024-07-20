@@ -1,8 +1,8 @@
 import { spacing } from '@/lib/constants/spacing';
 import { useCustomToast } from '@/lib/hooks/useCustomToast';
 import { Box } from '@chakra-ui/react';
-import useEnterRoom from '../../lib/hooks/explore/useEnterRoom';
-import { IRoomBox } from '../../types/explore';
+import useEnterRoom from '@/lib/hooks/explore/useEnterRoom';
+import { IRoomBox } from '@/types';
 
 const RoomBox = ({ roomId, roomName, open, isMember }: IRoomBox) => {
   const { mutate: enterRoom } = useEnterRoom(roomId);

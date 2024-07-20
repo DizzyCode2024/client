@@ -2,7 +2,7 @@ import { useCustomToast } from '@/lib/hooks/useCustomToast';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { RoomId } from '@/types/room';
+import { RoomId } from '@/types';
 import { enterRoom } from '@/lib/api/afterLogin/roomApi';
 import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
 

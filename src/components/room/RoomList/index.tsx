@@ -1,7 +1,7 @@
 import { Box, Divider, Stack, Text } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
-import { IRoom } from '../../../types/room';
+import { IRoom } from '@/types';
 import AddRoomButton from './AddRoomButton';
 import DMButton from './DMButton';
 import ExploreButton from './ExploreButton';

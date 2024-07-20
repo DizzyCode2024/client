@@ -7,8 +7,8 @@ import { useAuthStore } from '@/lib/stores/useAuthStore';
 import useFilesStore from '@/lib/stores/useFileStore';
 import { useFileHandler } from '@/lib/hooks/handlers';
 import useStompClient from '@/lib/hooks/useStompClient';
-import { useDestination } from '../../../lib/hooks/useDestination';
-import { ISendChatPayload } from '../../../types/chat';
+import { useDestination } from '@/lib/hooks/useDestination';
+import { ISendChatPayload } from '@/types';
 import FilePreview from './FilePreview';
 import InputPlusBtn from './InputPlusBtn';
 

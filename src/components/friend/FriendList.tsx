@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Box, Text } from '@chakra-ui/react';
-
-import { IFriendRequest } from '@/types/friend';
+import { IFriendRequest } from '@/types';
 import { useHandleFriend } from '@/lib/hooks/handlers';
 import FriendBox from './FriendBox';
 

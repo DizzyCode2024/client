@@ -4,8 +4,8 @@ import { useState } from 'react';
 
 import useRoomStore from '@/lib/stores/useRoomStore';
 import CustomTooltip from '@/components/shared/Tooltip';
+import { CategoryId } from '@/types';
 import AddChannelModal from './AddChannelModal';
-import { CategoryId } from '../../../types/room';
 
 const CategoryBox = ({
   name,

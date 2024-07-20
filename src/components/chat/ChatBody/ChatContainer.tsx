@@ -7,8 +7,8 @@ import {
   useInfiniteQuery,
 } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef } from 'react';
-import { getChats } from '../../../lib/api/afterLogin/chatApi';
-import { IChat } from '../../../types/chat';
+import { IChat } from '@/types';
+import { getChats } from '@/lib/api/afterLogin/chatApi';
 import ChatBox from './ChatBox';
 import NoChatUI from './NoChat';
 

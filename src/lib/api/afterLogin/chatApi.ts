@@ -1,5 +1,5 @@
 import axiosInstance from '@/lib/api/afterLogin/axiosInstance';
-import { CategoryId, ChannelId, RoomId } from '@/types/room';
+import { CategoryId, ChannelId, RoomId } from '@/types';
 
 interface getChatsProps {
   roomId: RoomId;

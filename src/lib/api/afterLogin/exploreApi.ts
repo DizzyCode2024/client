@@ -1,4 +1,4 @@
-import { IRoom } from '@/types/room';
+import { IRoom } from '@/types';
 import axiosInstance from './axiosInstance';
 
 // 모든 방 가져오기

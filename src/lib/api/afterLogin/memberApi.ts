@@ -1,5 +1,4 @@
-import { RoomId } from '@/types/room';
-import { IMember } from '@/types/member';
+import { RoomId, IMember } from '@/types';
 import axiosInstance from './axiosInstance';
 
 export const getMembers = async (roomId: RoomId): Promise<IMember[]> => {

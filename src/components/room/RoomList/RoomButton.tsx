@@ -13,7 +13,7 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { RoomId } from '../../../types/room';
+import { RoomId } from '@/types';
 import Indicator from './Indicator';
 import RoomMenuItems from './RoomMenuItems';
 

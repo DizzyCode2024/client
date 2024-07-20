@@ -1,7 +1,7 @@
 import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
 import { spacing } from '@/lib/constants/spacing';
 import useRoomStore from '@/lib/stores/useRoomStore';
-import { IRoom } from '@/types/room';
+import { IRoom } from '@/types';
 import { Box, Input } from '@chakra-ui/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';

@@ -8,7 +8,7 @@ import {
   IChannel,
   IRoom,
   RoomId,
-} from '@/types/room';
+} from '@/types';
 
 export const createRoom = async ({
   roomName,

@@ -15,7 +15,7 @@ import {
   IFriendRequestByName,
   IFriendAction,
   IFriendRequest,
-} from '@/types/friend';
+} from '@/types';
 
 const useHandleFriend = () => {
   const { user } = useAuthStore();

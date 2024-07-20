@@ -1,10 +1,10 @@
 import signupAxiosInstance from '@/lib/api/beforeLogin/signupAxiosInstance';
-import { IMember } from '@/types/member';
+import { IMember } from '@/types';
 import { useToast } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import axiosInstance from '../api/afterLogin/axiosInstance';
-import { postStatus } from '../api/afterLogin/memberApi';
-import { useAuthStore } from '../stores/useAuthStore';
+import axiosInstance from '@/lib/api/afterLogin/axiosInstance';
+import { postStatus } from '@/lib/api/afterLogin/memberApi';
+import { useAuthStore } from '@/lib/stores/useAuthStore';
 import useStompClient from './useStompClient';
 
 interface IUseAuth {

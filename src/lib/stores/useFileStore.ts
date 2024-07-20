@@ -1,5 +1,5 @@
 import { create } from 'zustand';
-import { IFile, IFileState } from '@/types/chat';
+import { IFile, IFileState } from '@/types';
 
 const useFilesStore = create<IFileState>((set) => ({
   files: [],

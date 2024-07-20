@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/lib/stores/useAuthStore';
-import { IMember } from '@/types/member';
+import { IMember } from '@/types';
 
 const useStatusPayload = () => {
   const { username, id: memberId } = useAuthStore((state) => state.user!);
