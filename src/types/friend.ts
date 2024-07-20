@@ -1,4 +1,4 @@
-export interface IFriendRequest {
+export interface IFriend {
   friendId: number;
   friendName: string;
   currentStatus: string;

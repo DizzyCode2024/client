@@ -1,10 +1,10 @@
 import axiosInstance from './axiosInstance';
-import { IFriendRequest } from '../../../types/friend';
+import { IFriend } from '../../../types/friend';
 
 export const sendFriendRequestById = async (
   senderId: number,
   receiverId: number,
-): Promise<IFriendRequest> => {
+): Promise<IFriend> => {
   const response = await axiosInstance.post(
     `/friendship/member1/${senderId}/member2/${receiverId}`,
     {
@@ -19,7 +19,7 @@ export const sendFriendRequestById = async (
 export const sendFriendRequestByName = async (
   senderId: number,
   username: string,
-): Promise<IFriendRequest> => {
+): Promise<IFriend> => {
   const response = await axiosInstance.post(
     `/friendship/member1/${senderId}/member2_name/${username}`,
     {
@@ -34,7 +34,7 @@ export const sendFriendRequestByName = async (
 export const rejectFriendRequest = async (
   member1Id: number,
   member2Id: number,
-): Promise<IFriendRequest> => {
+): Promise<IFriend> => {
   const response = await axiosInstance.post(
     `/friendship/reject/member1/${member1Id}/member2/${member2Id}`,
     {
@@ -49,7 +49,7 @@ export const rejectFriendRequest = async (
 export const acceptFriendRequest = async (
   member1Id: number,
   member2Id: number,
-): Promise<IFriendRequest> => {
+): Promise<IFriend> => {
   const response = await axiosInstance.post(
     `/friendship/accept/member1/${member1Id}/member2/${member2Id}`,
     {
@@ -61,16 +61,14 @@ export const acceptFriendRequest = async (
   return response.data;
 };
 
-export const getFriendsList = async (
-  memberId: number,
-): Promise<IFriendRequest[]> => {
+export const getFriendsList = async (memberId: number): Promise<IFriend[]> => {
   const response = await axiosInstance.get(`/friendship/member/${memberId}`);
   return response.data;
 };
 
 export const getPendingFriendRequests = async (
   memberId: number,
-): Promise<IFriendRequest[]> => {
+): Promise<IFriend[]> => {
   const response = await axiosInstance.get(
     `/friendship/pending/member/${memberId}`,
   );

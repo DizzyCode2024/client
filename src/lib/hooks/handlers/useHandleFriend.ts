@@ -14,7 +14,7 @@ import {
   IFriendRequestById,
   IFriendRequestByName,
   IFriendAction,
-  IFriendRequest,
+  IFriend,
 } from '@/types/friend';
 
 const useHandleFriend = () => {
@@ -155,13 +155,13 @@ const useHandleFriend = () => {
   });
 
   const useGetFriendsListQuery = () =>
-    useQuery<IFriendRequest[]>({
+    useQuery<IFriend[]>({
       queryKey: ['friends', userId],
       queryFn: () => getFriendsList(userId),
     });
 
   const useGetPendingFriendRequestsQuery = () =>
-    useQuery<IFriendRequest[]>({
+    useQuery<IFriend[]>({
       queryKey: ['pendingFriends', userId],
       queryFn: () => getPendingFriendRequests(userId),
     });
