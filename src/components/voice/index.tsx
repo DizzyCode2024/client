@@ -7,7 +7,7 @@ import {
 import { PiPhoneDisconnectFill } from 'react-icons/pi';
 import useVoiceStore from '@/lib/stores/voice/useVoiceStore';
 import { BiSolidMicrophone, BiSolidMicrophoneOff } from 'react-icons/bi';
-import { spacing } from '@/lib/constants/spacing';
+import { spacing } from '@/lib/constants';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { MdScreenShare, MdStopScreenShare } from 'react-icons/md';
 import useVoiceStateStore from '@/lib/stores/voice/useVoiceStateStore';

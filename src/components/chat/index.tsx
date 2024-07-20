@@ -1,4 +1,4 @@
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
+import { QUERY_KEYS } from '@/lib/api';
 import useStompClient from '@/lib/hooks/useStompClient';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import useSocketStore from '@/lib/stores/useSocketStore';

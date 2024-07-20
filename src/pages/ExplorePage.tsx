@@ -1,12 +1,11 @@
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
-import { spacing } from '@/lib/constants/spacing';
+import { QUERY_KEYS, getAllRooms } from '@/lib/api';
+import { spacing } from '@/lib/constants';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { IRoom } from '@/types';
 import { Box, Input } from '@chakra-ui/react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import RoomBox from '../components/explore/RoomBox';
-import { getAllRooms } from '../lib/api/afterLogin/exploreApi';
 
 const ExplorePage = () => {
   const { setCurrentChannelPath } = useRoomStore();

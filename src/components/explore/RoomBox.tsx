@@ -1,4 +1,4 @@
-import { spacing } from '@/lib/constants/spacing';
+import { spacing } from '@/lib/constants';
 import { useCustomToast } from '@/lib/hooks/useCustomToast';
 import { Box } from '@chakra-ui/react';
 import useEnterRoom from '@/lib/hooks/explore/useEnterRoom';

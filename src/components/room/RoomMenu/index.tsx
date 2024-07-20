@@ -1,8 +1,7 @@
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
-import { getCategories } from '@/lib/api/afterLogin/roomApi';
+import { QUERY_KEYS, getCategories } from '@/lib/api';
 import UserBox from '@/components/userBox/UserBox';
 import MenuContainer from '@/components/shared/MenuContainer';
 import useStompClient from '@/lib/hooks/useStompClient';

@@ -1,5 +1,4 @@
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
-import { createCategory } from '@/lib/api/afterLogin/roomApi';
+import { QUERY_KEYS, createCategory } from '@/lib/api';
 import { useCustomToast } from '@/lib/hooks/useCustomToast';
 import { ICategory, RoomId } from '@/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';

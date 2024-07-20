@@ -1,6 +1,5 @@
 import CustomTooltip from '@/components/shared/Tooltip';
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
-import { getCategories } from '@/lib/api/afterLogin/roomApi';
+import { QUERY_KEYS, getCategories } from '@/lib/api';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { handleRightClick } from '@/lib/utils/handleRightClick';
 import {
