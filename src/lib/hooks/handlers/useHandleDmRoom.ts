@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { useCustomToast } from '@/lib/hooks/useCustomToast';
+import { useNavigate } from 'react-router-dom';
 import {
   createDmRoomApi,
   fetchDmRoomDetailsApi,
@@ -18,6 +19,7 @@ export interface DmRoomResponse {
 const useHandleDmRoom = () => {
   const toast = useCustomToast();
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   const { mutate: addDmRoomMutation } = useMutation<
     DmRoomResponse,
@@ -25,13 +27,14 @@ const useHandleDmRoom = () => {
     IDmRoom
   >({
     mutationFn: createDmRoomApi,
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast({
         title: 'DM 방 생성 성공',
         description: '새로운 DM 방이 생성되었습니다.',
         status: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['dmRooms'] });
+      navigate(`/chat/main/${data.roomId}`);
     },
     onError: (error) => {
       toast({

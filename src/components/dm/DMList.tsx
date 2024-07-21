@@ -7,6 +7,7 @@ import {
   Spinner,
   useDisclosure,
 } from '@chakra-ui/react';
+import { useNavigate } from 'react-router-dom';
 import { SmallAddIcon, StarIcon } from '@chakra-ui/icons';
 import useHandleDmRoom from '@/lib/hooks/handlers/useHandleDmRoom';
 import useDmStore from '@/lib/stores/useDmStore';
@@ -26,16 +27,23 @@ const Container = ({ children }: { children: React.ReactNode }) => (
   </Box>
 );
 const DMList = () => {
+  const navigate = useNavigate();
   const { useGetDmRoomsQuery } = useHandleDmRoom();
   const { data: rooms, isLoading, isError, error } = useGetDmRoomsQuery();
   const { setDmRooms } = useDmStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef(null);
+  const btnRef = useRef<HTMLDivElement>(null);
   const [modalPosition, setModalPosition] = useState({
     top: 50,
     left: 250,
     right: null,
   });
+  const [selectedRoomId, setSelectedRoomId] = useState<number | null>(null);
+
+  const handleDmRoomSelect = (roomId: number) => {
+    setSelectedRoomId(roomId);
+    navigate(`/chat/main/${roomId}`);
+  };
 
   useEffect(() => {
     if (btnRef.current) {
@@ -52,7 +60,6 @@ const DMList = () => {
     if (rooms) {
       setDmRooms(rooms);
     }
-    console.log(rooms);
   }, [rooms, setDmRooms]);
 
   if (isError)
@@ -142,7 +149,7 @@ const DMList = () => {
       {isLoading ? (
         <Spinner color={'white'} ml={'auto'} mr={'auto'} />
       ) : (
-        filteredRooms.map((room: number) => (
+        filteredRooms.map((room: IDmRoom) => (
           <Box
             key={room.roomId}
             as={'button'}
@@ -151,10 +158,12 @@ const DMList = () => {
             height={'3rem'}
             ml={1}
             mr={1}
-            color={'gray.300'}
             borderRadius={'3px'}
             transition={'all 0.2s ease-in'}
+            bg={room.roomId === selectedRoomId ? 'gray.600' : 'transparent'}
+            color={room.roomId === selectedRoomId ? 'white' : 'gray.300'}
             _hover={{ bg: 'gray.600', color: 'white' }}
+            onClick={() => handleDmRoomSelect(room.roomId)}
           >
             <Text marginLeft={'1rem'}>
               {room.memberCount > 2 ? room.roomName : room.temporaryRoomName}

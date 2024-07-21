@@ -35,7 +35,7 @@ const FriendTopMenu = ({
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
-  const btnRef = useRef(null);
+  const btnRef = useRef<HTMLDivElement>(null);
   const [modalPosition, setModalPosition] = useState({
     top: 0,
     left: null,

@@ -53,7 +53,7 @@ const DmCreateModal = ({
       user?.username,
       ...selectedFriends.map((f) => f.friendName),
     ];
-    console.log({ roomName: dmName, userNames });
+
     addDmRoomMutation({ roomName: dmName, userNames });
     onClose();
   };
