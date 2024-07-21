@@ -7,14 +7,9 @@
 
 ## Tech Stack
 
-<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black"/>
-<img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=Typescript&logoColor=white"/>
+<img src="https://img.shields.io/badge/React-61DAFB?style=flat-square&logo=React&logoColor=black"/> <img src="https://img.shields.io/badge/Typescript-3178C6?style=flat-square&logo=Typescript&logoColor=white"/> <img src="https://img.shields.io/badge/TanStackQuery-FF4154?style=flat-square&logo=ReactQuery&logoColor=white"/> <img src="https://img.shields.io/badge/Zustand-66584D?style=flat-square&logo=Zustand&logoColor=white"/> <img src="https://img.shields.io/badge/ChakraUI-319795?style=flat-square&logo=ChakraUI&logoColor=white"/> <img src="https://img.shields.io/badge/StyledComponents-DB7093?style=flat-square&logo=StyledComponents&logoColor=white"/>
 
-<img src="https://img.shields.io/badge/TanStackQuery-FF4154?style=flat-square&logo=ReactQuery&logoColor=white"/>
-<img src="https://img.shields.io/badge/Zustand-66584D?style=flat-square&logo=Zustand&logoColor=white"/>
-
-<img src="https://img.shields.io/badge/ChakraUI-319795?style=flat-square&logo=ChakraUI&logoColor=white"/>
-<img src="https://img.shields.io/badge/StyledComponents-DB7093?style=flat-square&logo=StyledComponents&logoColor=white"/>
+<br />
 
 ## Features in this application
 
@@ -40,6 +35,8 @@
 
 **Friend**  
 👯 Add Friend
+
+<br />
 
 ## Articles
 
