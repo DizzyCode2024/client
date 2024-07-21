@@ -40,6 +40,10 @@ const DMList = () => {
   });
   const [selectedRoomId, setSelectedRoomId] = useState<number | null>(null);
 
+  const navigateToFriendList = () => {
+    navigate(`/chat/main`);
+  };
+
   const handleDmRoomSelect = (roomId: number) => {
     setSelectedRoomId(roomId);
     navigate(`/chat/main/${roomId}`);
@@ -112,6 +116,7 @@ const DMList = () => {
           borderRadius={'3px'}
           transition={'all 0.2s ease-in'}
           _hover={{ bg: 'gray.600', color: 'white' }}
+          onClick={() => navigateToFriendList()}
         >
           <StarIcon width={'0.7rem'} mr={1} />
           {'친구'}

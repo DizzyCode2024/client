@@ -82,9 +82,6 @@ const FriendList = () => {
                 key={friend.friendId}
                 id={friend.friendId}
                 name={friend.friendName}
-                onClickDM={() =>
-                  console.log('DM clicked for', friend.friendName)
-                }
               />
             ))}
           </PopoverManager>

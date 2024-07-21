@@ -8,6 +8,12 @@ export interface IDmRoom {
   memberCount: number;
   temporaryRoomName: string | null;
 }
+
+export interface IDmRoomCreation {
+  roomName: string;
+  userNames: UserId[];
+}
+
 export interface IDmChannelInfo {
   name: string;
   type: 'PRIVATE' | 'GROUP';
@@ -28,4 +34,8 @@ export interface IDmState {
   currentChannel: IDmChannelPath;
   recentVisits: IDmVisit[];
   favoriteChannels: IDmChannelPath[];
+  dmRooms: IDmRoom[];
+  setDmRooms: (rooms: IDmRoom[]) => void;
+  addDmRoom: (room: IDmRoom) => void;
+  findDmRoomByUserId: (userId: UserId) => IDmRoom | undefined;
 }
