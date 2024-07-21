@@ -1,3 +1,4 @@
+import { useRef, useState, useEffect } from 'react';
 import { ChatIcon, StarIcon, UnlockIcon } from '@chakra-ui/icons';
 import { Box, Tooltip, useDisclosure } from '@chakra-ui/react';
 import { useAuthActions } from '@/lib/hooks/useAuthActions';
@@ -34,6 +35,23 @@ const FriendTopMenu = ({
   };
 
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const btnRef = useRef(null);
+  const [modalPosition, setModalPosition] = useState({
+    top: 0,
+    left: null,
+    right: 10,
+  });
+
+  useEffect(() => {
+    if (btnRef.current) {
+      const rect = btnRef.current.getBoundingClientRect();
+      setModalPosition({
+        top: rect.bottom + window.scrollY,
+        left: rect.left + window.scrollX,
+        right: rect.right + window.scrollX,
+      });
+    }
+  }, [isOpen]);
 
   return (
     <>
@@ -88,7 +106,11 @@ const FriendTopMenu = ({
           </Tooltip>
         </Box>
       </Container>
-      <DmCreateModal isOpen={isOpen} onClose={onClose} />
+      <DmCreateModal
+        isOpen={isOpen}
+        onClose={onClose}
+        modalPosition={modalPosition}
+      />
     </>
   );
 };

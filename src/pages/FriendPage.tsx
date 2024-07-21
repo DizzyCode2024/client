@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Box } from '@chakra-ui/react';
 
-import DMList from '../components/friend/DMList';
+import DMList from '@/components/dm/DMList';
 import FriendTopMenu from '../components/friend/FriendTopMenu';
 import WaitingList from '../components/friend/WaitingList';
 import FriendRequest from '../components/friend/FriendRequest';

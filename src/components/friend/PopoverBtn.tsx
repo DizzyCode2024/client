@@ -20,7 +20,7 @@ const PopoverBtn = ({
   return (
     <Box
       bg={bgColor}
-      fontSize={'small'}
+      fontSize={'sm'}
       p={spacing.padding}
       color={textColor}
       textAlign={'left'}
