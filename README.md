@@ -17,7 +17,7 @@
 📱 Websockets (Sock.js, STOMP)  
 💬 1:1(DM), N:N(Channel) Chat  
 🟢 Real-time On/Offline Status  
-☑️ Real time Read/Unread Massage Marking _(Coming Soon)_
+☑️ Real time Read/Unread Message Marking _(Coming Soon)_
 
 **VIDEO CONFERENCE**  
 📞 1:1, N:N Video Conference  
