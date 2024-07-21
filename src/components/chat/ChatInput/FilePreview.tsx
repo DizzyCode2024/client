@@ -1,7 +1,7 @@
 import { Box, Image, Text, VStack, IconButton } from '@chakra-ui/react';
 import { FaFileAlt } from 'react-icons/fa';
 import { CloseIcon } from '@chakra-ui/icons';
-import { IFile } from '@/types/chat';
+import { IFile } from '@/types';
 
 interface FilePreviewProps {
   file: IFile;

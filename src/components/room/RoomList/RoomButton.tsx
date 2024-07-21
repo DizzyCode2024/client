@@ -1,6 +1,5 @@
 import CustomTooltip from '@/components/shared/Tooltip';
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
-import { getCategories } from '@/lib/api/afterLogin/roomApi';
+import { QUERY_KEYS, getCategories } from '@/lib/api';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { handleRightClick } from '@/lib/utils/handleRightClick';
 import {
@@ -13,7 +12,7 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { RoomId } from '../../../types/room';
+import { RoomId } from '@/types';
 import Indicator from './Indicator';
 import RoomMenuItems from './RoomMenuItems';
 

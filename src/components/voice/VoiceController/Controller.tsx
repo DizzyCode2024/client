@@ -1,4 +1,4 @@
-import { spacing } from '@/lib/constants/spacing';
+import { spacing } from '@/lib/constants';
 import { Flex } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import { Button, RedButton } from './Buttons';

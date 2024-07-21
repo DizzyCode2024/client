@@ -1,4 +1,4 @@
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
+import { QUERY_KEYS, getChats } from '@/lib/api';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { Box } from '@chakra-ui/react';
 import {
@@ -7,8 +7,7 @@ import {
   useInfiniteQuery,
 } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef } from 'react';
-import { getChats } from '../../../lib/api/afterLogin/chatApi';
-import { IChat } from '../../../types/chat';
+import { IChat } from '@/types';
 import ChatBox from './ChatBox';
 import NoChatUI from './NoChat';
 

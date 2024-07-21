@@ -5,8 +5,8 @@ import { ChakraProvider } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import GlobalStyle from '@/styles/GlobalStyle';
 import { chakraTheme, styledTheme } from '@/styles/theme';
+import { initializeAuthState } from '@/lib/api';
 import Router from './Router';
-import initializeAuthState from './lib/api/afterLogin/token';
 
 const queryClient = new QueryClient();
 

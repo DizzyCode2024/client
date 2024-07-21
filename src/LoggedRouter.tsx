@@ -5,10 +5,13 @@ import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import RoomList from './components/room/RoomList';
-import axiosInstance from './lib/api/afterLogin/axiosInstance';
-import { QUERY_KEYS } from './lib/api/afterLogin/queryKeys';
-import { getRooms } from './lib/api/afterLogin/roomApi';
-import { getSecondaryToken } from './lib/api/afterLogin/token';
+import {
+  QUERY_KEYS,
+  axiosInstance,
+  getRooms,
+  getSecondaryToken,
+} from './lib/api';
+import useHeartbeat from './lib/hooks/status/useHeartbeat';
 import useStatusPayload from './lib/hooks/status/useStatusPayload';
 import useAxiosInterceptor from './lib/hooks/useAxiosInterceptor';
 import useStompClient from './lib/hooks/useStompClient';
@@ -18,8 +21,7 @@ import DMPage from './pages/DMPage';
 import ExplorePage from './pages/ExplorePage';
 import FriendPage from './pages/FriendPage';
 import RoomPage from './pages/RoomPage';
-import { IRoom } from './types/room';
-import useHeartbeat from './lib/hooks/status/useHeartbeat';
+import { IRoom } from './types';
 
 const LoggedRouter = () => {
   // set up axiosInstance

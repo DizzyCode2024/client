@@ -1,21 +1,21 @@
-import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
+import {
+  acceptFriendRequest,
+  deleteFriendRequest,
+  getFriendsList,
+  getPendingFriendRequests,
+  rejectFriendRequest,
+  sendFriendRequestById,
+  sendFriendRequestByName,
+} from '@/lib/api';
 import { useCustomToast } from '@/lib/hooks/useCustomToast';
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import {
-  sendFriendRequestById,
-  sendFriendRequestByName,
-  rejectFriendRequest,
-  acceptFriendRequest,
-  getFriendsList,
-  getPendingFriendRequests,
-  deleteFriendRequest,
-} from '@/lib/api/afterLogin/friendApi';
-import {
+  IFriend,
+  IFriendAction,
   IFriendRequestById,
   IFriendRequestByName,
-  IFriendAction,
-  IFriend,
-} from '@/types/friend';
+} from '@/types';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 
 const useHandleFriend = () => {
   const { user } = useAuthStore();

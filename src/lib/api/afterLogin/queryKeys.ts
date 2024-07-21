@@ -1,4 +1,4 @@
-import { IChannelPath, RoomId } from '@/types/room';
+import { IChannelPath, RoomId } from '@/types';
 
 export const QUERY_KEYS = {
   ROOMS: ['rooms'],

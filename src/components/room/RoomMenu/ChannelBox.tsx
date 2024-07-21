@@ -3,7 +3,7 @@ import { Box, Icon, Text } from '@chakra-ui/react';
 import { MdKeyboardVoice } from 'react-icons/md';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { useNavigate } from 'react-router-dom';
-import { CategoryId, ChannelId, ChannelType } from '../../../types/room';
+import { CategoryId, ChannelId, ChannelType } from '@/types';
 
 interface ChannelBoxProps {
   channelId: ChannelId;

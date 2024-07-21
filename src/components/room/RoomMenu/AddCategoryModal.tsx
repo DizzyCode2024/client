@@ -13,7 +13,7 @@ import {
 import { useState } from 'react';
 
 import { useHandleCategory } from '@/lib/hooks/handlers';
-import { RoomId } from '../../../types/room';
+import { RoomId } from '@/types';
 
 const AddCategoryModal = ({
   isOpen,

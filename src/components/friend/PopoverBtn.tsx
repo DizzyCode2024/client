@@ -1,4 +1,4 @@
-import { spacing } from '@/lib/constants/spacing';
+import { spacing } from '@/lib/constants';
 import { Box } from '@chakra-ui/react';
 
 interface PopoverButtonProps {

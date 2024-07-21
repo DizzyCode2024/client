@@ -1,4 +1,4 @@
-import { ChannelType, IChannelPath } from '@/types/room';
+import { ChannelType, IChannelPath } from '@/types';
 import { create } from 'zustand';
 
 type IChannelInfo = {

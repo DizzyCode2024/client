@@ -1,16 +1,14 @@
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
-import { getCategories } from '@/lib/api/afterLogin/roomApi';
+import { QUERY_KEYS, getCategories } from '@/lib/api';
 import UserBox from '@/components/userBox/UserBox';
 import MenuContainer from '@/components/shared/MenuContainer';
 import useStompClient from '@/lib/hooks/useStompClient';
 import useSocketStore from '@/lib/stores/useSocketStore';
 import { StompSubscription } from '@stomp/stompjs';
 import { useDestination } from '@/lib/hooks/useDestination';
-import { IMember } from '@/types/member';
-import { ICatwChannel, IRoom } from '../../../types/room';
+import { ICatwChannel, IMember, IRoom } from '@/types';
 import CategoryBox from './CategoryBox';
 import ChannelBox from './ChannelBox';
 import RoomMenuButton from './RoomMenuButton';

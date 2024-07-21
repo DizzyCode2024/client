@@ -4,7 +4,7 @@ import {
   InternalAxiosRequestConfig,
 } from 'axios';
 import { useEffect } from 'react';
-import { accessTokenApi } from '../api/afterLogin/token';
+import { accessTokenApi } from '@/lib/api';
 import { useAuthActions } from './useAuthActions';
 import useStatusPayload from './status/useStatusPayload';
 

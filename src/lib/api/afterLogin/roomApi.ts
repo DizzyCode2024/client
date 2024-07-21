@@ -1,4 +1,3 @@
-import axiosInstance from '@/lib/api/afterLogin/axiosInstance';
 import {
   CategoryId,
   ChannelType,
@@ -8,7 +7,8 @@ import {
   IChannel,
   IRoom,
   RoomId,
-} from '@/types/room';
+} from '@/types';
+import axiosInstance from './axiosInstance';
 
 export const createRoom = async ({
   roomName,

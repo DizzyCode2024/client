@@ -1,10 +1,8 @@
+import { QUERY_KEYS, enterRoom } from '@/lib/api';
 import { useCustomToast } from '@/lib/hooks/useCustomToast';
+import { RoomId } from '@/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-
-import { RoomId } from '@/types/room';
-import { enterRoom } from '@/lib/api/afterLogin/roomApi';
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
 
 const useEnterRoom = (roomId: RoomId) => {
   const toast = useCustomToast();

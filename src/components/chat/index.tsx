@@ -1,4 +1,4 @@
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
+import { QUERY_KEYS } from '@/lib/api';
 import useStompClient from '@/lib/hooks/useStompClient';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import useSocketStore from '@/lib/stores/useSocketStore';
@@ -7,7 +7,7 @@ import { StompSubscription } from '@stomp/stompjs';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { useDestination } from '../../lib/hooks/useDestination';
-import { IChat } from '../../types/chat';
+import { IChat } from '../../types';
 import MemberList from '../memberList';
 import ChatContainer from './ChatBody/ChatContainer';
 import Header from './ChatHeader/Header';

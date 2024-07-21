@@ -1,5 +1,6 @@
+import { IFriendRequest } from '@/types';
 import axiosInstance from './axiosInstance';
-import { IFriend } from '../../../types/friend';
+import { IFriend } from '@/types';
 
 export const sendFriendRequestById = async (
   senderId: number,

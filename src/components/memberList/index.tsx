@@ -1,9 +1,8 @@
+import { getMembers, QUERY_KEYS } from '@/lib/api';
+import useRoomStore from '@/lib/stores/useRoomStore';
+import { IMember } from '@/types';
 import { Box } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { getMembers } from '@/lib/api/afterLogin/memberApi';
-import useRoomStore from '@/lib/stores/useRoomStore';
-import { IMember } from '@/types/member';
-import { QUERY_KEYS } from '@/lib/api/afterLogin/queryKeys';
 import List from './Base';
 
 const MemberList = () => {

@@ -1,4 +1,4 @@
-import { spacing } from '@/lib/constants/spacing';
+import { spacing } from '@/lib/constants';
 import { Box, Flex, Text } from '@chakra-ui/react';
 import { ReactNode, createContext, useContext } from 'react';
 

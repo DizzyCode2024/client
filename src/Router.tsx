@@ -1,8 +1,7 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { RedirectIfLogged, RequireAuth } from '@/lib/api';
 import LoggedRouter from './LoggedRouter';
 import LoginPage from './pages/LoginPage';
-import RedirectIfLogged from './lib/api/afterLogin/RedirectIfLogged';
-import RequireAuth from './lib/api/beforeLogin/RequireAuth';
 import SignupPage from './pages/SignupPage';
 import WelcomePage from './pages/WelcomePage';
 

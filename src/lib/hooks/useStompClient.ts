@@ -1,7 +1,6 @@
-import { ISendChatPayload } from '@/types/chat';
+import { ISendChatPayload, IMember } from '@/types';
 import useSocketStore from '@/lib/stores/useSocketStore';
 import { IMessage, StompSubscription } from '@stomp/stompjs';
-import { IMember } from '@/types/member';
 
 const useStompClient = () => {
   const { client, isConnected, setClient } = useSocketStore();

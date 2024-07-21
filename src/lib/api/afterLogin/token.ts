@@ -29,7 +29,7 @@ export const accessTokenApi = async () => {
 };
 
 // initialize
-const initializeAuthState = () => {
+export const initializeAuthState = () => {
   const token = localStorage.getItem('accessToken');
   if (token) {
     const payload = JSON.parse(atob(token.split('.')[1]));
@@ -47,8 +47,6 @@ const initializeAuthState = () => {
     useAuthStore.getState().clearUser();
   }
 };
-
-export default initializeAuthState;
 
 // secondary token
 export const getSecondaryToken = async (): Promise<string | null> => {
