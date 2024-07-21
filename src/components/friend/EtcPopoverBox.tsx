@@ -30,13 +30,11 @@ const EtcPopoverBox = ({ onClose, id }: EtcPopoverBoxProps) => {
     <PopoverContent
       bg={'gray.900'}
       color={'white'}
-      w={'200px'}
       borderColor={'transparent'}
-      border={'0'}
       borderRadius={10}
       overflow={'hidden'}
-      m={'3'}
-      ml={20}
+      m={2}
+      w={250}
     >
       <PopoverBody p={'0'} m={spacing.gutter}>
         <Stack>

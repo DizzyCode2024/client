@@ -10,8 +10,8 @@ import {
 import { useCustomToast } from '@/lib/hooks/useCustomToast';
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import {
+  IFriend,
   IFriendAction,
-  IFriendRequest,
   IFriendRequestById,
   IFriendRequestByName,
 } from '@/types';
@@ -155,13 +155,13 @@ const useHandleFriend = () => {
   });
 
   const useGetFriendsListQuery = () =>
-    useQuery<IFriendRequest[]>({
+    useQuery<IFriend[]>({
       queryKey: ['friends', userId],
       queryFn: () => getFriendsList(userId),
     });
 
   const useGetPendingFriendRequestsQuery = () =>
-    useQuery<IFriendRequest[]>({
+    useQuery<IFriend[]>({
       queryKey: ['pendingFriends', userId],
       queryFn: () => getPendingFriendRequests(userId),
     });
