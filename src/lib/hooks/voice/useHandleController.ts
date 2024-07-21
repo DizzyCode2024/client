@@ -1,5 +1,5 @@
 import useVoiceStateStore from '@/lib/stores/voice/useVoiceStateStore';
-import useVideoStore from '@/lib/stores/voice/useVoiceStore';
+import useVideoStore from '@/lib/stores/voice/useVoiceControllerStore';
 import { useCallback } from 'react';
 
 const useHandleController = () => {

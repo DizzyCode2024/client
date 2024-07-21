@@ -1,9 +1,8 @@
+import { axiosInstance } from '@/lib/api';
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import useRoomStore from '@/lib/stores/useRoomStore';
+import useVoiceStore from '@/lib/stores/voice/useVoiceControllerStore';
 import useVoiceStateStore from '@/lib/stores/voice/useVoiceStateStore';
-import useVoiceStore from '@/lib/stores/voice/useVoiceStore';
-import { BASE_URL } from '@/lib/utils/config';
-import axios from 'axios';
 import { Device, OpenVidu, Publisher, StreamManager } from 'openvidu-browser';
 import { useCallback, useState } from 'react';
 import useHandleController from './useHandleController';
@@ -160,13 +159,9 @@ const useVoiceRoom = () => {
   const createSession = async (mySessionId: string) => {
     console.log('CREATE SESSION', mySessionId);
     try {
-      const response = await axios.post(
-        `${BASE_URL}/api/sessions`,
-        { customSessionId: mySessionId },
-        {
-          headers: { 'Content-Type': 'application/json' },
-        },
-      );
+      const response = await axiosInstance.post(`/api/sessions`, {
+        customSessionId: mySessionId,
+      });
       console.log('CREATE SESSION', response.data);
       return response.data; // The sessionId
     } catch (e) {
@@ -177,12 +172,9 @@ const useVoiceRoom = () => {
 
   const createToken = async (sessionId: any) => {
     try {
-      const response = await axios.post(
-        `${BASE_URL}/api/sessions/${sessionId}/connections`,
+      const response = await axiosInstance.post(
+        `/api/sessions/${sessionId}/connections`,
         {},
-        {
-          headers: { 'Content-Type': 'application/json' },
-        },
       );
 
       console.log('CREATE TOKEN', response.data);

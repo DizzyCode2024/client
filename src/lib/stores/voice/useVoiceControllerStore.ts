@@ -1,6 +1,6 @@
 import { create } from 'zustand';
 
-interface IVoiceState {
+interface IVoiceControllerState {
   videoOn: boolean;
   audioOn: boolean;
   screenShareOn: boolean;
@@ -9,7 +9,7 @@ interface IVoiceState {
   setScreenShareOn: (screenShareOn: boolean) => void;
 }
 
-const useVoiceStore = create<IVoiceState>((set) => ({
+const useVoiceControllerStore = create<IVoiceControllerState>((set) => ({
   videoOn: false,
   audioOn: false,
   screenShareOn: false,
@@ -18,4 +18,4 @@ const useVoiceStore = create<IVoiceState>((set) => ({
   setScreenShareOn: (screenShareOn) => set({ screenShareOn }),
 }));
 
-export default useVoiceStore;
+export default useVoiceControllerStore;

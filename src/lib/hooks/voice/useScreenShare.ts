@@ -1,6 +1,6 @@
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import useVoiceStateStore from '@/lib/stores/voice/useVoiceStateStore';
-import useVoiceStore from '@/lib/stores/voice/useVoiceStore';
+import useVoiceStore from '@/lib/stores/voice/useVoiceControllerStore';
 import { Publisher } from 'openvidu-browser';
 import { useState } from 'react';
 

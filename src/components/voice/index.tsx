@@ -5,7 +5,7 @@ import {
   BsFillCameraVideoOffFill,
 } from 'react-icons/bs';
 import { PiPhoneDisconnectFill } from 'react-icons/pi';
-import useVoiceStore from '@/lib/stores/voice/useVoiceStore';
+import useVoiceControllerStore from '@/lib/stores/voice/useVoiceControllerStore';
 import { BiSolidMicrophone, BiSolidMicrophoneOff } from 'react-icons/bi';
 import { spacing } from '@/lib/constants';
 import useRoomStore from '@/lib/stores/useRoomStore';
@@ -20,7 +20,7 @@ import Controller from './VoiceController/Controller';
 
 const VoiceSection = () => {
   const { name } = useRoomStore((state) => state.currentChannelInfo);
-  const { videoOn, audioOn, screenShareOn } = useVoiceStore();
+  const { videoOn, audioOn, screenShareOn } = useVoiceControllerStore();
 
   const { joinSession, handleMainVideoStream } = useVoiceRoom();
 
