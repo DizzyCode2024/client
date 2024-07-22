@@ -1,4 +1,4 @@
-import { IDmRoom } from '@/types/dm';
+import { IDmRoom, RoomId } from '@/types/dm';
 import axiosInstance from '@/lib/api/afterLogin/axiosInstance';
 
 export const createDmRoomApi = async ({ roomName, userNames }: IDmRoom) => {
@@ -36,7 +36,9 @@ export const removeMemberFromRoomApi = async (
   return response.data;
 };
 
-export const fetchDmRoomDetailsApi = async (roomId: number) => {
+export const fetchDmRoomDetailsApi = async (
+  roomId: RoomId,
+): Promise<IDmRoom> => {
   const response = await axiosInstance.get(`/direct/rooms/${roomId}`);
   return response.data;
 };

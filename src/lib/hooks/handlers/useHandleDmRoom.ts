@@ -4,13 +4,14 @@ import { useCustomToast } from '@/lib/hooks/useCustomToast';
 import { useNavigate } from 'react-router-dom';
 import {
   createDmRoomApi,
-  // fetchDmRoomDetailsApi,
+  fetchDmRoomDetailsApi,
   addMemberToRoomApi,
   removeMemberFromRoomApi,
   deleteDmRoomApi,
   getDmRooms,
 } from '@/lib/api/afterLogin/dmApi';
 import { IDmRoom, RoomId } from '@/types/dm';
+import useDmStore from '@/lib/stores/useDmStore';
 
 export interface DmRoomResponse {
   roomId: number;
@@ -59,12 +60,25 @@ const useHandleDmRoom = () => {
     });
   };
 
-  // const useFetchDmRoomDetails = (roomId: number) => {
-  //   return useQuery(['dmRoomDetails', roomId], () =>
-  //     fetchDmRoomDetailsApi(roomId),
-  //   );
-  // };
-
+  const useDmRoomDetails = (roomId: RoomId) => {
+    return useQuery({
+      queryKey: ['dmRoomDetails', roomId],
+      queryFn: () => fetchDmRoomDetailsApi(roomId),
+      onSuccess: (data: IDmRoom) => {
+        useDmStore.getState().setCurrentDmChannelInfo({
+          roomId: data.roomId,
+          roomName: data.roomName,
+          userNames: [],
+          open: data.open,
+          memberCount: data.memberCount,
+          temporaryRoomName: data.temporaryRoomName,
+        });
+      },
+      onError: (error: Error) => {
+        console.error('Failed to fetch room details:', error);
+      },
+    });
+  };
   const { mutate: addMemberMutation } = useMutation<
     any,
     Error,
@@ -137,7 +151,7 @@ const useHandleDmRoom = () => {
   return {
     addDmRoomMutation,
     useGetDmRoomsQuery,
-    // useFetchDmRoomDetails,
+    useDmRoomDetails,
     addMemberMutation,
     removeMemberMutation,
     deleteRoomMutation,

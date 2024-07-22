@@ -5,13 +5,13 @@ import useHandleDmRoom from '../handlers/useHandleDmRoom';
 
 export function useOnClickDM() {
   const navigate = useNavigate();
-  const { findDmRoomByUserId } = useDmStore();
+  const { findDmRoomByUserName } = useDmStore();
   const { user } = useAuthStore();
   const { addDmRoomMutation } = useHandleDmRoom();
 
   return (friendName: string) => {
-    console.log('onClickDM called with userID:', friendName);
-    const existingRoom = findDmRoomByUserId(friendName);
+    console.log('onClickDM called with user Name:', friendName);
+    const existingRoom = findDmRoomByUserName(friendName);
 
     if (existingRoom === undefined) {
       console.log('No existing room found, creating new room for:', friendName);
@@ -22,6 +22,7 @@ export function useOnClickDM() {
           roomName: dmName,
           userNames,
           roomId: 0,
+          open: false,
           memberCount: 0,
           temporaryRoomName: null,
         });

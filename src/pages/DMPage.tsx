@@ -20,7 +20,7 @@ const DMPage = () => {
       });
     }
   }, [roomIdParam, currentDmChannelPath, setCurrentDmChannelPath]);
-
+  console.log(currentDmChannelPath);
   return (
     <MainContainer>
       <DMList />

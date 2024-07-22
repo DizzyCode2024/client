@@ -1,14 +1,16 @@
 import { Flex } from '@chakra-ui/react';
 import { useState } from 'react';
+import useHandleDmRoom from '@/lib/hooks/handlers/useHandleDmRoom';
 import Header from '../chat/ChatHeader/Header';
 import ChatContainer from '../chat/ChatBody/ChatContainer';
 import DmInput from './DmInput/DmInput';
 import MemberList from '../memberList';
 import Container from '../chat/DragFileContainer';
 
-const DMSection = () => {
+const DMSection = (roomId: number) => {
   const [isMembersOpen, setIsMembersOpen] = useState<boolean>(false);
-
+  const { useDmRoomDetails } = useHandleDmRoom();
+  useDmRoomDetails(roomId);
   return (
     <Container>
       <Header
