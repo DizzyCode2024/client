@@ -1,7 +1,7 @@
 import { ChatIcon } from '@chakra-ui/icons';
 import { Popover, PopoverTrigger, Box } from '@chakra-ui/react';
 import { HiDotsVertical } from 'react-icons/hi';
-import { useOnClickDM } from '@/lib/hooks/explore/useOnclickDm';
+import { useOnClickDM } from '@/lib/hooks/explore/useOnClickDm';
 import EtcPopoverBox from './EtcPopoverBox';
 import CommonBox from './CommonBox';
 
@@ -46,7 +46,7 @@ const FriendBox = ({
       }
       tooltipLabel1={'DM'}
       tooltipLabel2={'기타'}
-      onClickIcon1={() => onClickDM(name)}
+      onClickIcon1={onClickDM}
       onClickIcon2={() => onOpenPopover && onOpenPopover(id)}
     />
   );

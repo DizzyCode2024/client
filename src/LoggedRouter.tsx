@@ -2,7 +2,7 @@ import { Box } from '@chakra-ui/react';
 import { Client, StompSubscription } from '@stomp/stompjs';
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import SockJS from 'sockjs-client';
 import RoomList from './components/room/RoomList';
 import axiosInstance from './lib/api/afterLogin/axiosInstance';
@@ -20,16 +20,27 @@ import FriendPage from './pages/FriendPage';
 import RoomPage from './pages/RoomPage';
 import { IRoom } from './types/room';
 import useHeartbeat from './lib/hooks/status/useHeartbeat';
+import { getDmRooms } from './lib/api/afterLogin/dmApi';
+import { IDmRoom } from './types/dm';
 
 const LoggedRouter = () => {
   // set up axiosInstance
   useAxiosInterceptor(axiosInstance);
+
+  const location = useLocation();
+  const [isDm, setIsDm] = useState(false);
+  useEffect(() => {
+    const match = location.pathname.match(/^\/chat\/main\/(\d+)$/);
+    setIsDm(!!match);
+  }, [location]);
+  console.log(isDm);
+
   // secondary token
   const [ST, setST] = useState<string | null>(null);
   // get rooms
-  const { data: rooms } = useQuery<IRoom[], Error>({
-    queryKey: QUERY_KEYS.ROOMS,
-    queryFn: getRooms,
+  const { data: rooms } = useQuery<IDmRoom[] | IRoom[], Error>({
+    queryKey: [isDm ? QUERY_KEYS.DM_ROOMS : QUERY_KEYS.ROOMS, isDm],
+    queryFn: () => (isDm ? getDmRooms() : getRooms()),
   });
 
   // 웹소켓 연결
@@ -45,7 +56,7 @@ const LoggedRouter = () => {
 
   useEffect(() => {
     getST();
-    if (ST) {
+    if (ST && !client) {
       const socket = new SockJS(`${BROKER_URL}?token=${ST}`);
       const stompClient = new Client({
         webSocketFactory: () => socket,
@@ -72,7 +83,7 @@ const LoggedRouter = () => {
       deactivateSocket();
       setST(null);
     };
-  }, [setClient, setIsConnected, ST]);
+  }, [client, deactivateSocket, setClient, setIsConnected, ST]);
 
   // rooms 구독
   const subscriptionsRef = useRef<Map<number, StompSubscription>>(new Map());
@@ -80,6 +91,21 @@ const LoggedRouter = () => {
     if (rooms && isConnected && client) {
       const currentRoomIds = new Set(rooms.map((room) => room.roomId));
       const existingSubscriptions = subscriptionsRef.current;
+      console.log('rooms', rooms);
+
+      // DM 방 구독 로직
+      rooms.forEach((room) => {
+        if (isDm && !existingSubscriptions.has(room.roomId)) {
+          const dmTopic = `/topic/direct/room/${room.roomId}`;
+          const subscription = subscribe(dmTopic, (message) => {
+            const chatMessage = JSON.parse(message.body);
+            console.log(`Received DM in room ${room.roomId}:`, chatMessage);
+          });
+          if (subscription) {
+            existingSubscriptions.set(room.roomId, subscription);
+          }
+        }
+      });
 
       // 구독되지 않은 새로운 방 구독
       rooms.forEach((room) => {
@@ -117,7 +143,7 @@ const LoggedRouter = () => {
       });
       subscriptionsRef.current.clear();
     }
-  }, [rooms, isConnected, subscribe, unsubscribe, client]);
+  }, [isDm, rooms, isConnected, subscribe, unsubscribe, client]);
 
   // update online status
   const { onlinePayload, offlinePayload } = useStatusPayload();
@@ -134,7 +160,7 @@ const LoggedRouter = () => {
         sendMessage(`/app/rooms/${room.roomId}/status`, offlinePayload);
       });
     };
-  }, [rooms, isConnected, client]);
+  }, [offlinePayload, onlinePayload, sendMessage, rooms, isConnected, client]);
   useHeartbeat(10000);
 
   return (
