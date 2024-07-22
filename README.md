@@ -16,6 +16,7 @@
 **CHAT**  
 📱 Websockets (Sock.js, STOMP)  
 💬 1:1(DM), N:N(Channel) Chat  
+📁 file upload function
 🟢 Real-time On/Offline Status  
 ☑️ Real time Read/Unread Message Marking _(Coming Soon)_
 
