@@ -8,10 +8,11 @@ import {
   useDisclosure,
 } from '@chakra-ui/react';
 import { useNavigate } from 'react-router-dom';
-import { SmallAddIcon, StarIcon } from '@chakra-ui/icons';
+import { CloseIcon, SmallAddIcon, StarIcon } from '@chakra-ui/icons';
 import useHandleDmRoom from '@/lib/hooks/handlers/useHandleDmRoom';
 import useDmStore from '@/lib/stores/useDmStore';
 import { IDmRoom } from '@/types/dm';
+import { useAuthStore } from '@/lib/stores/useAuthStore';
 import UserBox from '../userBox/UserBox';
 import DmCreateModal from './DmCreateModal';
 
@@ -27,8 +28,10 @@ const Container = ({ children }: { children: React.ReactNode }) => (
   </Box>
 );
 const DMList = () => {
+  const { user } = useAuthStore();
   const navigate = useNavigate();
-  const { useGetDmRoomsQuery } = useHandleDmRoom();
+  const { useGetDmRoomsQuery, removeMemberMutation, deleteRoomMutation } =
+    useHandleDmRoom();
   const { data: rooms, isLoading, isError, error } = useGetDmRoomsQuery();
   const { setDmRooms } = useDmStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -77,6 +80,14 @@ const DMList = () => {
     (room: IDmRoom) =>
       !(room.memberCount === 2 && room.temporaryRoomName === null),
   );
+
+  const handleLeaveOrDeleteRoom = (room: IDmRoom) => {
+    if (room.memberCount > 2) {
+      removeMemberMutation({ roomId: room.roomId, username: user?.username });
+    } else {
+      deleteRoomMutation(room.roomId);
+    }
+  };
 
   return (
     <Container>
@@ -157,22 +168,43 @@ const DMList = () => {
         filteredRooms.map((room: IDmRoom) => (
           <Box
             key={room.roomId}
-            as={'button'}
             display={'flex'}
             alignItems={'center'}
+            justifyContent={'space-between'}
             height={'3rem'}
             ml={1}
             mr={1}
             borderRadius={'3px'}
-            transition={'all 0.2s ease-in'}
             bg={room.roomId === selectedRoomId ? 'gray.600' : 'transparent'}
             color={room.roomId === selectedRoomId ? 'white' : 'gray.300'}
-            _hover={{ bg: 'gray.600', color: 'white' }}
+            _hover={{
+              bg: 'gray.600',
+              color: 'white',
+              cursor: 'pointer',
+              '.close-icon': {
+                display: 'flex',
+              },
+            }}
             onClick={() => handleDmRoomSelect(room.roomId)}
           >
             <Text marginLeft={'1rem'}>
               {room.memberCount > 2 ? room.roomName : room.temporaryRoomName}
             </Text>
+            <Box
+              as={'button'}
+              display={'none'}
+              alignItems={'center'}
+              justifyContent={'center'}
+              className={'close-icon'}
+              color={'gray.500'}
+              _hover={{ color: 'white' }}
+              onClick={(e) => {
+                e.stopPropagation();
+                handleLeaveOrDeleteRoom(room);
+              }}
+            >
+              <CloseIcon w={2} h={2} mr={2} />
+            </Box>
           </Box>
         ))
       )}
