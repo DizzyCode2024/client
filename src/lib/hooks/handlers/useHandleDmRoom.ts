@@ -4,7 +4,7 @@ import { useCustomToast } from '@/lib/hooks/useCustomToast';
 import { useNavigate } from 'react-router-dom';
 import {
   createDmRoomApi,
-  fetchDmRoomDetailsApi,
+  // fetchDmRoomDetailsApi,
   addMemberToRoomApi,
   removeMemberFromRoomApi,
   deleteDmRoomApi,
@@ -59,11 +59,11 @@ const useHandleDmRoom = () => {
     });
   };
 
-  const useFetchDmRoomDetails = (roomId: number) => {
-    return useQuery(['dmRoomDetails', roomId], () =>
-      fetchDmRoomDetailsApi(roomId),
-    );
-  };
+  // const useFetchDmRoomDetails = (roomId: number) => {
+  //   return useQuery(['dmRoomDetails', roomId], () =>
+  //     fetchDmRoomDetailsApi(roomId),
+  //   );
+  // };
 
   const { mutate: addMemberMutation } = useMutation<
     any,
@@ -137,7 +137,7 @@ const useHandleDmRoom = () => {
   return {
     addDmRoomMutation,
     useGetDmRoomsQuery,
-    useFetchDmRoomDetails,
+    // useFetchDmRoomDetails,
     addMemberMutation,
     removeMemberMutation,
     deleteRoomMutation,

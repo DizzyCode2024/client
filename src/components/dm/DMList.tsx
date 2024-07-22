@@ -29,7 +29,6 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 );
 const DMList = () => {
   const { user } = useAuthStore();
-  console.log(user);
   const navigate = useNavigate();
   const { useGetDmRoomsQuery, removeMemberMutation, deleteRoomMutation } =
     useHandleDmRoom();
@@ -84,7 +83,6 @@ const DMList = () => {
 
   const handleLeaveOrDeleteRoom = (room: IDmRoom) => {
     if (room.memberCount > 2) {
-      console.log({ roomId: room.roomId, username: user?.username });
       removeMemberMutation({ roomId: room.roomId, username: user?.username });
     } else {
       deleteRoomMutation(room.roomId);
