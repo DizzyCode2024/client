@@ -49,7 +49,6 @@ const useDmStore = create<IDmState>((set, get) => ({
   },
   findDmRoomByUserId: (userId) => {
     console.log('Finding DM room for user ID:', userId);
-    console.log(get().dmRooms);
     const rooms = get().dmRooms;
 
     let room = rooms.find((room) => room.userNames?.includes(userId));

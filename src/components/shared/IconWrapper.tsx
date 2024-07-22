@@ -11,7 +11,6 @@ const IconWrapper = ({ children }: { children: ReactNode }) => (
     width={'2rem'}
     height={'2rem'}
     mx={1}
-    as={'button'}
   >
     {children}
   </Box>
