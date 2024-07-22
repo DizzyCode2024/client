@@ -1,3 +1,4 @@
+import { QUERY_KEYS } from '@/lib/api';
 import { useMutation, useQueryClient, useQuery } from '@tanstack/react-query';
 import { useCustomToast } from '@/lib/hooks/useCustomToast';
 import { useNavigate } from 'react-router-dom';
@@ -9,11 +10,16 @@ import {
   deleteDmRoomApi,
   getDmRooms,
 } from '@/lib/api/afterLogin/dmApi';
-import { IDmRoom } from '@/types/dm';
+import { IDmRoom, RoomId } from '@/types/dm';
 
 export interface DmRoomResponse {
   roomId: number;
   message: string;
+}
+
+export interface MemberMutationParams {
+  roomId: RoomId;
+  username: string;
 }
 
 const useHandleDmRoom = () => {
@@ -59,9 +65,12 @@ const useHandleDmRoom = () => {
     );
   };
 
-  const { mutate: addMemberMutation } = useMutation({
-    mutationFn: (roomId: number, username: string) =>
-      addMemberToRoomApi(roomId, username),
+  const { mutate: addMemberMutation } = useMutation<
+    any,
+    Error,
+    MemberMutationParams
+  >({
+    mutationFn: ({ roomId, username }) => addMemberToRoomApi(roomId, username),
     onSuccess: () => {
       toast({
         title: '멤버 추가 성공',
@@ -80,15 +89,20 @@ const useHandleDmRoom = () => {
     },
   });
 
-  const { mutate: removeMemberMutation } = useMutation({
-    mutationFn: removeMemberFromRoomApi,
+  const { mutate: removeMemberMutation } = useMutation<
+    any,
+    Error,
+    MemberMutationParams
+  >({
+    mutationFn: (params: MemberMutationParams) =>
+      removeMemberFromRoomApi(params.roomId, params.username),
     onSuccess: () => {
       toast({
-        title: '멤버 삭제 성공',
-        description: '멤버가 DM 방에서 삭제되었습니다.',
+        title: '탈퇴 성공',
+        description: '해당 DM 방에서 탈퇴되었습니다.',
         status: 'success',
       });
-      queryClient.invalidateQueries({ queryKey: ['dmRooms'] });
+      queryClient.invalidateQueries({ queryKey: QUERY_KEYS.DM_ROOMS });
     },
     onError: (error) => {
       toast({

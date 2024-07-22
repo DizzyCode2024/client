@@ -5,6 +5,7 @@ export interface IDmRoom {
   roomId: RoomId;
   roomName: string;
   userNames: UserId[];
+  open: boolean;
   memberCount: number;
   temporaryRoomName: string | null;
 }

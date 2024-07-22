@@ -6,4 +6,5 @@ export const QUERY_KEYS = {
   EXPLORE_ROOMS: ['exploreRooms'],
   CHATS: (currentChannelPath: IChannelPath) => ['chats', currentChannelPath],
   MEMBERS: (roomId: RoomId) => ['members', roomId],
+  DM_ROOMS: ['dmRooms'],
 };
