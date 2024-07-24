@@ -2,6 +2,7 @@ import CustomTooltip from '@/components/shared/Tooltip';
 import { QUERY_KEYS, getCategories } from '@/lib/api';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { handleRightClick } from '@/lib/utils/handleRightClick';
+import { RoomId } from '@/types';
 import {
   Box,
   Button,
@@ -12,7 +13,6 @@ import {
 } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { RoomId } from '@/types';
 import Indicator from './Indicator';
 import RoomMenuItems from './RoomMenuItems';
 
@@ -50,7 +50,6 @@ const RoomButton = ({ label, roomId, thumbnail }: RoomButtonProps) => {
 
   const handleClick = () => {
     if (!data) return;
-    console.log('>>>>>', data);
     setCurrentChannelPath({
       roomId,
       categoryId: data.firstCategoryId,

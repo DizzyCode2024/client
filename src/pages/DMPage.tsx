@@ -1,9 +1,9 @@
-import { Box } from '@chakra-ui/react';
+import DMSection from '@/components/dm';
 import MainContainer from '@/components/shared/MainContainer';
 import useDmStore from '@/lib/stores/useDmStore';
-import { useParams } from 'react-router-dom';
+import { Box } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import DMSection from '@/components/dm';
+import { useParams } from 'react-router-dom';
 import DMList from '../components/dm/DMList';
 
 const DMPage = () => {

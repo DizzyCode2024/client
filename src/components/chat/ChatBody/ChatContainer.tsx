@@ -34,6 +34,7 @@ const ChatContainer = () => {
         }
         return undefined;
       },
+      enabled: currentChannelPath.channelId !== 0,
     });
 
   const handleScroll = useCallback(() => {
