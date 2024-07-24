@@ -23,7 +23,13 @@ const useStompClient = () => {
   ) => {
     if (client && isConnected) {
       const messageBody = JSON.stringify(body);
-      client.publish({ destination, body: messageBody });
+      client.publish({
+        destination,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+        body: messageBody,
+      });
     }
   };
 
