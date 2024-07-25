@@ -2,6 +2,8 @@ import { create } from 'zustand';
 import { IDmRoom } from '@/types/dm';
 
 interface IDmState {
+  currentDmId: number | null;
+  setCurrentDmId: (id: number | null) => void;
   currentDmRoom: IDmRoom | null;
   setCurrentDmRoom: (room: IDmRoom | null) => void;
   dmRooms: IDmRoom[];
@@ -11,6 +13,8 @@ interface IDmState {
 }
 
 const useDmStore = create<IDmState>((set, get) => ({
+  currentDmId: null,
+  setCurrentDmId: (id: number | null) => set({ currentDmId: id }),
   currentDmRoom: null,
   setCurrentDmRoom: (room: IDmRoom | null) => set({ currentDmRoom: room }),
 

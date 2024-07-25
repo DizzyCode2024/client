@@ -1,67 +1,65 @@
 /* eslint-disable react/jsx-props-no-spreading */
-// import { ArrowUpIcon } from '@chakra-ui/icons';
-// import { Box, Button, Flex, HStack, Input } from '@chakra-ui/react';
-// import { useState } from 'react';
-import { Box } from '@chakra-ui/react';
-// import { useDropzone } from 'react-dropzone';
-// import { useAuthStore } from '@/lib/stores/useAuthStore';
-// import useFilesStore from '@/lib/stores/useFileStore';
-// import { useFileHandler } from '@/lib/hooks/handlers';
-// import useStompClient from '@/lib/hooks/useStompClient';
-// import InputPlusBtn from '@/components/chat/ChatInput/InputPlusBtn';
-// import FilePreview from '@/components/chat/ChatInput/FilePreview';
+import { ArrowUpIcon } from '@chakra-ui/icons';
+import { Box, Button, Flex, HStack, Input } from '@chakra-ui/react';
+import { useState } from 'react';
+import { useDropzone } from 'react-dropzone';
+import { useAuthStore } from '@/lib/stores/useAuthStore';
+import useFilesStore from '@/lib/stores/useFileStore';
+import { useFileHandler } from '@/lib/hooks/handlers';
+import useStompClient from '@/lib/hooks/useStompClient';
+import InputPlusBtn from '@/components/chat/ChatInput/InputPlusBtn';
+import FilePreview from '@/components/chat/ChatInput/FilePreview';
 
-// import { useDestination } from '@/lib/hooks/useDestination';
-// import { ISendChatPayload } from '../../../types/chat';
+import { useDestination } from '@/lib/hooks/useDestination';
+import { ISendChatPayload } from '../../../types/chat';
 
 const DmInput = () => {
-  // const { files, addFiles, removeFile, clearFiles } = useFilesStore();
-  // const { uploadAllFiles } = useFileHandler();
-  // const [content, setContent] = useState('');
-  // const senderId = useAuthStore((state) => state.user?.id);
+  const { files, addFiles, removeFile, clearFiles } = useFilesStore();
+  const { uploadAllFiles } = useFileHandler();
+  const [content, setContent] = useState('');
+  const senderId = useAuthStore((state) => state.user?.id);
 
-  // const { sendMessage } = useStompClient();
-  // const { DmDestination } = useDestination();
+  const { sendMessage } = useStompClient();
+  const { DmDestination } = useDestination();
 
-  // const handleSendMessage = async () => {
-  //   if (senderId && (content.trim() || files.length)) {
-  //     const payload: ISendChatPayload = {
-  //       senderId,
-  //       content,
-  //       ...(files.length > 0 && { files }),
-  //     };
-  //     console.log('Sending message:', payload);
-  //     console.log('ChatDestination', ChatDestination);
-  //     sendMessage(DmDestination, payload);
-  //     setContent('');
-  //     if (files.length > 0) {
-  //       await uploadAllFiles();
-  //       clearFiles();
-  //     }
-  //   }
-  // };
+  const handleSendMessage = async () => {
+    if (senderId && (content.trim() || files.length)) {
+      const payload: ISendChatPayload = {
+        senderId,
+        content,
+        ...(files.length > 0 && { files }),
+      };
+      console.log('Sending message:', payload);
+      console.log('ChatDestination', DmDestination);
+      sendMessage(DmDestination, payload);
+      setContent('');
+      if (files.length > 0) {
+        await uploadAllFiles();
+        clearFiles();
+      }
+    }
+  };
 
-  // const onDrop = (acceptedFiles: File[]) => {
-  //   const newFiles = acceptedFiles.map((file) => ({
-  //     file,
-  //     name: file.name,
-  //     size: file.size,
-  //     type: file.type,
-  //     preview: URL.createObjectURL(file),
-  //   }));
-  //   addFiles(newFiles);
-  // };
+  const onDrop = (acceptedFiles: File[]) => {
+    const newFiles = acceptedFiles.map((file) => ({
+      file,
+      name: file.name,
+      size: file.size,
+      type: file.type,
+      preview: URL.createObjectURL(file),
+    }));
+    addFiles(newFiles);
+  };
 
-  // const { getRootProps, getInputProps } = useDropzone({
-  //   onDrop,
-  //   noClick: true,
-  //   noKeyboard: true,
-  // });
+  const { getRootProps, getInputProps } = useDropzone({
+    onDrop,
+    noClick: true,
+    noKeyboard: true,
+  });
 
   return (
-    // <Box {...getRootProps()} mt={4} bg={'gray.700'}>
-    <Box>
-      {/* <Flex alignItems={'center'} justifyContent={'center'} height={'3.2rem'}>
+    <Box {...getRootProps()} mt={4} bg={'gray.700'}>
+      <Flex alignItems={'center'} justifyContent={'center'} height={'3.2rem'}>
         <InputPlusBtn />
         <Input
           value={content}
@@ -98,7 +96,7 @@ const DmInput = () => {
         {files.map((file) => (
           <FilePreview key={file.preview} file={file} onRemove={removeFile} />
         ))}
-      </HStack> */}
+      </HStack>
     </Box>
   );
 };
