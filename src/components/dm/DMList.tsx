@@ -1,18 +1,20 @@
-import { useRef, useState, useEffect } from 'react';
+import { getDmRooms } from '@/lib/api';
+import useHandleDmRoom from '@/lib/hooks/handlers/useHandleDmRoom';
+import { useAuthStore } from '@/lib/stores/useAuthStore';
+import useDmStore from '@/lib/stores/useDmStore';
+import { IDmRoom } from '@/types/dm';
+import { CloseIcon, SmallAddIcon, StarIcon } from '@chakra-ui/icons';
 import {
   Box,
+  Spinner,
   Stack,
   Text,
   Tooltip,
-  Spinner,
   useDisclosure,
 } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CloseIcon, SmallAddIcon, StarIcon } from '@chakra-ui/icons';
-import useHandleDmRoom from '@/lib/hooks/handlers/useHandleDmRoom';
-import useDmStore from '@/lib/stores/useDmStore';
-import { IDmRoom } from '@/types/dm';
-import { useAuthStore } from '@/lib/stores/useAuthStore';
 import UserBox from '../userBox/UserBox';
 import DmCreateModal from './DmCreateModal';
 
@@ -27,12 +29,30 @@ const Container = ({ children }: { children: React.ReactNode }) => (
     {children}
   </Box>
 );
+
 const DMList = () => {
   const { user } = useAuthStore();
   const navigate = useNavigate();
   const { useGetDmRoomsQuery, removeMemberMutation, deleteRoomMutation } =
     useHandleDmRoom();
+
+  const [friends, setFriends] = useState([]);
   const { data: rooms, isLoading, isError, error } = useGetDmRoomsQuery();
+
+  const { data } = useQuery({
+    queryKey: ['dmRooms'],
+    queryFn: getDmRooms,
+  });
+
+  console.log('>>', data);
+
+  useEffect(() => {
+    if (data) {
+      setFriends(data);
+    }
+    console.log('>>.', friends);
+  }, [data]);
+
   const { setDmRooms, dmRooms } = useDmStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLDivElement>(null);

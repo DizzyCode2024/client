@@ -1,5 +1,5 @@
 import { IDmRoom, RoomId } from '@/types/dm';
-import axiosInstance from '@/lib/api/afterLogin/axiosInstance';
+import axiosInstance from './axiosInstance';
 
 interface GetDmChatsProps {
   dmRoomId: RoomId;

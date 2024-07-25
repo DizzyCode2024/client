@@ -1,12 +1,10 @@
-import { useState } from 'react';
 import { Box } from '@chakra-ui/react';
+import { useState } from 'react';
 
-import DMList from '@/components/dm/DMList';
+import FriendList from '../components/friend/FriendList';
+import FriendRequest from '../components/friend/FriendRequest';
 import FriendTopMenu from '../components/friend/FriendTopMenu';
 import WaitingList from '../components/friend/WaitingList';
-import FriendRequest from '../components/friend/FriendRequest';
-import MainContainer from '../components/shared/MainContainer';
-import FriendList from '../components/friend/FriendList';
 
 const FriendPage = () => {
   const [selectedMenu, setSelectedMenu] = useState('모두');
@@ -25,21 +23,18 @@ const FriendPage = () => {
   };
 
   return (
-    <MainContainer>
-      <DMList />
-      <Box
-        display={'flex'}
-        flexDirection={'column'}
-        width={'100%'}
-        whiteSpace={'nowrap'}
-      >
-        <FriendTopMenu
-          selectedMenu={selectedMenu}
-          onSelectMenu={setSelectedMenu}
-        />
-        {renderContent()}
-      </Box>
-    </MainContainer>
+    <Box
+      display={'flex'}
+      flexDirection={'column'}
+      width={'100%'}
+      whiteSpace={'nowrap'}
+    >
+      <FriendTopMenu
+        selectedMenu={selectedMenu}
+        onSelectMenu={setSelectedMenu}
+      />
+      {renderContent()}
+    </Box>
   );
 };
 
