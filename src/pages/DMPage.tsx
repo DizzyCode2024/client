@@ -1,4 +1,3 @@
-import { Box } from '@chakra-ui/react';
 import MainContainer from '@/components/shared/MainContainer';
 import { useParams } from 'react-router-dom';
 import DMSection from '@/components/dm';
@@ -11,6 +10,7 @@ import { useQuery } from '@tanstack/react-query';
 import { QUERY_KEYS } from '@/lib/api';
 import { getDmRooms } from '@/lib/api/afterLogin/dmApi';
 import { IRoom } from '@/types';
+import { Box } from '@chakra-ui/react';
 import DMList from '../components/dm/DMList';
 // import useHeartbeat from '@/lib/hooks/status/useHeartbeat';
 

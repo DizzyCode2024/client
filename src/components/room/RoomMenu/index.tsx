@@ -1,29 +1,23 @@
-import useRoomStore from '@/lib/stores/useRoomStore';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useMemo, useRef, useState } from 'react';
-import { QUERY_KEYS, getCategories } from '@/lib/api';
-import UserBox from '@/components/userBox/UserBox';
 import MenuContainer from '@/components/shared/MenuContainer';
+import UserBox from '@/components/userBox/UserBox';
+import { QUERY_KEYS, getCategories } from '@/lib/api';
+import { useDestination } from '@/lib/hooks/useDestination';
 import useStompClient from '@/lib/hooks/useStompClient';
 import useSocketStore from '@/lib/stores/useSocketStore';
+import { ICatwChannel, IMember, IRoom, RoomId } from '@/types';
 import { StompSubscription } from '@stomp/stompjs';
-import { useDestination } from '@/lib/hooks/useDestination';
-import { ICatwChannel, IMember, IRoom } from '@/types';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 import CategoryBox from './CategoryBox';
 import ChannelBox from './ChannelBox';
 import RoomMenuButton from './RoomMenuButton';
 
-const RoomMenu = () => {
+const RoomMenu = ({ roomId }: { roomId: RoomId }) => {
   const queryClient = useQueryClient();
+
   const [currentRoomName, setCurrentRoomName] = useState<string>('');
 
-  const rooms = useMemo(() => {
-    return queryClient.getQueryData<IRoom[]>(QUERY_KEYS.ROOMS) || [];
-  }, [queryClient]);
-
-  const {
-    currentChannelPath: { roomId },
-  } = useRoomStore();
+  const rooms = queryClient.getQueryData<IRoom[]>(QUERY_KEYS.ROOMS) || [];
 
   const { data: categories } = useQuery<ICatwChannel[]>({
     queryKey: QUERY_KEYS.CATWCHANNELS(roomId),
