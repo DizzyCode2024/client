@@ -74,6 +74,7 @@ const LoggedRouter = () => {
       deactivateSocket();
       setST(null);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setClient, setIsConnected, ST]);
 
   // rooms 구독

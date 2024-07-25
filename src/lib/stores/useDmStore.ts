@@ -2,18 +2,18 @@ import { create } from 'zustand';
 import { IDmRoom } from '@/types/dm';
 
 interface IDmState {
-  currentDmId: number | null;
+  currentDmId: number | 0;
   setCurrentDmId: (id: number | null) => void;
   currentDmRoom: IDmRoom | null;
   setCurrentDmRoom: (room: IDmRoom | null) => void;
   dmRooms: IDmRoom[];
   setDmRooms: (rooms: IDmRoom[]) => void;
   addDmRoom: (room: IDmRoom) => void;
-  findRoomIdByUserNames: (userNames: string[]) => number | undefined;
+  findRoomIdByUserNames: (userNames: string[]) => number | null | undefined;
 }
 
 const useDmStore = create<IDmState>((set, get) => ({
-  currentDmId: null,
+  currentDmId: 0,
   setCurrentDmId: (id: number | null) => set({ currentDmId: id }),
   currentDmRoom: null,
   setCurrentDmRoom: (room: IDmRoom | null) => set({ currentDmRoom: room }),

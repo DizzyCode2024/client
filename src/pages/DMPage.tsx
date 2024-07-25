@@ -10,11 +10,14 @@ const DMPage = () => {
   const param = useParams();
   const roomIdParam = param.id ? parseInt(param.id, 10) : 0;
 
-  const { setCurrentDmId } = useDmStore();
+  const { setCurrentDmId, dmRooms, setCurrentDmRoom } = useDmStore();
 
   useEffect(() => {
+    console.log('dmRooms', dmRooms);
     setCurrentDmId(roomIdParam);
-  }, [roomIdParam, setCurrentDmId]);
+    const currentRoom = dmRooms.find((room) => room.roomId === roomIdParam);
+    setCurrentDmRoom(currentRoom || null);
+  }, [dmRooms, roomIdParam, setCurrentDmId, setCurrentDmRoom]);
 
   return (
     <MainContainer>

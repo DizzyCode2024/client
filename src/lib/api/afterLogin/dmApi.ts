@@ -2,8 +2,8 @@ import { IDmRoom, RoomId } from '@/types/dm';
 import axiosInstance from '@/lib/api/afterLogin/axiosInstance';
 
 interface GetDmChatsProps {
-  roomId: RoomId;
-  timestamp?: string;
+  dmRoomId: RoomId;
+  timestamp: string;
 }
 
 export const createDmRoomApi = async ({ roomName, userNames }: IDmRoom) => {
@@ -16,7 +16,6 @@ export const createDmRoomApi = async ({ roomName, userNames }: IDmRoom) => {
 
 export const getDmRooms = async () => {
   const response = await axiosInstance.get('/direct/rooms');
-
   return response.data;
 };
 
@@ -49,9 +48,11 @@ export const fetchDmRoomDetailsApi = async (
   return response.data;
 };
 
-export const getDmChats = async ({ roomId, timestamp }: GetDmChatsProps) => {
+export const getDmChats = async ({ dmRoomId, timestamp }: GetDmChatsProps) => {
   const params = timestamp ? { last: timestamp } : {};
-  const response = await axiosInstance.get(`/direct/room/${roomId}/messages`, {
+  console.log('timestamp', timestamp);
+  console.log('dRI', dmRoomId);
+  const response = await axiosInstance.get(`/direct/room/1/messages`, {
     params,
   });
   console.log(response);

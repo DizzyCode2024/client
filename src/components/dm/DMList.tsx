@@ -33,7 +33,7 @@ const DMList = () => {
   const { useGetDmRoomsQuery, removeMemberMutation, deleteRoomMutation } =
     useHandleDmRoom();
   const { data: rooms, isLoading, isError, error } = useGetDmRoomsQuery();
-  const { setDmRooms } = useDmStore();
+  const { setDmRooms, dmRooms } = useDmStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLDivElement>(null);
   const [modalPosition, setModalPosition] = useState({
@@ -76,10 +76,6 @@ const DMList = () => {
         {error.message}
       </Box>
     );
-  const filteredRooms = rooms?.filter(
-    (room: IDmRoom) =>
-      !(room.memberCount === 2 && room.temporaryRoomName === null),
-  );
 
   const handleLeaveOrDeleteRoom = (room: IDmRoom) => {
     if (room.memberCount > 2) {
@@ -165,7 +161,7 @@ const DMList = () => {
       {isLoading ? (
         <Spinner color={'white'} ml={'auto'} mr={'auto'} />
       ) : (
-        filteredRooms.map((room: IDmRoom) => (
+        dmRooms.map((room: IDmRoom) => (
           <Box
             key={room.roomId}
             display={'flex'}
@@ -188,7 +184,7 @@ const DMList = () => {
             onClick={() => handleDmRoomSelect(room.roomId)}
           >
             <Text marginLeft={'1rem'}>
-              {room.memberCount > 2 ? room.roomName : room.temporaryRoomName}
+              {room.roomName ? room.roomName : room.temporaryRoomName}
             </Text>
             <Box
               as={'button'}
