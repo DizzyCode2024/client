@@ -4,7 +4,6 @@ import { IMessage, StompSubscription } from '@stomp/stompjs';
 
 const useStompClient = () => {
   const { client, isConnected, setClient } = useSocketStore();
-
   const subscribe = (
     destination: string,
     callback: (message: IMessage) => void,
@@ -21,9 +20,19 @@ const useStompClient = () => {
     destination: string,
     body: ISendChatPayload | IMember,
   ) => {
-    if (client && isConnected) {
+    if (!client) {
+      console.error('STOMP client is not initialized.');
+      return;
+    }
+    if (!isConnected) {
+      console.error('Client is not connected.');
+      return;
+    }
+    try {
       const messageBody = JSON.stringify(body);
       client.publish({ destination, body: messageBody });
+    } catch (error) {
+      console.error('Publish error:', error);
     }
   };
 

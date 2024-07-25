@@ -9,7 +9,7 @@ import { useFileHandler } from '@/lib/hooks/handlers';
 import useStompClient from '@/lib/hooks/useStompClient';
 import InputPlusBtn from '@/components/chat/ChatInput/InputPlusBtn';
 import FilePreview from '@/components/chat/ChatInput/FilePreview';
-import { useDestination } from '../../../lib/hooks/useDestination';
+import { useDmDestination } from '@/lib/hooks/useDmDestination';
 import { ISendChatPayload } from '../../../types/chat';
 
 const DmInput = () => {
@@ -19,7 +19,7 @@ const DmInput = () => {
   const senderId = useAuthStore((state) => state.user?.id);
 
   const { sendMessage } = useStompClient();
-  const { ChatDestination } = useDestination();
+  const { ChatDestination } = useDmDestination();
 
   const handleSendMessage = async () => {
     if (senderId && (content.trim() || files.length)) {
@@ -29,6 +29,7 @@ const DmInput = () => {
         ...(files.length > 0 && { files }),
       };
       console.log('Sending message:', payload);
+      console.log('ChatDestination', ChatDestination);
       sendMessage(ChatDestination, payload);
       setContent('');
       if (files.length > 0) {

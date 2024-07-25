@@ -27,6 +27,7 @@ const useHandleDmRoom = () => {
   const toast = useCustomToast();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
+  const { setCurrentDmRoom } = useDmStore();
 
   const { mutate: addDmRoomMutation } = useMutation<
     DmRoomResponse,
@@ -41,6 +42,8 @@ const useHandleDmRoom = () => {
         status: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['dmRooms'] });
+      console.log(data);
+      setCurrentDmRoom(data);
       navigate(`/chat/main/${data.roomId}`);
     },
     onError: (error) => {
@@ -64,19 +67,6 @@ const useHandleDmRoom = () => {
     return useQuery({
       queryKey: ['dmRoomDetails', roomId],
       queryFn: () => fetchDmRoomDetailsApi(roomId),
-      onSuccess: (data: IDmRoom) => {
-        useDmStore.getState().setCurrentDmChannelInfo({
-          roomId: data.roomId,
-          roomName: data.roomName,
-          userNames: [],
-          open: data.open,
-          memberCount: data.memberCount,
-          temporaryRoomName: data.temporaryRoomName,
-        });
-      },
-      onError: (error: Error) => {
-        console.error('Failed to fetch room details:', error);
-      },
     });
   };
   const { mutate: addMemberMutation } = useMutation<

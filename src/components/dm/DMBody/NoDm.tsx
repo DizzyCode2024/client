@@ -1,9 +1,11 @@
-import useRoomStore from '@/lib/stores/useRoomStore';
+import useDmStore from '@/lib/stores/useDmStore';
 import { ChatIcon } from '@chakra-ui/icons';
 import { Box } from '@chakra-ui/react';
 
 const NoDmUI = () => {
-  const { name } = useRoomStore((state) => state.currentChannelInfo);
+  const { currentDmRoom } = useDmStore();
+  const dmName = currentDmRoom?.roomName || currentDmRoom?.temporaryRoomName;
+
   return (
     <Box color={'white'} mt={'auto'} ml={5}>
       <Box
@@ -26,11 +28,11 @@ const NoDmUI = () => {
         alignItems={'center'}
         fontWeight={'bold'}
       >
-        {`${name}에 오신 걸 환영 합니다!`}
+        {`${dmName}`}
       </Box>
       <Box fontSize={'lg'} display={'flex'} alignItems={'center'}>
         <ChatIcon mr={2} />
-        {`${name} 채팅 채널의 시작이에요.`}
+        {`${dmName} 님과 나눈 대화의 첫 시작이에요.`}
       </Box>
     </Box>
   );

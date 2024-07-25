@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import {
   Box,
   Button,
@@ -17,6 +18,7 @@ import useFriendStore from '@/lib/stores/useFriendStore';
 import { IFriend } from '@/types/friend';
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import useHandleDmRoom from '@/lib/hooks/handlers/useHandleDmRoom';
+import useDmStore from '@/lib/stores/useDmStore'; // Assuming useDmStore includes findRoomIdByUserNames
 
 interface DmCreateModalProps {
   isOpen: boolean;
@@ -29,10 +31,12 @@ const DmCreateModal = ({
   onClose,
   modalPosition,
 }: DmCreateModalProps) => {
+  const navigate = useNavigate();
   const { friends } = useFriendStore();
   const { user } = useAuthStore();
   const [selectedFriends, setSelectedFriends] = useState<IFriend[]>([]);
   const { addDmRoomMutation } = useHandleDmRoom();
+  const { findRoomIdByUserNames } = useDmStore(); // Use this function to check existing room
 
   const handleFriendSelection = (friend: IFriend) => {
     setSelectedFriends((prev) => {
@@ -45,17 +49,32 @@ const DmCreateModal = ({
   };
 
   const handleDmRoom = () => {
-    const dmName = [
-      user?.username,
-      ...selectedFriends.map((f) => f.friendName),
-    ].join(', ');
-    const userNames = [
-      user?.username,
-      ...selectedFriends.map((f) => f.friendName),
-    ];
+    if (!user?.username) {
+      console.error('User is not logged in');
+      return;
+    }
 
-    addDmRoomMutation({ roomName: dmName, userNames });
-    onClose();
+    const userNames = [...selectedFriends.map((f) => f.friendName)];
+    const existingRoomId = findRoomIdByUserNames(userNames);
+    console.log(existingRoomId);
+    if (existingRoomId) {
+      navigate(`/chat/main/${existingRoomId}`);
+      onClose();
+    } else {
+      const dmName = [
+        user.username,
+        ...selectedFriends.map((f) => f.friendName),
+      ].join(', ');
+      addDmRoomMutation({
+        roomName: dmName,
+        userNames,
+        roomId: 0,
+        open: false,
+        memberCount: 0,
+        temporaryRoomName: null,
+      });
+      onClose();
+    }
   };
 
   return (
@@ -91,7 +110,7 @@ const DmCreateModal = ({
             ) : (
               <Text>
                 {
-                  '친구가 존재하지 않습니다. 친구 신청을 통해 dizzyCode에서 소통하세요. '
+                  '친구가 존재하지 않습니다. 친구 신청을 통해 dizzyCode에서 소통하세요.'
                 }
               </Text>
             )}

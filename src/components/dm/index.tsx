@@ -1,16 +1,28 @@
 import { Flex } from '@chakra-ui/react';
-import { useState } from 'react';
-import useHandleDmRoom from '@/lib/hooks/handlers/useHandleDmRoom';
-import Header from '../chat/ChatHeader/Header';
-import ChatContainer from '../chat/ChatBody/ChatContainer';
+import { useEffect, useState } from 'react';
+import { RoomId } from '@/types';
+import useDmStore from '@/lib/stores/useDmStore';
+
 import DmInput from './DmInput/DmInput';
 import MemberList from '../memberList';
 import Container from '../chat/DragFileContainer';
+import DMContainer from './DMBody/DmContainer';
+import Header from './DmHeader/Header';
 
-const DMSection = (roomId: number) => {
+const DMSection = ({ roomId }: { roomId: RoomId }) => {
   const [isMembersOpen, setIsMembersOpen] = useState<boolean>(false);
-  const { useDmRoomDetails } = useHandleDmRoom();
-  useDmRoomDetails(roomId);
+
+  const { dmRooms, currentDmRoom, setCurrentDmRoom } = useDmStore();
+
+  useEffect(() => {
+    if (roomId && roomId !== currentDmRoom?.roomId) {
+      const roomData = dmRooms.find((room) => room.roomId === roomId);
+      if (roomData) {
+        setCurrentDmRoom(roomData);
+      }
+    }
+  }, [roomId, currentDmRoom, setCurrentDmRoom, dmRooms]);
+
   return (
     <Container>
       <Header
@@ -19,7 +31,7 @@ const DMSection = (roomId: number) => {
       />
       <Flex flex={1}>
         <Flex flex={1} direction={'column'}>
-          <ChatContainer />
+          <DMContainer />
           <DmInput />
         </Flex>
       </Flex>

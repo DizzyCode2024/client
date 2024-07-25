@@ -16,16 +16,3 @@ export interface IDmRoomCreation {
   roomName: string;
   userNames: UserId[];
 }
-
-// DM 방 방문 정보
-export interface IDmVisit {
-  roomId: RoomId;
-  channelId: number;
-  lastVisited: Date;
-}
-
-// DM 채널 경로
-export interface IDmChannelPath {
-  roomId: RoomId;
-  channelId: number;
-}

@@ -13,5 +13,7 @@ export const useDestination = () => {
   const StatusTopic = `/topic/rooms.${roomId}.status`;
   const StatusSend = `/app/rooms/${roomId}/status`;
 
+  console.log(ChatDestination);
+
   return { ChannelTopic, ChatDestination, VoiceTopic, StatusTopic, StatusSend };
 };
