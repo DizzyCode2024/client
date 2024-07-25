@@ -34,10 +34,7 @@ const FriendBox = ({
           closeOnBlur
         >
           <PopoverTrigger>
-            <Box
-              as={'button'}
-              onClick={() => onOpenPopover && onOpenPopover(id)}
-            >
+            <Box onClick={() => onOpenPopover && onOpenPopover(id)}>
               <HiDotsVertical color={'#A0AEC0'} />
             </Box>
           </PopoverTrigger>
