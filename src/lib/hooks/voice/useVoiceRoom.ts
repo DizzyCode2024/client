@@ -113,6 +113,22 @@ const useVoiceRoom = () => {
       console.log('>>SESSION ID: ', sessionId, mySessionId);
 
       const token = await createToken(sessionId);
+
+      // const match = token.match(
+      //   /^(wss?)\:\/\/(([^:\/?#]*)(?:\:([0-9]+))?)([\/]{0,1}[^?#]*)(\?[^#]*|)(#.*|)$/,
+      // );
+      // if (!!match) {
+      //   const url = {
+      //     protocol: match[1],
+      //     host: match[2],
+      //     hostname: match[3],
+      //     port: match[4],
+      //     pathname: match[5],
+      //     search: match[6],
+      //     hash: match[7],
+      //   };
+      // }
+
       return token;
     };
 
