@@ -36,8 +36,8 @@ const DmCreateModal = ({
   const { user } = useAuthStore();
   const [selectedFriends, setSelectedFriends] = useState<IFriend[]>([]);
   const { addDmRoomMutation } = useHandleDmRoom();
-  const { findRoomIdByUserNames } = useDmStore(); // Use this function to check existing room
-
+  const { findRoomIdByUserNames } = useDmStore();
+  console.log('friends', friends);
   const handleFriendSelection = (friend: IFriend) => {
     setSelectedFriends((prev) => {
       const index = prev.findIndex((f) => f.friendId === friend.friendId);
@@ -71,7 +71,7 @@ const DmCreateModal = ({
         roomId: 0,
         open: false,
         memberCount: 0,
-        temporaryRoomName: null,
+        temporaryRoomName: '',
       });
       onClose();
     }

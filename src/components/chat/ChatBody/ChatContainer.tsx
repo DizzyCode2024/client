@@ -14,7 +14,6 @@ import NoChatUI from './NoChat';
 const ChatContainer = () => {
   const { currentChannelPath } = useRoomStore();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     useInfiniteQuery<IChat[], Error>({
       queryKey: QUERY_KEYS.CHATS(currentChannelPath),

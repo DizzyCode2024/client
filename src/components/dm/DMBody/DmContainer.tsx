@@ -72,7 +72,6 @@ const DMContainer = () => {
     };
   }, [handleScroll]);
 
-  console.log('dmChat', data);
   return data?.pages[0].length === 0 ? (
     <NoDmUI />
   ) : (

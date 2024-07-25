@@ -13,10 +13,11 @@ const DMPage = () => {
   const { setCurrentDmId, dmRooms, setCurrentDmRoom } = useDmStore();
 
   useEffect(() => {
-    console.log('dmRooms', dmRooms);
     setCurrentDmId(roomIdParam);
     const currentRoom = dmRooms.find((room) => room.roomId === roomIdParam);
-    setCurrentDmRoom(currentRoom || null);
+    if (currentRoom) {
+      setCurrentDmRoom(currentRoom);
+    }
   }, [dmRooms, roomIdParam, setCurrentDmId, setCurrentDmRoom]);
 
   return (

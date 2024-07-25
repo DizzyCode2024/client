@@ -9,7 +9,6 @@ import { useFileHandler } from '@/lib/hooks/handlers';
 import useStompClient from '@/lib/hooks/useStompClient';
 import InputPlusBtn from '@/components/chat/ChatInput/InputPlusBtn';
 import FilePreview from '@/components/chat/ChatInput/FilePreview';
-
 import { useDestination } from '@/lib/hooks/useDestination';
 import { ISendChatPayload } from '../../../types/chat';
 

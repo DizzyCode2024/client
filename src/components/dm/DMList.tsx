@@ -39,7 +39,7 @@ const DMList = () => {
   const [modalPosition, setModalPosition] = useState({
     top: 50,
     left: 250,
-    right: null,
+    right: 0,
   });
   const [selectedRoomId, setSelectedRoomId] = useState<number | null>(null);
 
@@ -66,6 +66,7 @@ const DMList = () => {
   useEffect(() => {
     if (rooms) {
       setDmRooms(rooms);
+      console.log('rooms', rooms);
     }
   }, [rooms, setDmRooms]);
 
@@ -78,7 +79,7 @@ const DMList = () => {
     );
 
   const handleLeaveOrDeleteRoom = (room: IDmRoom) => {
-    if (room.memberCount > 2) {
+    if (room.memberCount > 2 && user) {
       removeMemberMutation({ roomId: room.roomId, username: user?.username });
     } else {
       deleteRoomMutation(room.roomId);

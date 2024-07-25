@@ -16,6 +16,7 @@ export const createDmRoomApi = async ({ roomName, userNames }: IDmRoom) => {
 
 export const getDmRooms = async () => {
   const response = await axiosInstance.get('/direct/rooms');
+  console.log('response', response);
   return response.data;
 };
 

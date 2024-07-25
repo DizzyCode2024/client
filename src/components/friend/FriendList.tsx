@@ -77,7 +77,7 @@ const FriendList = () => {
           <Text color={'white'}>{'친구가 존재하지 않습니다.'}</Text>
         ) : (
           <PopoverManager>
-            {data.map((friend: IFriend) => (
+            {data?.map((friend: IFriend) => (
               <FriendBox
                 key={friend.friendId}
                 id={friend.friendId}

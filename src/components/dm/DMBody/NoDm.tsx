@@ -1,10 +1,20 @@
 import useDmStore from '@/lib/stores/useDmStore';
 import { ChatIcon } from '@chakra-ui/icons';
 import { Box } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
 
 const NoDmUI = () => {
   const { currentDmRoom } = useDmStore();
-  const dmName = currentDmRoom?.roomName || currentDmRoom?.temporaryRoomName;
+  const [dmName, setDmName] = useState('');
+  console.log('currentDmRoom', currentDmRoom);
+  useEffect(() => {
+    if (currentDmRoom) {
+      const name = currentDmRoom.roomName || currentDmRoom.temporaryRoomName;
+      setDmName(name);
+    } else {
+      setDmName('');
+    }
+  }, [currentDmRoom]);
 
   return (
     <Box color={'white'} mt={'auto'} ml={5}>

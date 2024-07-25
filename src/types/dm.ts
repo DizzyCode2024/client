@@ -5,10 +5,10 @@ export type UserId = string;
 export interface IDmRoom {
   roomId: RoomId;
   roomName: string;
-  userNames?: UserId[];
+  userNames: UserId[];
   open: boolean;
   memberCount: number;
-  temporaryRoomName: string | null;
+  temporaryRoomName: string;
 }
 
 // DM 방 생성을 위한 인터페이스
