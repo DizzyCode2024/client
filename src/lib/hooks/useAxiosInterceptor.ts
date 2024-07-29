@@ -3,12 +3,13 @@ import {
   AxiosResponse,
   InternalAxiosRequestConfig,
 } from 'axios';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { accessTokenApi } from '@/lib/api';
 import { useAuthActions } from './useAuthActions';
 import useStatusPayload from './status/useStatusPayload';
 
 const useAxiosInterceptor = (instance: AxiosInstance) => {
+  const [interceptor, setInterceptor] = useState<boolean>(false);
   const { signout } = useAuthActions();
   const { offlinePayload } = useStatusPayload();
 
@@ -82,8 +83,11 @@ const useAxiosInterceptor = (instance: AxiosInstance) => {
 
   useEffect(() => {
     const { requestInterceptor, responseInterceptor } = setupInterceptors();
+    setInterceptor(true);
     return () => ejectInterceptors({ requestInterceptor, responseInterceptor });
   }, []);
+
+  return interceptor;
 };
 
 export default useAxiosInterceptor;

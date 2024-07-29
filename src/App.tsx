@@ -6,7 +6,7 @@ import { useEffect } from 'react';
 import GlobalStyle from '@/styles/GlobalStyle';
 import { chakraTheme, styledTheme } from '@/styles/theme';
 import { initializeAuthState } from '@/lib/api';
-import Router from './Router';
+import Router from './routers/Router';
 
 const queryClient = new QueryClient();
 

@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { RedirectIfLogged, RequireAuth } from '@/lib/api';
 import LoggedRouter from './LoggedRouter';
-import LoginPage from './pages/LoginPage';
-import SignupPage from './pages/SignupPage';
-import WelcomePage from './pages/WelcomePage';
+import LoginPage from '../pages/LoginPage';
+import SignupPage from '../pages/SignupPage';
+import WelcomePage from '../pages/WelcomePage';
 
 const Router = () => {
   return (

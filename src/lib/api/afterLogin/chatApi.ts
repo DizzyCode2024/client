@@ -15,7 +15,6 @@ export const getChats = async ({
   timestamp,
 }: getChatsProps) => {
   const params = timestamp ? { last: timestamp } : {};
-
   const response = await axiosInstance.get(
     `/rooms/${roomId}/categories/${categoryId}/channels/${channelId}/messages`,
     { params },

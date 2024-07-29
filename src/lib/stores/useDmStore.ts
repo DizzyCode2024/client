@@ -1,65 +1,37 @@
-import { IDmChannelInfo, IDmChannelPath, IDmRoom, IDmVisit } from '@/types/dm';
 import { create } from 'zustand';
+import { IDmRoom } from '@/types/dm';
 
 interface IDmState {
-  currentDmChannelPath: IDmChannelPath;
-  setCurrentDmChannelPath: (path: IDmChannelPath) => void;
-
-  currentDmChannelInfo: IDmChannelInfo;
-  setCurrentDmChannelInfo: (info: IDmChannelInfo) => void;
-
-  recentDmVisits: IDmVisit[];
-  setRecentDmVisits: (visit: IDmVisit) => void;
-
+  currentDmId: number | 0;
+  setCurrentDmId: (id: number) => void;
+  currentDmRoom: IDmRoom | null;
+  setCurrentDmRoom: (room: IDmRoom | null) => void;
   dmRooms: IDmRoom[];
   setDmRooms: (rooms: IDmRoom[]) => void;
   addDmRoom: (room: IDmRoom) => void;
-  findDmRoomByUserId: (userId: string) => IDmRoom | undefined;
+  findRoomIdByUserNames: (userNames: string[]) => number | null | undefined;
 }
 
 const useDmStore = create<IDmState>((set, get) => ({
-  currentDmChannelPath: { roomId: 0, channelId: 0 },
-  setCurrentDmChannelPath: (path) => {
-    set({ currentDmChannelPath: path });
-  },
-
-  currentDmChannelInfo: { name: '', type: 'PRIVATE' },
-  setCurrentDmChannelInfo: (info) => {
-    set({ currentDmChannelInfo: info });
-  },
-
-  recentDmVisits: [],
-  setRecentDmVisits: (visit) => {
-    set((state) => ({
-      recentDmVisits: [
-        visit,
-        ...state.recentDmVisits.filter(
-          (v) => v.roomId !== visit.roomId || v.channelId !== visit.channelId,
-        ),
-      ],
-    }));
-  },
+  currentDmId: 0,
+  setCurrentDmId: (id: number) => set({ currentDmId: id }),
+  currentDmRoom: null,
+  setCurrentDmRoom: (room: IDmRoom | null) => set({ currentDmRoom: room }),
 
   dmRooms: [],
-  setDmRooms: (rooms) => {
-    set({ dmRooms: rooms });
-  },
-  addDmRoom: (room) => {
-    set((state) => ({ dmRooms: [...state.dmRooms, room] }));
-  },
-  findDmRoomByUserId: (userId) => {
-    console.log('Finding DM room for user ID:', userId);
-    console.log(get().dmRooms);
+  setDmRooms: (rooms: IDmRoom[]) => set({ dmRooms: rooms }),
+  addDmRoom: (room: IDmRoom) =>
+    set((state) => ({ dmRooms: [...state.dmRooms, room] })),
+
+  findRoomIdByUserNames: (userNames: string[]) => {
     const rooms = get().dmRooms;
-
-    let room = rooms.find((room) => room.userNames?.includes(userId));
-
-    if (!room) {
-      room = rooms.find((room) => room.temporaryRoomName === userId);
-    }
-
-    console.log('Found room:', room);
-    return room;
+    const room = rooms.find(
+      (room) =>
+        room.userNames &&
+        userNames.length === room.userNames.length &&
+        userNames.every((userName) => room.userNames?.includes(userName)),
+    );
+    return room ? room.roomId : undefined;
   },
 }));
 

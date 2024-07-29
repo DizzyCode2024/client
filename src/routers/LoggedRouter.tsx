@@ -4,28 +4,28 @@ import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import SockJS from 'sockjs-client';
-import RoomList from './components/room/RoomList';
 import {
   QUERY_KEYS,
   axiosInstance,
   getRooms,
   getSecondaryToken,
-} from './lib/api';
-import useHeartbeat from './lib/hooks/status/useHeartbeat';
-import useStatusPayload from './lib/hooks/status/useStatusPayload';
-import useAxiosInterceptor from './lib/hooks/useAxiosInterceptor';
-import useStompClient from './lib/hooks/useStompClient';
-import useSocketStore from './lib/stores/useSocketStore';
-import { BROKER_URL } from './lib/utils/config';
-import DMPage from './pages/DMPage';
-import ExplorePage from './pages/ExplorePage';
-import FriendPage from './pages/FriendPage';
-import RoomPage from './pages/RoomPage';
-import { IRoom } from './types';
+} from '@/lib/api';
+import useHeartbeat from '@/lib/hooks/status/useHeartbeat';
+import useStatusPayload from '@/lib/hooks/status/useStatusPayload';
+import useAxiosInterceptor from '@/lib/hooks/useAxiosInterceptor';
+import useStompClient from '@/lib/hooks/useStompClient';
+import useSocketStore from '@/lib/stores/useSocketStore';
+import { BROKER_URL } from '@/lib/utils/config';
+import ExplorePage from '@/pages/ExplorePage';
+import RoomPage from '@/pages/RoomPage';
+import { IRoom } from '@/types';
+import RoomList from '../components/room/RoomList';
+import DmRouter from './DmRouter';
 
 const LoggedRouter = () => {
   // set up axiosInstance
-  useAxiosInterceptor(axiosInstance);
+  const interceptor = useAxiosInterceptor(axiosInstance);
+
   // secondary token
   const [ST, setST] = useState<string | null>(null);
   // get rooms
@@ -33,6 +33,13 @@ const LoggedRouter = () => {
     queryKey: QUERY_KEYS.ROOMS,
     queryFn: getRooms,
   });
+
+  // const { data: friends } = useQuery({
+  //   queryKey: ['dmRooms'],
+  //   queryFn: getDmRooms,
+  // });
+
+  // console.log('>>>>', friends);
 
   // 웹소켓 연결
   const { client, setClient, isConnected, setIsConnected } = useSocketStore();
@@ -74,6 +81,7 @@ const LoggedRouter = () => {
       deactivateSocket();
       setST(null);
     };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setClient, setIsConnected, ST]);
 
   // rooms 구독
@@ -139,12 +147,15 @@ const LoggedRouter = () => {
   }, [rooms, isConnected, client]);
   useHeartbeat(10000);
 
+  if (!interceptor) {
+    return <div>{'Loading...'}</div>; // 인터셉터가 설정될 때까지 로딩 상태 표시
+  }
+
   return (
     <Box display={'flex'}>
       <RoomList />
       <Routes>
-        <Route path={'/main'} element={<FriendPage />} />
-        <Route path={'/main/:id'} element={<DMPage />} />
+        <Route path={'/main/*'} element={<DmRouter />} />
         <Route path={'/channels/:roomId/:channelId'} element={<RoomPage />} />
         <Route path={'/explore'} element={<ExplorePage />} />
       </Routes>

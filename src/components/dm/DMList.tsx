@@ -1,18 +1,20 @@
-import { useRef, useState, useEffect } from 'react';
+import { getDmRooms } from '@/lib/api';
+import useHandleDmRoom from '@/lib/hooks/handlers/useHandleDmRoom';
+import { useAuthStore } from '@/lib/stores/useAuthStore';
+import useDmStore from '@/lib/stores/useDmStore';
+import { IDmRoom } from '@/types/dm';
+import { CloseIcon, SmallAddIcon, StarIcon } from '@chakra-ui/icons';
 import {
   Box,
+  Spinner,
   Stack,
   Text,
   Tooltip,
-  Spinner,
   useDisclosure,
 } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CloseIcon, SmallAddIcon, StarIcon } from '@chakra-ui/icons';
-import useHandleDmRoom from '@/lib/hooks/handlers/useHandleDmRoom';
-import useDmStore from '@/lib/stores/useDmStore';
-import { IDmRoom } from '@/types/dm';
-import { useAuthStore } from '@/lib/stores/useAuthStore';
 import UserBox from '../userBox/UserBox';
 import DmCreateModal from './DmCreateModal';
 
@@ -27,28 +29,44 @@ const Container = ({ children }: { children: React.ReactNode }) => (
     {children}
   </Box>
 );
+
 const DMList = () => {
   const { user } = useAuthStore();
   const navigate = useNavigate();
+
   const { useGetDmRoomsQuery, removeMemberMutation, deleteRoomMutation } =
     useHandleDmRoom();
+
+  const [friends, setFriends] = useState([]);
   const { data: rooms, isLoading, isError, error } = useGetDmRoomsQuery();
-  const { setDmRooms } = useDmStore();
+
+  const { data } = useQuery({
+    queryKey: ['dmRooms'],
+    queryFn: getDmRooms,
+  });
+
+  console.log('rooms', rooms);
+  useEffect(() => {
+    if (data) {
+      setFriends(data);
+    }
+    console.log('>>.', friends);
+  }, [data, friends]);
+
+  const { currentDmId, setCurrentDmId, setDmRooms, dmRooms } = useDmStore();
   const { isOpen, onOpen, onClose } = useDisclosure();
   const btnRef = useRef<HTMLDivElement>(null);
   const [modalPosition, setModalPosition] = useState({
     top: 50,
     left: 250,
-    right: null,
+    right: 0,
   });
-  const [selectedRoomId, setSelectedRoomId] = useState<number | null>(null);
 
   const navigateToFriendList = () => {
     navigate(`/chat/main`);
   };
-
   const handleDmRoomSelect = (roomId: number) => {
-    setSelectedRoomId(roomId);
+    setCurrentDmId(roomId);
     navigate(`/chat/main/${roomId}`);
   };
 
@@ -66,6 +84,7 @@ const DMList = () => {
   useEffect(() => {
     if (rooms) {
       setDmRooms(rooms);
+      console.log('rooms', rooms);
     }
   }, [rooms, setDmRooms]);
 
@@ -76,13 +95,9 @@ const DMList = () => {
         {error.message}
       </Box>
     );
-  const filteredRooms = rooms?.filter(
-    (room: IDmRoom) =>
-      !(room.memberCount === 2 && room.temporaryRoomName === null),
-  );
 
   const handleLeaveOrDeleteRoom = (room: IDmRoom) => {
-    if (room.memberCount > 2) {
+    if (room.memberCount > 2 && user) {
       removeMemberMutation({ roomId: room.roomId, username: user?.username });
     } else {
       deleteRoomMutation(room.roomId);
@@ -165,7 +180,7 @@ const DMList = () => {
       {isLoading ? (
         <Spinner color={'white'} ml={'auto'} mr={'auto'} />
       ) : (
-        filteredRooms.map((room: IDmRoom) => (
+        dmRooms.map((room: IDmRoom) => (
           <Box
             key={room.roomId}
             display={'flex'}
@@ -175,8 +190,8 @@ const DMList = () => {
             ml={1}
             mr={1}
             borderRadius={'3px'}
-            bg={room.roomId === selectedRoomId ? 'gray.600' : 'transparent'}
-            color={room.roomId === selectedRoomId ? 'white' : 'gray.300'}
+            bg={room.roomId === currentDmId ? 'gray.600' : 'transparent'}
+            color={room.roomId === currentDmId ? 'white' : 'gray.300'}
             _hover={{
               bg: 'gray.600',
               color: 'white',
@@ -188,7 +203,7 @@ const DMList = () => {
             onClick={() => handleDmRoomSelect(room.roomId)}
           >
             <Text marginLeft={'1rem'}>
-              {room.memberCount > 2 ? room.roomName : room.temporaryRoomName}
+              {room.roomName ? room.roomName : room.temporaryRoomName}
             </Text>
             <Box
               as={'button'}

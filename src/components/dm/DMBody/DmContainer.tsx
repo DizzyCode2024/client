@@ -1,5 +1,5 @@
-import { QUERY_KEYS, getChats } from '@/lib/api';
-import useRoomStore from '@/lib/stores/useRoomStore';
+import { getDmChats } from '@/lib/api/afterLogin/dmApi';
+import useDmStore from '@/lib/stores/useDmStore';
 import { Box } from '@chakra-ui/react';
 import {
   QueryFunctionContext,
@@ -8,20 +8,25 @@ import {
 } from '@tanstack/react-query';
 import { useCallback, useEffect, useRef } from 'react';
 import { IChat } from '@/types';
-import ChatBox from './ChatBox';
-import NoChatUI from './NoChat';
+import ChatBox from '@/components/chat/ChatBody/ChatBox';
+import { QUERY_KEYS } from '@/lib/api';
+import NoDmUI from './NoDm';
 
-const ChatContainer = () => {
-  const { currentChannelPath } = useRoomStore();
+const DMContainer = () => {
+  const { currentDmId } = useDmStore();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
     useInfiniteQuery<IChat[], Error>({
-      queryKey: QUERY_KEYS.CHATS(currentChannelPath),
+      queryKey: QUERY_KEYS.DM_CHATS({
+        roomId: 0,
+        categoryId: 0,
+        channelId: currentDmId,
+      }),
       queryFn: ({
         pageParam = null,
       }: QueryFunctionContext<QueryKey, unknown>) =>
-        getChats({
-          ...currentChannelPath,
+        getDmChats({
+          roomId: currentDmId,
           timestamp: pageParam as string | null,
         }),
       initialPageParam: null,
@@ -33,7 +38,7 @@ const ChatContainer = () => {
         }
         return undefined;
       },
-      enabled: currentChannelPath.channelId !== 0,
+      enabled: !!currentDmId,
     });
 
   const handleScroll = useCallback(() => {
@@ -68,13 +73,13 @@ const ChatContainer = () => {
   }, [handleScroll]);
 
   return data?.pages[0].length === 0 ? (
-    <NoChatUI />
+    <NoDmUI />
   ) : (
     <Box mt={'auto'} color={'white'} overflow={'hidden'} flex={1}>
       <Box
         height={'100%'}
         overflowY={'auto'}
-        ref={scrollContainerRef}
+        // ref={scrollContainerRef}
         display={'flex'}
         flexDirection={'column-reverse'}
         style={{
@@ -97,4 +102,4 @@ const ChatContainer = () => {
   );
 };
 
-export default ChatContainer;
+export default DMContainer;
