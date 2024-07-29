@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import {
   Box,
@@ -19,6 +19,7 @@ import { IFriend } from '@/types/friend';
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import useHandleDmRoom from '@/lib/hooks/handlers/useHandleDmRoom';
 import useDmStore from '@/lib/stores/useDmStore'; // Assuming useDmStore includes findRoomIdByUserNames
+import { useHandleFriend } from '@/lib/hooks/handlers';
 
 interface DmCreateModalProps {
   isOpen: boolean;
@@ -32,12 +33,21 @@ const DmCreateModal = ({
   modalPosition,
 }: DmCreateModalProps) => {
   const navigate = useNavigate();
-  const { friends } = useFriendStore();
+
   const { user } = useAuthStore();
   const [selectedFriends, setSelectedFriends] = useState<IFriend[]>([]);
   const { addDmRoomMutation } = useHandleDmRoom();
   const { findRoomIdByUserNames } = useDmStore();
-  console.log('friends', friends);
+  const { useGetFriendsListQuery } = useHandleFriend();
+  const { data } = useGetFriendsListQuery();
+  const { setFriends } = useFriendStore();
+
+  useEffect(() => {
+    if (data) {
+      setFriends(data);
+    }
+  }, [data, setFriends]);
+
   const handleFriendSelection = (friend: IFriend) => {
     setSelectedFriends((prev) => {
       const index = prev.findIndex((f) => f.friendId === friend.friendId);
@@ -91,9 +101,9 @@ const DmCreateModal = ({
           <ModalHeader fontSize={'md'}>{'친구 선택하기'}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {friends.length > 0 ? (
+            {data ? (
               <Stack>
-                {friends.map((friend) => (
+                {data.map((friend) => (
                   <Checkbox
                     colorScheme={'purple'}
                     fontSize={'sm'}

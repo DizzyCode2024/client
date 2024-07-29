@@ -10,3 +10,4 @@ export * from './afterLogin/friendApi';
 export * from './afterLogin/memberApi';
 export * from './afterLogin/roomApi';
 export * from './afterLogin/token';
+export * from './afterLogin/dmApi';

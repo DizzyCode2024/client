@@ -1,10 +1,8 @@
-import MainContainer from '@/components/shared/MainContainer';
-import { useParams } from 'react-router-dom';
 import DMSection from '@/components/dm';
-import { Box } from '@chakra-ui/react';
 import useDmStore from '@/lib/stores/useDmStore';
+import { Box } from '@chakra-ui/react';
 import { useEffect } from 'react';
-import DMList from '../components/dm/DMList';
+import { useParams } from 'react-router-dom';
 
 const DMPage = () => {
   const param = useParams();
@@ -21,17 +19,14 @@ const DMPage = () => {
   }, [dmRooms, roomIdParam, setCurrentDmId, setCurrentDmRoom]);
 
   return (
-    <MainContainer>
-      <DMList />
-      <Box
-        display={'flex'}
-        flexDirection={'column'}
-        width={'100%'}
-        whiteSpace={'nowrap'}
-      >
-        <DMSection />
-      </Box>
-    </MainContainer>
+    <Box
+      display={'flex'}
+      flexDirection={'column'}
+      width={'100%'}
+      whiteSpace={'nowrap'}
+    >
+      <DMSection />
+    </Box>
   );
 };
 

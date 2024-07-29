@@ -1,14 +1,26 @@
-import { useState } from 'react';
 import { Box } from '@chakra-ui/react';
-
-import DMList from '@/components/dm/DMList';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
+import useDmStore from '@/lib/stores/useDmStore';
+import FriendList from '../components/friend/FriendList';
+import FriendRequest from '../components/friend/FriendRequest';
 import FriendTopMenu from '../components/friend/FriendTopMenu';
 import WaitingList from '../components/friend/WaitingList';
-import FriendRequest from '../components/friend/FriendRequest';
-import MainContainer from '../components/shared/MainContainer';
-import FriendList from '../components/friend/FriendList';
 
 const FriendPage = () => {
+  const param = useParams();
+  const roomIdParam = param.id ? parseInt(param.id, 10) : 0;
+
+  const { setCurrentDmId, dmRooms, setCurrentDmRoom } = useDmStore();
+
+  useEffect(() => {
+    setCurrentDmId(roomIdParam);
+    const currentRoom = dmRooms.find((room) => room.roomId === roomIdParam);
+    if (currentRoom) {
+      setCurrentDmRoom(currentRoom);
+    }
+  }, [dmRooms, roomIdParam, setCurrentDmId, setCurrentDmRoom]);
+
   const [selectedMenu, setSelectedMenu] = useState('모두');
 
   const renderContent = () => {
@@ -25,21 +37,18 @@ const FriendPage = () => {
   };
 
   return (
-    <MainContainer>
-      <DMList />
-      <Box
-        display={'flex'}
-        flexDirection={'column'}
-        width={'100%'}
-        whiteSpace={'nowrap'}
-      >
-        <FriendTopMenu
-          selectedMenu={selectedMenu}
-          onSelectMenu={setSelectedMenu}
-        />
-        {renderContent()}
-      </Box>
-    </MainContainer>
+    <Box
+      display={'flex'}
+      flexDirection={'column'}
+      width={'100%'}
+      whiteSpace={'nowrap'}
+    >
+      <FriendTopMenu
+        selectedMenu={selectedMenu}
+        onSelectMenu={setSelectedMenu}
+      />
+      {renderContent()}
+    </Box>
   );
 };
 

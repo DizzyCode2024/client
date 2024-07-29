@@ -11,7 +11,7 @@ export const useDestination = () => {
   const ChatDestination = `/app/rooms.${roomId}.categories.${categoryId}.channels.${channelId}`;
 
   const DmRoomTopic = `/topic/direct.room.${currentDmId}`;
-  const DmDestination = `/app/direct.room.${currentDmId}`;
+  const DmDestination = `/app/direct/room/${currentDmId}`;
 
   const DmCheckTopic = `/topic/direct.check.room`;
 

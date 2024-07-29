@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react';
 const NoDmUI = () => {
   const { currentDmRoom } = useDmStore();
   const [dmName, setDmName] = useState('');
-  console.log('currentDmRoom', currentDmRoom);
+
   useEffect(() => {
     if (currentDmRoom) {
       const name = currentDmRoom.roomName || currentDmRoom.temporaryRoomName;
