@@ -41,7 +41,6 @@ const DmCreateModal = ({
   const { useGetFriendsListQuery } = useHandleFriend();
   const { data } = useGetFriendsListQuery();
   const { setFriends } = useFriendStore();
-  console.log('user', user);
   useEffect(() => {
     if (data) {
       setFriends(data);
@@ -69,8 +68,7 @@ const DmCreateModal = ({
       ...selectedFriends.map((f) => f.friendName),
     ];
     const existingRoomId = findRoomIdByUserNames(userNames);
-    console.log('userNames', userNames);
-    console.log(existingRoomId);
+
     if (existingRoomId === undefined) {
       const dmName = [
         user.username,

@@ -3,7 +3,7 @@ import axiosInstance from './axiosInstance';
 
 interface GetDmChatsProps {
   dmRoomId: RoomId;
-  timestamp: string;
+  timestamp: string | null;
 }
 
 export const createDmRoomApi = async ({ roomName, userNames }: IDmRoom) => {
@@ -16,7 +16,6 @@ export const createDmRoomApi = async ({ roomName, userNames }: IDmRoom) => {
 
 export const getDmRooms = async () => {
   const response = await axiosInstance.get('/direct/rooms');
-  console.log('response', response);
   return response.data;
 };
 
@@ -51,11 +50,10 @@ export const fetchDmRoomDetailsApi = async (
 
 export const getDmChats = async ({ dmRoomId, timestamp }: GetDmChatsProps) => {
   const params = timestamp ? { last: timestamp } : {};
-  console.log('timestamp', timestamp);
-  console.log('dRI', dmRoomId);
-  const response = await axiosInstance.get(`/direct/room/1/messages`, {
-    params,
-  });
-  console.log(response);
+  const response = await axiosInstance.get(
+    `/direct/room/${dmRoomId}/messages`,
+    { params },
+  );
+
   return response.data;
 };
