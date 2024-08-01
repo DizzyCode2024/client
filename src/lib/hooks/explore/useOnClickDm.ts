@@ -11,10 +11,8 @@ export function useOnClickDM() {
 
   return (friendName: string) => {
     const userNames = [friendName].filter(Boolean);
-
-    console.log('onClickDM called with user Name:', friendName);
     const existingRoom = findRoomIdByUserNames(userNames);
-    console.log(existingRoom);
+
     if (existingRoom === undefined) {
       console.log('No existing room found, creating new room for:', friendName);
       if (user?.username) {

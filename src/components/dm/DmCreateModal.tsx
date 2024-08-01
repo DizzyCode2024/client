@@ -67,10 +67,7 @@ const DmCreateModal = ({
     const userNames = [...selectedFriends.map((f) => f.friendName)];
     const existingRoomId = findRoomIdByUserNames(userNames);
     console.log(existingRoomId);
-    if (existingRoomId) {
-      navigate(`/chat/main/${existingRoomId}`);
-      onClose();
-    } else {
+    if (existingRoomId === undefined) {
       const dmName = [
         user.username,
         ...selectedFriends.map((f) => f.friendName),
@@ -83,6 +80,9 @@ const DmCreateModal = ({
         memberCount: 0,
         temporaryRoomName: '',
       });
+      onClose();
+    } else if (existingRoomId) {
+      navigate(`/chat/main/${existingRoomId}`);
       onClose();
     }
   };

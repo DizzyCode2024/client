@@ -10,9 +10,9 @@ import { IChat } from '@/types';
 import { QUERY_KEYS } from '@/lib/api';
 import Container from '../chat/DragFileContainer';
 // import MemberList from '../memberList';
-import DMContainer from './DMBody/DmContainer';
 import DmInput from './DmInput/DmInput';
 import Header from './DmHeader/Header';
+import DMContainer from './DmBody/DmContainer';
 
 const DMSection = () => {
   const [isMembersOpen, setIsMembersOpen] = useState<boolean>(false);
@@ -63,7 +63,15 @@ const DMSection = () => {
         subscriptionRef.current = null;
       }
     };
-  }, [isConnected, subscribe, unsubscribe, client, topic, currentDmId]);
+  }, [
+    isConnected,
+    subscribe,
+    unsubscribe,
+    client,
+    topic,
+    currentDmId,
+    queryClient,
+  ]);
 
   return (
     <Container>
