@@ -143,6 +143,7 @@ const LoggedRouter = () => {
       });
     };
   }, [rooms, isConnected, client]);
+
   useHeartbeat(10000);
 
   if (!interceptor) {

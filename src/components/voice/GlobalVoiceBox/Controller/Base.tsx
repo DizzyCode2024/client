@@ -1,7 +1,7 @@
 import { Flex, Icon } from '@chakra-ui/react';
 import { ReactNode } from 'react';
 import { IconType } from 'react-icons';
-import CustomTooltip from '../shared/Tooltip';
+import CustomTooltip from '../../../shared/Tooltip';
 
 export interface ButtonProps {
   onClick: () => void;

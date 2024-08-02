@@ -7,6 +7,7 @@ const useHeartbeat = (interval: number) => {
   const { onlinePayload } = useStatusPayload();
 
   const heartbeat = () => {
+    console.log('HEARTBEAT', onlinePayload);
     sendMessage('/app/members/status/heartbeat', onlinePayload);
   };
 

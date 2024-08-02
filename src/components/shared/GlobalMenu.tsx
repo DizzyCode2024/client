@@ -1,6 +1,6 @@
 import { Box } from '@chakra-ui/react';
 import UserBox from '../userBox';
-import VoiceBox from '../voiceBox';
+import VoiceBox from '../voice/GlobalVoiceBox';
 
 const GlobalMenu = () => {
   return (
