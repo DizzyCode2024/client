@@ -1,4 +1,4 @@
-import { Box, Icon, useDisclosure } from '@chakra-ui/react';
+import { Box, Icon, Tooltip, useDisclosure } from '@chakra-ui/react';
 import { MdPeopleAlt, MdPersonAdd } from 'react-icons/md';
 import Container from '@/components/chat/ChatHeader/Container';
 import useDmStore from '@/lib/stores/useDmStore';
@@ -24,16 +24,20 @@ const Header = ({ isMembersOpen, setIsMembersOpen }: HeaderProps) => {
       <DmName
         dmName={currentDmRoom?.roomName || currentDmRoom?.temporaryRoomName}
       />
-      <Box>
-        <Icon
-          as={MdPersonAdd}
-          color={isMembersOpen ? 'white' : 'gray.300'}
-          boxSize={6}
-          onClick={onOpen}
-          _hover={{ color: 'white' }}
-          cursor={'pointer'}
-          mr={2}
-        />
+      <Box display={'flex'}>
+        <Tooltip label={'DM으로 친구 초대하기'} bg={'black'} hasArrow>
+          <Box>
+            <Icon
+              as={MdPersonAdd}
+              color={isMembersOpen ? 'white' : 'gray.300'}
+              boxSize={6}
+              onClick={onOpen}
+              _hover={{ color: 'white' }}
+              cursor={'pointer'}
+              mr={4}
+            />
+          </Box>
+        </Tooltip>
         <Icon
           as={MdPeopleAlt}
           color={isMembersOpen ? 'white' : 'gray.300'}

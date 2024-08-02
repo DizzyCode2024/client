@@ -82,6 +82,7 @@ const DMContainer = () => {
         // ref={scrollContainerRef}
         display={'flex'}
         flexDirection={'column-reverse'}
+        overflow={'scroll'}
         style={{
           overflowAnchor: 'auto',
         }}
