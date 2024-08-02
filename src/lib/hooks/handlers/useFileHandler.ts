@@ -28,7 +28,6 @@ const useFileHandler = () => {
 
   const uploadFileBinary = async (file: File): Promise<void> => {
     const fileData = await fileToBase64(file);
-
     try {
       const response = await axiosInstance.post('/upload/binary', {
         fileName: file.name,

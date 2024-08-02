@@ -35,7 +35,7 @@ const ChatContainer = () => {
       },
       enabled: currentChannelPath.channelId !== 0,
     });
-
+  console.log('data', data);
   const handleScroll = useCallback(() => {
     const scrollContainer = scrollContainerRef.current;
     // console.log(hasNextPage);

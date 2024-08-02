@@ -20,7 +20,6 @@ const DmInput = () => {
 
   const { sendMessage } = useStompClient();
   const { DmDestination } = useDestination();
-
   const handleSendMessage = async () => {
     if (senderId && (content.trim() || files.length)) {
       const payload: ISendChatPayload = {

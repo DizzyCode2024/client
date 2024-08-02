@@ -6,6 +6,11 @@ interface GetDmChatsProps {
   timestamp: string | null;
 }
 
+interface MemberMutationParams {
+  roomId: number;
+  username: string;
+}
+
 export const createDmRoomApi = async ({ roomName, userNames }: IDmRoom) => {
   const response = await axiosInstance.post('/direct/rooms', {
     roomName,
@@ -24,7 +29,10 @@ export const deleteDmRoomApi = async (roomId: number) => {
   return response.data;
 };
 
-export const addMemberToRoomApi = async (roomId: number, username: string) => {
+export const addMemberToRoomApi = async ({
+  roomId,
+  username,
+}: MemberMutationParams) => {
   const response = await axiosInstance.post(
     `/direct/rooms/${roomId}/members/${username}`,
   );
