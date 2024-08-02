@@ -36,7 +36,7 @@ const UserBox = () => {
             _hover={{ bg: 'gray.700', color: 'white' }}
           >
             <Box
-              backgroundColor={'teal.200'}
+              backgroundColor={'purple.400'}
               display={'flex'}
               justifyContent={'center'}
               alignItems={'center'}
