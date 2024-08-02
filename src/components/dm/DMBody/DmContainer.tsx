@@ -12,7 +12,7 @@ import ChatBox from '@/components/chat/ChatBody/ChatBox';
 import { QUERY_KEYS } from '@/lib/api';
 import NoDmUI from './NoDm';
 
-const DMContainer = () => {
+const DmContainer = () => {
   const { currentDmId } = useDmStore();
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const { data, fetchNextPage, isFetchingNextPage, hasNextPage } =
@@ -103,4 +103,4 @@ const DMContainer = () => {
   );
 };
 
-export default DMContainer;
+export default DmContainer;

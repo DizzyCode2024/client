@@ -12,7 +12,7 @@ import Container from '../chat/DragFileContainer';
 // import MemberList from '../memberList';
 import DmInput from './DmInput/DmInput';
 import Header from './DmHeader/Header';
-import DMContainer from './DMBody/DmContainer';
+import DmContainer from './DmBody/DmContainer';
 
 const DMSection = () => {
   const [isMembersOpen, setIsMembersOpen] = useState<boolean>(false);
@@ -81,7 +81,7 @@ const DMSection = () => {
       />
       <Flex flex={1} overflow={'scroll'}>
         <Flex flex={1} direction={'column'}>
-          <DMContainer />
+          <DmContainer />
           <DmInput />
         </Flex>
       </Flex>
