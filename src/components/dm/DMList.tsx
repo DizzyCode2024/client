@@ -82,7 +82,6 @@ const DMList = () => {
   useEffect(() => {
     if (rooms) {
       setDmRooms(rooms);
-      console.log('rooms', rooms);
     }
   }, [rooms, setDmRooms]);
 
