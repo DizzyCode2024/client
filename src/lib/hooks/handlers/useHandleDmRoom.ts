@@ -78,13 +78,15 @@ const useHandleDmRoom = () => {
     MemberMutationParams
   >({
     mutationFn: addMemberToRoomApi,
-    onSuccess: () => {
+    onSuccess: (data) => {
       toast({
         title: '멤버 추가 성공',
         description: '새로운 멤버가 DM 방에 추가되었습니다.',
         status: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['dmRooms'] });
+      navigate(`/chat/main/${data.roomId}`);
+      console.log('data', data);
     },
     onError: (error) => {
       toast({
