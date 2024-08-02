@@ -1,13 +1,15 @@
 import { Box } from '@chakra-ui/react';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import useDmStore from '@/lib/stores/useDmStore';
+import MenuContainer from '@/components/shared/MenuContainer';
+import DMList from '@/components/dm/DMList';
 import FriendList from '../components/friend/FriendList';
 import FriendRequest from '../components/friend/FriendRequest';
 import FriendTopMenu from '../components/friend/FriendTopMenu';
 import WaitingList from '../components/friend/WaitingList';
 
-const FriendPage = () => {
+const FriendPage = ({ global }: { global: ReactNode }) => {
   const param = useParams();
   const roomIdParam = param.id ? parseInt(param.id, 10) : 0;
 
@@ -37,18 +39,24 @@ const FriendPage = () => {
   };
 
   return (
-    <Box
-      display={'flex'}
-      flexDirection={'column'}
-      width={'100%'}
-      whiteSpace={'nowrap'}
-    >
-      <FriendTopMenu
-        selectedMenu={selectedMenu}
-        onSelectMenu={setSelectedMenu}
-      />
-      {renderContent()}
-    </Box>
+    <>
+      <MenuContainer>
+        <DMList />
+        {global}
+      </MenuContainer>
+      <Box
+        display={'flex'}
+        flexDirection={'column'}
+        width={'100%'}
+        whiteSpace={'nowrap'}
+      >
+        <FriendTopMenu
+          selectedMenu={selectedMenu}
+          onSelectMenu={setSelectedMenu}
+        />
+        {renderContent()}
+      </Box>
+    </>
   );
 };
 

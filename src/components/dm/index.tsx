@@ -12,7 +12,7 @@ import Container from '../chat/DragFileContainer';
 // import MemberList from '../memberList';
 import DmInput from './DmInput/DmInput';
 import Header from './DmHeader/Header';
-import DMContainer from './DmBody/DmContainer';
+import DMContainer from './DMBody/DmContainer';
 
 const DMSection = () => {
   const [isMembersOpen, setIsMembersOpen] = useState<boolean>(false);

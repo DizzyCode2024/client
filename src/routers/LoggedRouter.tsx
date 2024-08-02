@@ -1,9 +1,4 @@
-import { Box } from '@chakra-ui/react';
-import { Client, StompSubscription } from '@stomp/stompjs';
-import { useQuery } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import SockJS from 'sockjs-client';
+import GlobalMenu from '@/components/GlobalMenu';
 import {
   QUERY_KEYS,
   axiosInstance,
@@ -16,13 +11,22 @@ import useAxiosInterceptor from '@/lib/hooks/useAxiosInterceptor';
 import useStompClient from '@/lib/hooks/useStompClient';
 import useSocketStore from '@/lib/stores/useSocketStore';
 import { BROKER_URL } from '@/lib/utils/config';
+import DMPage from '@/pages/DMPage';
 import ExplorePage from '@/pages/ExplorePage';
+import FriendPage from '@/pages/FriendPage';
 import RoomPage from '@/pages/RoomPage';
 import { IRoom } from '@/types';
+import { Box } from '@chakra-ui/react';
+import { Client, StompSubscription } from '@stomp/stompjs';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useMemo, useRef, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import SockJS from 'sockjs-client';
 import RoomList from '../components/room/RoomList';
-import DmRouter from './DmRouter';
 
 const LoggedRouter = () => {
+  const globalMenu = useMemo(() => <GlobalMenu />, []);
+
   // set up axiosInstance
   const interceptor = useAxiosInterceptor(axiosInstance);
 
@@ -155,8 +159,12 @@ const LoggedRouter = () => {
     <Box display={'flex'}>
       <RoomList />
       <Routes>
-        <Route path={'/main/*'} element={<DmRouter />} />
-        <Route path={'/channels/:roomId/:channelId'} element={<RoomPage />} />
+        <Route path={'/main'} element={<FriendPage global={globalMenu} />} />
+        <Route path={'/main/:id'} element={<DMPage global={globalMenu} />} />
+        <Route
+          path={'/channels/:roomId/:channelId'}
+          element={<RoomPage global={globalMenu} />}
+        />
         <Route path={'/explore'} element={<ExplorePage />} />
       </Routes>
     </Box>

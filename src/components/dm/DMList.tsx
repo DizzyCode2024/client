@@ -15,7 +15,6 @@ import {
 import { useQuery } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import UserBox from '../userBox/UserBox';
 import DmCreateModal from './DmCreateModal';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
@@ -223,7 +222,6 @@ const DMList = () => {
           </Box>
         ))
       )}
-      <UserBox />
     </Container>
   );
 };

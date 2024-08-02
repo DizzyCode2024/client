@@ -1,15 +1,19 @@
 import ChatSection from '@/components/chat';
 import RoomMenu from '@/components/room/RoomMenu';
-import MainContainer from '@/components/shared/MainContainer';
+import MenuContainer from '@/components/shared/MenuContainer';
 import VoiceSection from '@/components/voice';
 import { QUERY_KEYS, getCategories } from '@/lib/api';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { IRoom } from '@/types';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { useEffect, useState } from 'react';
+import { ReactNode, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-const RoomPage = () => {
+interface RoomPageProps {
+  global: ReactNode;
+}
+
+const RoomPage = ({ global }: RoomPageProps) => {
   const { setCurrentChannelPath, setCurrentChannelInfo } = useRoomStore();
   const [path, setPath] = useState({ roomId: 0, channelId: 0 });
   const { roomId: roomIdStr, channelId: channelIdStr } = useParams<{
@@ -65,10 +69,13 @@ const RoomPage = () => {
   } = useRoomStore();
 
   return (
-    <MainContainer>
-      <RoomMenu roomId={path.roomId} />
+    <>
+      <MenuContainer>
+        <RoomMenu roomId={path.roomId} />
+        {global}
+      </MenuContainer>
       {type === 'CHAT' ? <ChatSection /> : <VoiceSection />}
-    </MainContainer>
+    </>
   );
 };
 

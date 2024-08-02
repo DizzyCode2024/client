@@ -1,5 +1,3 @@
-import MenuContainer from '@/components/shared/MenuContainer';
-import UserBox from '@/components/userBox/UserBox';
 import { QUERY_KEYS, getCategories } from '@/lib/api';
 import { useDestination } from '@/lib/hooks/useDestination';
 import useStompClient from '@/lib/hooks/useStompClient';
@@ -76,7 +74,7 @@ const RoomMenu = ({ roomId }: { roomId: RoomId }) => {
   }, [isConnected, roomId, client, StatusTopic]);
 
   return (
-    <MenuContainer>
+    <>
       <RoomMenuButton name={currentRoomName} />
       {categories?.map((category) => (
         <CategoryBox
@@ -95,8 +93,8 @@ const RoomMenu = ({ roomId }: { roomId: RoomId }) => {
           ))}
         </CategoryBox>
       ))}
-      <UserBox />
-    </MenuContainer>
+      {/* <UserBox /> */}
+    </>
   );
 };
 
