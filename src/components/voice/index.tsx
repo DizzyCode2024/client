@@ -1,25 +1,25 @@
+import { spacing } from '@/lib/constants';
+import useHandleController from '@/lib/hooks/voice/useHandleController';
+import useScreenShare from '@/lib/hooks/voice/useScreenShare';
+import useRoomStore from '@/lib/stores/useRoomStore';
+import useConnectedVoiceStore from '@/lib/stores/voice/useConnectedVoiceStore';
+import useVoiceControllerStore from '@/lib/stores/voice/useVoiceControllerStore';
+import useVoiceStateStore from '@/lib/stores/voice/useVoiceStateStore';
 import { Button, Flex, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
+import { BiSolidMicrophone, BiSolidMicrophoneOff } from 'react-icons/bi';
 import {
   BsFillCameraVideoFill,
   BsFillCameraVideoOffFill,
 } from 'react-icons/bs';
-import { PiPhoneDisconnectFill } from 'react-icons/pi';
-import useVoiceControllerStore from '@/lib/stores/voice/useVoiceControllerStore';
-import { BiSolidMicrophone, BiSolidMicrophoneOff } from 'react-icons/bi';
-import { spacing } from '@/lib/constants';
-import useRoomStore from '@/lib/stores/useRoomStore';
 import { MdScreenShare, MdStopScreenShare } from 'react-icons/md';
-import useVoiceStateStore from '@/lib/stores/voice/useVoiceStateStore';
-import useHandleController from '@/lib/hooks/voice/useHandleController';
-import useScreenShare from '@/lib/hooks/voice/useScreenShare';
+import { PiPhoneDisconnectFill } from 'react-icons/pi';
 import useVoiceRoom from '../../lib/hooks/voice/useVoiceRoom';
 import Container from '../chat/DragFileContainer';
 import VideoContainer from './VoiceBody/VideoContainer';
 import Controller from './VoiceController/Controller';
 
 const VoiceSection = () => {
-  const { name } = useRoomStore((state) => state.currentChannelInfo);
   const { videoOn, audioOn, screenShareOn } = useVoiceControllerStore();
 
   const { joinSession, handleMainVideoStream } = useVoiceRoom();
@@ -27,19 +27,32 @@ const VoiceSection = () => {
   const { session, publisher, mainStreamManager, subscribers } =
     useVoiceStateStore();
 
+  const {
+    currentChannelPath: { roomId, categoryId, channelId },
+    currentChannelInfo: { name, type },
+  } = useRoomStore();
+  const { setConnectedVoicePath, setConnectedVoiceInfo } =
+    useConnectedVoiceStore();
+
   const { toggleAudio, toggleVideo, leaveSession } = useHandleController();
   const { startScreenShare, stopScreenShare } = useScreenShare();
 
-  useEffect(() => {
-    console.log('=======MOUNT=======');
-    // window.addEventListener('beforeunload', onbeforeunload);
-    return () => {
-      console.log('=======UNMOUNT=======');
-      if (session) {
-        leaveSession();
-      }
-    };
-  }, [session, leaveSession]);
+  // useEffect(() => {
+  //   console.log('=======MOUNT=======');
+  //   // window.addEventListener('beforeunload', onbeforeunload);
+  //   return () => {
+  //     console.log('=======UNMOUNT=======');
+  //     if (session) {
+  //       leaveSession();
+  //     }
+  //   };
+  // }, [session, leaveSession]);
+
+  const handleJoinSession = () => {
+    joinSession();
+    setConnectedVoicePath({ roomId, categoryId, channelId });
+    setConnectedVoiceInfo({ name, type });
+  };
 
   useEffect(() => {
     console.log('>> SUBSCRIBERS:', subscribers);
@@ -64,7 +77,7 @@ const VoiceSection = () => {
           <Text color={'white'} fontWeight={200} fontSize={'1.2rem'}>
             {'No one is currently in voice.'}
           </Text>
-          <Button onClick={joinSession} fontSize={'1.3rem'} mt={'1rem'}>
+          <Button onClick={handleJoinSession} fontSize={'1.3rem'} mt={'1rem'}>
             {'Join Voice'}
           </Button>
         </Flex>

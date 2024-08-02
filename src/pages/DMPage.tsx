@@ -1,10 +1,15 @@
 import DMSection from '@/components/dm';
+import DMList from '@/components/dm/DMList';
 import useDmStore from '@/lib/stores/useDmStore';
 import { Box } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-const DMPage = () => {
+const DMPage = ({
+  setMenu,
+}: {
+  setMenu: React.Dispatch<React.SetStateAction<React.ReactNode>>;
+}) => {
   const param = useParams();
   const roomIdParam = param.id ? parseInt(param.id, 10) : 0;
 
@@ -18,6 +23,9 @@ const DMPage = () => {
     }
   }, [dmRooms, roomIdParam, setCurrentDmId, setCurrentDmRoom]);
 
+  useEffect(() => {
+    setMenu(<DMList />);
+  }, []);
   return (
     <Box
       display={'flex'}

@@ -1,8 +1,8 @@
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import { StarIcon } from '@chakra-ui/icons';
 import { Box, Popover, PopoverTrigger } from '@chakra-ui/react';
-import UserSettingsButton from './UserSettingsButton';
 import UserPopoverBox from './UserPopoverBox';
+import UserSettingsButton from './UserSettingsButton';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
@@ -12,7 +12,6 @@ const Container = ({ children }: { children: React.ReactNode }) => (
     display={'flex'}
     justifyContent={'space-between'}
     alignItems={'center'}
-    mt={'auto'}
   >
     {children}
   </Box>

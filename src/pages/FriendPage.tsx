@@ -1,13 +1,18 @@
+import DMList from '@/components/dm/DMList';
+import useDmStore from '@/lib/stores/useDmStore';
 import { Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import useDmStore from '@/lib/stores/useDmStore';
 import FriendList from '../components/friend/FriendList';
 import FriendRequest from '../components/friend/FriendRequest';
 import FriendTopMenu from '../components/friend/FriendTopMenu';
 import WaitingList from '../components/friend/WaitingList';
 
-const FriendPage = () => {
+const FriendPage = ({
+  setMenu,
+}: {
+  setMenu: React.Dispatch<React.SetStateAction<React.ReactNode>>;
+}) => {
   const param = useParams();
   const roomIdParam = param.id ? parseInt(param.id, 10) : 0;
 
@@ -35,6 +40,10 @@ const FriendPage = () => {
         return null;
     }
   };
+
+  useEffect(() => {
+    setMenu(<DMList />);
+  }, []);
 
   return (
     <Box

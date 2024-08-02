@@ -1,9 +1,4 @@
-import { Box } from '@chakra-ui/react';
-import { Client, StompSubscription } from '@stomp/stompjs';
-import { useQuery } from '@tanstack/react-query';
-import { useEffect, useRef, useState } from 'react';
-import { Route, Routes } from 'react-router-dom';
-import SockJS from 'sockjs-client';
+import MenuContainer from '@/components/shared/MenuContainer';
 import {
   QUERY_KEYS,
   axiosInstance,
@@ -16,13 +11,23 @@ import useAxiosInterceptor from '@/lib/hooks/useAxiosInterceptor';
 import useStompClient from '@/lib/hooks/useStompClient';
 import useSocketStore from '@/lib/stores/useSocketStore';
 import { BROKER_URL } from '@/lib/utils/config';
+import DMPage from '@/pages/DMPage';
 import ExplorePage from '@/pages/ExplorePage';
+import FriendPage from '@/pages/FriendPage';
 import RoomPage from '@/pages/RoomPage';
 import { IRoom } from '@/types';
+import { Box } from '@chakra-ui/react';
+import { Client, StompSubscription } from '@stomp/stompjs';
+import { useQuery } from '@tanstack/react-query';
+import { ReactNode, useEffect, useRef, useState } from 'react';
+import { Route, Routes } from 'react-router-dom';
+import SockJS from 'sockjs-client';
+import GlobalMenu from '@/components/shared/GlobalMenu';
 import RoomList from '../components/room/RoomList';
-import DmRouter from './DmRouter';
 
 const LoggedRouter = () => {
+  const [menu, setMenu] = useState<ReactNode>(<div>{'Loading...'}</div>);
+
   // set up axiosInstance
   const interceptor = useAxiosInterceptor(axiosInstance);
 
@@ -33,13 +38,6 @@ const LoggedRouter = () => {
     queryKey: QUERY_KEYS.ROOMS,
     queryFn: getRooms,
   });
-
-  // const { data: friends } = useQuery({
-  //   queryKey: ['dmRooms'],
-  //   queryFn: getDmRooms,
-  // });
-
-  // console.log('>>>>', friends);
 
   // 웹소켓 연결
   const { client, setClient, isConnected, setIsConnected } = useSocketStore();
@@ -145,6 +143,7 @@ const LoggedRouter = () => {
       });
     };
   }, [rooms, isConnected, client]);
+
   useHeartbeat(10000);
 
   if (!interceptor) {
@@ -154,10 +153,19 @@ const LoggedRouter = () => {
   return (
     <Box display={'flex'}>
       <RoomList />
+      <MenuContainer>
+        {menu}
+        <GlobalMenu />
+      </MenuContainer>
+
       <Routes>
-        <Route path={'/main/*'} element={<DmRouter />} />
-        <Route path={'/channels/:roomId/:channelId'} element={<RoomPage />} />
-        <Route path={'/explore'} element={<ExplorePage />} />
+        <Route path={'/main'} element={<FriendPage setMenu={setMenu} />} />
+        <Route path={'/main/:id'} element={<DMPage setMenu={setMenu} />} />
+        <Route
+          path={'/channels/:roomId/:channelId'}
+          element={<RoomPage setMenu={setMenu} />}
+        />
+        <Route path={'/explore'} element={<ExplorePage setMenu={setMenu} />} />
       </Routes>
     </Box>
   );
