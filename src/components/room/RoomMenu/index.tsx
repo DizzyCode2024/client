@@ -24,7 +24,7 @@ const RoomMenu = ({ roomId }: { roomId: RoomId }) => {
     queryFn: () => getCategories(roomId),
     enabled: !!roomId,
   });
-
+  console.log('categories', categories);
   useEffect(() => {
     rooms?.forEach((room) => {
       if (room.roomId === roomId) {

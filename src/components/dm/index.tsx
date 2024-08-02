@@ -79,7 +79,7 @@ const DMSection = () => {
         isMembersOpen={isMembersOpen}
         setIsMembersOpen={setIsMembersOpen}
       />
-      <Flex flex={1}>
+      <Flex flex={1} overflow={'scroll'}>
         <Flex flex={1} direction={'column'}>
           <DMContainer />
           <DmInput />

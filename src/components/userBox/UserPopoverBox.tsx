@@ -12,7 +12,7 @@ import { useAuthStore } from '@/lib/stores/useAuthStore';
 import EditProfile from './EditButton';
 
 const Top = styled.div`
-  background-color: green;
+  background-color: #b794f4;
   height: 6rem;
   position: relative;
   margin-bottom: 1rem;
