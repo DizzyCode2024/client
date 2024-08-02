@@ -1,7 +1,14 @@
-import UserBox from '../userBox/UserBox';
+import { Box } from '@chakra-ui/react';
+import UserBox from '../userBox';
+import VoiceBox from '../voiceBox';
 
 const GlobalMenu = () => {
-  return <UserBox />;
+  return (
+    <Box mt={'auto'}>
+      <VoiceBox />
+      <UserBox />
+    </Box>
+  );
 };
 
 export default GlobalMenu;

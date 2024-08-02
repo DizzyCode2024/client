@@ -2,7 +2,6 @@ import { QUERY_KEYS } from '@/lib/api';
 import { IRoom } from '@/types';
 import { Box, Divider, Stack, Text } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
-import { useEffect } from 'react';
 import AddRoomButton from './AddRoomButton';
 import DMButton from './DMButton';
 import ExploreButton from './ExploreButton';
@@ -18,14 +17,6 @@ const RoomList = () => {
   const queryClient = useQueryClient();
   const rooms: IRoom[] =
     queryClient.getQueryData<IRoom[]>(QUERY_KEYS.ROOMS) || [];
-
-  useEffect(() => {
-    console.log('>>>>>>>>>>>RoomList rendered<<<<<<<<<<<');
-
-    return () => {
-      console.log('>>>>>>>>>>RoomList unmounted<<<<<<<<<<');
-    };
-  }, []);
 
   return (
     <Container>

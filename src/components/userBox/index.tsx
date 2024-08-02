@@ -12,7 +12,6 @@ const Container = ({ children }: { children: React.ReactNode }) => (
     display={'flex'}
     justifyContent={'space-between'}
     alignItems={'center'}
-    mt={'auto'}
   >
     {children}
   </Box>
