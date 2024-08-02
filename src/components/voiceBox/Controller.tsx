@@ -1,6 +1,6 @@
 import { Flex, Icon } from '@chakra-ui/react';
-import { IconType } from 'react-icons';
 import { ReactNode } from 'react';
+import { IconType } from 'react-icons';
 import CustomTooltip from '../shared/Tooltip';
 
 export interface ButtonProps {
@@ -13,7 +13,7 @@ const GlobalController = ({ children }: { children: ReactNode }) => {
   return <Flex justifyContent={'space-between'}>{children}</Flex>;
 };
 
-const BaseButton = ({ onClick, label, icon }: ButtonProps) => (
+const Button = ({ onClick, label, icon }: ButtonProps) => (
   <CustomTooltip label={label} placement={'top'}>
     <Flex
       borderRadius={'10%'}
@@ -28,10 +28,6 @@ const BaseButton = ({ onClick, label, icon }: ButtonProps) => (
       <Icon as={icon} boxSize={4} color={'white'} />
     </Flex>
   </CustomTooltip>
-);
-
-const Button = (props: Omit<ButtonProps, 'hoverBgColor'>) => (
-  <BaseButton {...props} />
 );
 
 GlobalController.Button = Button;

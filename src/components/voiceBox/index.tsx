@@ -1,21 +1,21 @@
 import { QUERY_KEYS } from '@/lib/api';
 import { spacing } from '@/lib/constants';
+import useHandleController from '@/lib/hooks/voice/useHandleController';
+import useScreenShare from '@/lib/hooks/voice/useScreenShare';
 import useRoomStore from '@/lib/stores/useRoomStore';
+import useVoiceControllerStore from '@/lib/stores/voice/useVoiceControllerStore';
 import { IRoom } from '@/types';
 import { Box, Flex } from '@chakra-ui/react';
 import { useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
-import { GiNetworkBars } from 'react-icons/gi';
+import { BiSolidMicrophone, BiSolidMicrophoneOff } from 'react-icons/bi';
 import {
   BsFillCameraVideoFill,
   BsFillCameraVideoOffFill,
 } from 'react-icons/bs';
-import useVoiceControllerStore from '@/lib/stores/voice/useVoiceControllerStore';
-import { PiPhoneDisconnectFill } from 'react-icons/pi';
-import useHandleController from '@/lib/hooks/voice/useHandleController';
-import { BiSolidMicrophone, BiSolidMicrophoneOff } from 'react-icons/bi';
+import { GiNetworkBars } from 'react-icons/gi';
 import { MdScreenShare, MdStopScreenShare } from 'react-icons/md';
-import useScreenShare from '@/lib/hooks/voice/useScreenShare';
+import { PiPhoneDisconnectFill } from 'react-icons/pi';
 import GlobalController from './Controller';
 
 const VoiceBox = () => {
