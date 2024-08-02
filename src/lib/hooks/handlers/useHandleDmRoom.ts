@@ -40,7 +40,6 @@ const useHandleDmRoom = () => {
       setCurrentDmId(data.roomId);
       const currentRoom = dmRooms.find((room) => room.roomId === currentDmId);
       if (currentRoom) setCurrentDmRoom(currentRoom);
-      console.log('Room response', data);
       toast({
         title: 'DM 방 생성 성공',
         description: '새로운 DM 방이 생성되었습니다.',
@@ -77,14 +76,15 @@ const useHandleDmRoom = () => {
     Error,
     MemberMutationParams
   >({
-    mutationFn: ({ roomId, username }) => addMemberToRoomApi(roomId, username),
-    onSuccess: () => {
+    mutationFn: addMemberToRoomApi,
+    onSuccess: (data) => {
       toast({
         title: '멤버 추가 성공',
         description: '새로운 멤버가 DM 방에 추가되었습니다.',
         status: 'success',
       });
       queryClient.invalidateQueries({ queryKey: ['dmRooms'] });
+      navigate(`/chat/main/${data.roomId}`);
     },
     onError: (error) => {
       toast({

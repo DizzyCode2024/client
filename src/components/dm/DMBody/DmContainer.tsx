@@ -26,7 +26,7 @@ const DMContainer = () => {
         pageParam = null,
       }: QueryFunctionContext<QueryKey, unknown>) =>
         getDmChats({
-          roomId: currentDmId,
+          dmRoomId: currentDmId,
           timestamp: pageParam as string | null,
         }),
       initialPageParam: null,

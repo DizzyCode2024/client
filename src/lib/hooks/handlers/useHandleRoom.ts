@@ -58,7 +58,6 @@ const useHandleRoom = () => {
   const { mutate: deleteRoomMutation } = useMutation<void, Error, RoomId>({
     mutationFn: deleteRoom,
     onSuccess: () => {
-      console.log('Room deleted');
       toast({
         title: '방 삭제 성공',
         description: '방이 삭제되었습니다.',

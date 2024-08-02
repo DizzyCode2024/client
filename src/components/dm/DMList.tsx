@@ -44,12 +44,10 @@ const DMList = () => {
     queryFn: getDmRooms,
   });
 
-  console.log('rooms', rooms);
   useEffect(() => {
     if (data) {
       setFriends(data);
     }
-    console.log('>>.', friends);
   }, [data, friends]);
 
   const { currentDmId, setCurrentDmId, setDmRooms, dmRooms } = useDmStore();
@@ -83,7 +81,6 @@ const DMList = () => {
   useEffect(() => {
     if (rooms) {
       setDmRooms(rooms);
-      console.log('rooms', rooms);
     }
   }, [rooms, setDmRooms]);
 
