@@ -48,30 +48,30 @@ const AddChannelModal = ({
   };
 
   return (
-    <Modal isOpen={isOpen} onClose={onClose} size={'xl'} isCentered>
+    <Modal isOpen={isOpen} onClose={onClose} size={'md'} isCentered>
       <ModalOverlay />
-      <ModalContent p={'0.5rem'}>
+      <ModalContent p={'0.2rem'}>
         <ModalHeader />
-        <ModalCloseButton size={'xl'} />
+        <ModalCloseButton size={'md'} />
         <ModalBody pt={'2rem'}>
           <Box>
-            <Text fontWeight={'bold'} fontSize={'xl'} color={'gray.300'}>
+            <Text fontWeight={'bold'} fontSize={'sm'} color={'gray.300'}>
               {'CHANNEL NAME'}
             </Text>
             <Input
               value={channelName}
               onChange={handleChange}
               placeholder={'채널 이름을 입력하세요.'}
-              fontSize={'2xl'}
+              fontSize={'sm'}
               bg={'gray.900'}
               border={'none'}
-              py={'10'}
+              py={'5'}
             />
           </Box>
           <Box pt={'2rem'}>
             <Text
               fontWeight={'bold'}
-              fontSize={'xl'}
+              fontSize={'sm'}
               color={'gray.300'}
               pb={'1rem'}
             >
@@ -79,10 +79,10 @@ const AddChannelModal = ({
             </Text>
             <RadioGroup onChange={handleChannelTypeChange} value={channelType}>
               <Stack>
-                <Radio value={'CHAT'} size={'lg'} colorScheme={'white'}>
+                <Radio value={'CHAT'} size={'sm'} colorScheme={'white'}>
                   {'Chat'}
                 </Radio>
-                <Radio value={'VOICE'} size={'lg'} colorScheme={'white'}>
+                <Radio value={'VOICE'} size={'sm'} colorScheme={'white'}>
                   {'Voice'}
                 </Radio>
               </Stack>
@@ -96,7 +96,7 @@ const AddChannelModal = ({
             onClick={onClose}
             bg={'transparent'}
             color={'white'}
-            fontSize={'xl'}
+            fontSize={'md'}
             _hover={{
               bg: 'transparent',
               color: 'white',
@@ -104,7 +104,7 @@ const AddChannelModal = ({
           >
             {'취소'}
           </Button>
-          <Button fontSize={'xl'} onClick={handleSubmit}>
+          <Button fontSize={'md'} onClick={handleSubmit}>
             {'채널 만들기'}
           </Button>
         </ModalFooter>
