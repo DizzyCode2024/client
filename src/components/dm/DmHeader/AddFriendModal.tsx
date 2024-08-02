@@ -9,28 +9,22 @@ import {
   ModalCloseButton,
   Text,
 } from '@chakra-ui/react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
+
 import useDmStore from '@/lib/stores/useDmStore';
 import useFriendStore from '@/lib/stores/useFriendStore';
-import { addMemberToRoomApi } from '@/lib/api';
+import useHandleDmRoom from '@/lib/hooks/handlers/useHandleDmRoom';
 
-const AddFriendModal = ({ isOpen, onClose }) => {
+interface AddFriendModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+}
+
+const AddFriendModal = ({ isOpen, onClose }: AddFriendModalProps) => {
   const [selectedFriend, setSelectedFriend] = useState('');
   const { currentDmRoom } = useDmStore();
   const { friends } = useFriendStore();
-  const queryClient = useQueryClient();
+  const { addMemberMutation } = useHandleDmRoom();
   console.log(selectedFriend);
-
-  const { mutate: addMemberMutation } = useMutation({
-    mutationFn: addMemberToRoomApi,
-    onSuccess: () => {
-      queryClient.invalidateQueries(['dmRooms']);
-      onClose();
-    },
-    onError: (error) => {
-      console.error('Failed to add member:', error);
-    },
-  });
 
   const toggleFriendSelection = (friendName: string) => {
     if (selectedFriend === friendName) {
@@ -47,6 +41,8 @@ const AddFriendModal = ({ isOpen, onClose }) => {
         username: selectedFriend,
       });
     }
+    setSelectedFriend('');
+    onClose();
   };
 
   const availableFriends = friends.filter(
