@@ -1,9 +1,8 @@
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import { StarIcon } from '@chakra-ui/icons';
 import { Box, Popover, PopoverTrigger } from '@chakra-ui/react';
-import { useEffect } from 'react';
-import UserSettingsButton from './UserSettingsButton';
 import UserPopoverBox from './UserPopoverBox';
+import UserSettingsButton from './UserSettingsButton';
 
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box
@@ -21,14 +20,6 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 
 const UserBox = () => {
   const user = useAuthStore((state) => state.user);
-
-  useEffect(() => {
-    console.log('>>>>>>>>>>>UserBox rendered<<<<<<<<<<<');
-
-    return () => {
-      console.log('>>>>>>>>>>UserBox unmounted<<<<<<<<<<');
-    };
-  }, []);
 
   return (
     <Container>

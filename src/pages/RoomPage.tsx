@@ -1,19 +1,18 @@
 import ChatSection from '@/components/chat';
 import RoomMenu from '@/components/room/RoomMenu';
-import MenuContainer from '@/components/shared/MenuContainer';
 import VoiceSection from '@/components/voice';
 import { QUERY_KEYS, getCategories } from '@/lib/api';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { IRoom } from '@/types';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { ReactNode, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-interface RoomPageProps {
-  global: ReactNode;
-}
-
-const RoomPage = ({ global }: RoomPageProps) => {
+const RoomPage = ({
+  setMenu,
+}: {
+  setMenu: React.Dispatch<React.SetStateAction<React.ReactNode>>;
+}) => {
   const { setCurrentChannelPath, setCurrentChannelInfo } = useRoomStore();
   const [path, setPath] = useState({ roomId: 0, channelId: 0 });
   const { roomId: roomIdStr, channelId: channelIdStr } = useParams<{
@@ -68,15 +67,18 @@ const RoomPage = ({ global }: RoomPageProps) => {
     currentChannelInfo: { type },
   } = useRoomStore();
 
-  return (
-    <>
-      <MenuContainer>
-        <RoomMenu roomId={path.roomId} />
-        {global}
-      </MenuContainer>
-      {type === 'CHAT' ? <ChatSection /> : <VoiceSection />}
-    </>
-  );
+  useEffect(() => {
+    if (path.roomId === 0) {
+      setMenu(<div>{'Loading...'}</div>);
+    } else {
+      setMenu(<RoomMenu roomId={path.roomId} />);
+    }
+  }, [path]);
+
+  if (type === 'CHAT') {
+    return <ChatSection />;
+  }
+  return <VoiceSection />;
 };
 
 export default RoomPage;

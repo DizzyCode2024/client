@@ -93,7 +93,6 @@ const RoomMenu = ({ roomId }: { roomId: RoomId }) => {
           ))}
         </CategoryBox>
       ))}
-      {/* <UserBox /> */}
     </>
   );
 };

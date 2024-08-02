@@ -1,15 +1,18 @@
-import { Box } from '@chakra-ui/react';
-import { ReactNode, useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import useDmStore from '@/lib/stores/useDmStore';
-import MenuContainer from '@/components/shared/MenuContainer';
 import DMList from '@/components/dm/DMList';
+import useDmStore from '@/lib/stores/useDmStore';
+import { Box } from '@chakra-ui/react';
+import { useEffect, useState } from 'react';
+import { useParams } from 'react-router-dom';
 import FriendList from '../components/friend/FriendList';
 import FriendRequest from '../components/friend/FriendRequest';
 import FriendTopMenu from '../components/friend/FriendTopMenu';
 import WaitingList from '../components/friend/WaitingList';
 
-const FriendPage = ({ global }: { global: ReactNode }) => {
+const FriendPage = ({
+  setMenu,
+}: {
+  setMenu: React.Dispatch<React.SetStateAction<React.ReactNode>>;
+}) => {
   const param = useParams();
   const roomIdParam = param.id ? parseInt(param.id, 10) : 0;
 
@@ -38,25 +41,23 @@ const FriendPage = ({ global }: { global: ReactNode }) => {
     }
   };
 
+  useEffect(() => {
+    setMenu(<DMList />);
+  }, []);
+
   return (
-    <>
-      <MenuContainer>
-        <DMList />
-        {global}
-      </MenuContainer>
-      <Box
-        display={'flex'}
-        flexDirection={'column'}
-        width={'100%'}
-        whiteSpace={'nowrap'}
-      >
-        <FriendTopMenu
-          selectedMenu={selectedMenu}
-          onSelectMenu={setSelectedMenu}
-        />
-        {renderContent()}
-      </Box>
-    </>
+    <Box
+      display={'flex'}
+      flexDirection={'column'}
+      width={'100%'}
+      whiteSpace={'nowrap'}
+    >
+      <FriendTopMenu
+        selectedMenu={selectedMenu}
+        onSelectMenu={setSelectedMenu}
+      />
+      {renderContent()}
+    </Box>
   );
 };
 

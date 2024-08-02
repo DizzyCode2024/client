@@ -7,7 +7,11 @@ import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect } from 'react';
 import RoomBox from '../components/explore/RoomBox';
 
-const ExplorePage = () => {
+const ExplorePage = ({
+  setMenu,
+}: {
+  setMenu: React.Dispatch<React.SetStateAction<React.ReactNode>>;
+}) => {
   const { setCurrentChannelPath } = useRoomStore();
   useEffect(() => {
     setCurrentChannelPath({
@@ -29,6 +33,10 @@ const ExplorePage = () => {
     ...room,
     isMember: myRooms?.some((myRoom) => myRoom.roomId === room.roomId),
   }));
+
+  useEffect(() => {
+    setMenu(<div>{'Explore!'}</div>);
+  }, []);
 
   return (
     <Box flex={1} bg={'gray.600'}>
