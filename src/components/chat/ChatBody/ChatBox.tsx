@@ -7,7 +7,7 @@ import styled from 'styled-components';
 const ProfilePic = styled.div`
   width: 3rem;
   height: 3rem;
-  background-color: green;
+  background-color: #9f7aea;
   border-radius: 50%;
 `;
 

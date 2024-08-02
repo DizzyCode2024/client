@@ -77,7 +77,7 @@ const useHandleDmRoom = () => {
     Error,
     MemberMutationParams
   >({
-    mutationFn: ({ roomId, username }) => addMemberToRoomApi(roomId, username),
+    mutationFn: addMemberToRoomApi,
     onSuccess: () => {
       toast({
         title: '멤버 추가 성공',
