@@ -40,8 +40,8 @@ const RoomMenu = ({ roomId }: { roomId: RoomId }) => {
   useEffect(() => {
     if (isConnected && roomId && client) {
       const subscription = subscribe(StatusTopic, (message) => {
-        console.log('Status:', message.body);
         const { username, status } = JSON.parse(message.body);
+
         queryClient.setQueryData<IMember[]>(
           QUERY_KEYS.MEMBERS(roomId),
           (oldData) => {
@@ -49,6 +49,7 @@ const RoomMenu = ({ roomId }: { roomId: RoomId }) => {
 
             const newData = oldData.map((member) => {
               if (member.username === username) {
+                console.log('Status updated:', username, status);
                 return { ...member, status };
               }
               return member;
@@ -58,6 +59,7 @@ const RoomMenu = ({ roomId }: { roomId: RoomId }) => {
           },
         );
       });
+
       if (subscription) {
         subscriptionRef.current = subscription;
       } else {
