@@ -1,4 +1,5 @@
 import { IDmRoom, RoomId } from '@/types/dm';
+import { IMember } from '@/types';
 import axiosInstance from './axiosInstance';
 
 interface GetDmChatsProps {
@@ -21,6 +22,12 @@ export const createDmRoomApi = async ({ roomName, userNames }: IDmRoom) => {
 
 export const getDmRooms = async () => {
   const response = await axiosInstance.get('/direct/rooms');
+  return response.data;
+};
+
+export const getDmMembers = async (roomId: RoomId): Promise<IMember[]> => {
+  console.log('roomId', roomId);
+  const response = await axiosInstance.get(`/direct/rooms/${roomId}/members`);
   return response.data;
 };
 
