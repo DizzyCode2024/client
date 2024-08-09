@@ -1,7 +1,8 @@
 import { getMembers, QUERY_KEYS } from '@/lib/api';
+import { spacing } from '@/lib/constants';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { IMember } from '@/types';
-import { Box } from '@chakra-ui/react';
+import { Box, Flex, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import List from './Base';
 
@@ -17,8 +18,9 @@ const MemberList = () => {
   });
 
   const onlineMembers = data?.filter((member) => member.status === 'online');
-
   const offlineMembers = data?.filter((member) => member.status === 'offline');
+
+  const nullMembers = data?.filter((member) => member.status === null);
 
   return (
     <Box bg={'gray.800'}>
@@ -36,6 +38,22 @@ const MemberList = () => {
           ))}
         </List>
       )}
+      {nullMembers &&
+        nullMembers?.length > 0 &&
+        nullMembers?.map((member) => (
+          <Flex
+            alignItems={'center'}
+            gap={spacing.small}
+            py={spacing.small}
+            pl={spacing.gutter}
+            pr={'7rem'}
+            color={'white'}
+            key={member.username}
+          >
+            <Box w={3} h={3} borderRadius={'50%'} bg={'black'} />
+            <Text>{member.username}</Text>
+          </Flex>
+        ))}
     </Box>
   );
 };
