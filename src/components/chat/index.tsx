@@ -83,7 +83,7 @@ const ChatSection = () => {
         isMembersOpen={isMembersOpen}
         setIsMembersOpen={setIsMembersOpen}
       />
-      <Flex flex={1} overflow={'scroll'}>
+      <Flex flex={1} overflowY={'scroll'}>
         <Flex flex={1} direction={'column'}>
           <ChatContainer />
           <ChatInput />

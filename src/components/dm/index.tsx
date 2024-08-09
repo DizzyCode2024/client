@@ -10,10 +10,10 @@ import { IChat, ICurrentFriend } from '@/types';
 import { QUERY_KEYS } from '@/lib/api';
 import useFriendStore from '@/lib/stores/useFriendStore';
 import Container from '../chat/DragFileContainer';
-// import MemberList from '../memberList';
 import DmInput from './DmInput/DmInput';
 import Header from './DmHeader/Header';
 import DmContainer from './DmBody/DmContainer';
+import MemberListDm from '../memberListDm';
 
 const DMSection = () => {
   const [isMembersOpen, setIsMembersOpen] = useState<boolean>(false);
@@ -94,13 +94,13 @@ const DMSection = () => {
         isMembersOpen={isMembersOpen}
         setIsMembersOpen={setIsMembersOpen}
       />
-      <Flex flex={1} overflow={'scroll'}>
+      <Flex flex={1} overflowY={'scroll'}>
         <Flex flex={1} direction={'column'}>
           <DmContainer />
           <DmInput />
         </Flex>
+        {isMembersOpen && <MemberListDm />}
       </Flex>
-      {/* <Flex>{isMembersOpen && <MemberList />}</Flex> */}
     </Container>
   );
 };
