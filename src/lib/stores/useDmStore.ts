@@ -1,5 +1,6 @@
 import { create } from 'zustand';
 import { IDmRoom } from '@/types/dm';
+import { ICurrentFriend } from '@/types/friend';
 
 interface IDmState {
   currentDmId: number | 0;
@@ -10,6 +11,8 @@ interface IDmState {
   setDmRooms: (rooms: IDmRoom[]) => void;
   addDmRoom: (room: IDmRoom) => void;
   findRoomIdByUserNames: (userNames: string[]) => number | null | undefined;
+  currentFriend: ICurrentFriend | null;
+  setCurrentFriend: (friend: ICurrentFriend | null) => void;
 }
 
 const useDmStore = create<IDmState>((set, get) => ({
@@ -33,6 +36,9 @@ const useDmStore = create<IDmState>((set, get) => ({
     );
     return room ? room.roomId : undefined;
   },
+  currentFriend: null,
+  setCurrentFriend: (friend: ICurrentFriend | null) =>
+    set({ currentFriend: friend }),
 }));
 
 export default useDmStore;

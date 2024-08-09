@@ -8,6 +8,7 @@ export interface IFriend {
 export interface IFriendRequestById {
   senderId: number;
   friendId: number;
+  n;
 }
 
 export interface IFriendRequestByName {
@@ -18,4 +19,9 @@ export interface IFriendRequestByName {
 export interface IFriendAction {
   member1Id: number;
   member2Id: number;
+}
+
+export interface ICurrentFriend {
+  friendId: number;
+  friendName: string;
 }
