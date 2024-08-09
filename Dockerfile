@@ -2,11 +2,13 @@ FROM node:20-alpine
 
 WORKDIR /src
 
-COPY package.json .
+RUN apk update
+
+RUN apk add --no-cache git
+
+RUN git clone https://github.com/DizzyCode2024/client.git .
 
 RUN npm install
-
-COPY . .
 
 EXPOSE 5173
 
