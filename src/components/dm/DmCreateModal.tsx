@@ -18,7 +18,7 @@ import useFriendStore from '@/lib/stores/useFriendStore';
 import { IFriend } from '@/types/friend';
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import useHandleDmRoom from '@/lib/hooks/handlers/useHandleDmRoom';
-import useDmStore from '@/lib/stores/useDmStore'; // Assuming useDmStore includes findRoomIdByUserNames
+import useDmStore from '@/lib/stores/useDmStore';
 import { useHandleFriend } from '@/lib/hooks/handlers';
 
 interface DmCreateModalProps {
@@ -103,7 +103,7 @@ const DmCreateModal = ({
           <ModalHeader fontSize={'md'}>{'친구 선택하기'}</ModalHeader>
           <ModalCloseButton />
           <ModalBody>
-            {data ? (
+            {data && data.length > 0 ? (
               <Stack>
                 {data.map((friend) => (
                   <Checkbox
@@ -128,13 +128,23 @@ const DmCreateModal = ({
             )}
           </ModalBody>
           <ModalFooter>
-            <Button
-              colorScheme={'purple'}
-              onClick={handleDmRoom}
-              width={'90vw'}
-            >
-              {'DM생성'}
-            </Button>
+            {data && data.length > 0 ? (
+              <Button
+                colorScheme={'purple'}
+                onClick={handleDmRoom}
+                width={'90vw'}
+              >
+                {'DM 생성'}
+              </Button>
+            ) : (
+              <Button
+                colorScheme={'gray'}
+                width={'90vw'}
+                cursor={'not-allowed'}
+              >
+                {'DM 생성 불가'}
+              </Button>
+            )}
           </ModalFooter>
         </ModalContent>
       </Modal>

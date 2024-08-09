@@ -6,8 +6,9 @@ import { StompSubscription } from '@stomp/stompjs';
 import { InfiniteData, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useRef, useState } from 'react';
 import useDmStore from '@/lib/stores/useDmStore';
-import { IChat } from '@/types';
+import { IChat, ICurrentFriend } from '@/types';
 import { QUERY_KEYS } from '@/lib/api';
+import useFriendStore from '@/lib/stores/useFriendStore';
 import Container from '../chat/DragFileContainer';
 // import MemberList from '../memberList';
 import DmInput from './DmInput/DmInput';
@@ -20,7 +21,8 @@ const DMSection = () => {
   const { subscribe, unsubscribe } = useStompClient();
   const subscriptionRef = useRef<StompSubscription | null>(null);
   const { DmRoomTopic: topic } = useDestination();
-  const { currentDmId } = useDmStore();
+  const { currentDmId, currentDmRoom, setCurrentFriend } = useDmStore();
+  const { findFriendByName } = useFriendStore();
   const queryClient = useQueryClient();
 
   useEffect(() => {
@@ -72,6 +74,19 @@ const DMSection = () => {
     currentDmId,
     queryClient,
   ]);
+
+  useEffect(() => {
+    if (currentDmRoom) {
+      const friend = findFriendByName(currentDmRoom.userNames[0]);
+      if (friend) {
+        const currentFriend: ICurrentFriend = {
+          friendId: friend.friendId,
+          friendName: friend.friendName,
+        };
+        setCurrentFriend(currentFriend);
+      }
+    }
+  }, [currentDmRoom, findFriendByName, setCurrentFriend]);
 
   return (
     <Container>

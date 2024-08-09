@@ -5,7 +5,7 @@ export const useDestination = () => {
   const {
     currentChannelPath: { roomId, categoryId, channelId },
   } = useRoomStore();
-  const { currentDmId } = useDmStore();
+  const { currentDmId, currentFriend } = useDmStore();
 
   const ChannelTopic = `/topic/rooms.${roomId}.categories.${categoryId}.channels.${channelId}`;
   const ChatDestination = `/app/rooms.${roomId}.categories.${categoryId}.channels.${channelId}`;
@@ -20,6 +20,12 @@ export const useDestination = () => {
   const StatusTopic = `/topic/rooms.${roomId}.status`;
   const StatusSend = `/app/rooms/${roomId}/status`;
 
+  let FriendStatus = '';
+  if (currentFriend) {
+    FriendStatus = `/friendship.${currentFriend.friendId}.status`;
+  }
+  // const OnlineFriendRenewal = `/friendship/status/member1/${memberId1}/member2/${memberId2}`;
+
   return {
     ChannelTopic,
     ChatDestination,
@@ -29,5 +35,6 @@ export const useDestination = () => {
     VoiceTopic,
     StatusTopic,
     StatusSend,
+    FriendStatus,
   };
 };
