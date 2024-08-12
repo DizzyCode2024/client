@@ -47,11 +47,13 @@ const useHandleDmRoom = () => {
       if (currentRoom) setCurrentDmRoom(currentRoom);
       queryClient.invalidateQueries({ queryKey: ['dmRooms'] });
       navigate(`/chat/main/${data.roomId}`);
-      toast({
-        title: 'DM 방 입장',
-        description: `${currentFriend?.friendName}님의 DM 방에 입장하였습니다.`,
-        status: 'success',
-      });
+      if (currentFriend?.friendName) {
+        toast({
+          title: 'DM 방 입장',
+          description: `${currentFriend.friendName}님의 DM 방에 입장하였습니다.`,
+          status: 'success',
+        });
+      }
     },
     onError: (error) => {
       toast({
