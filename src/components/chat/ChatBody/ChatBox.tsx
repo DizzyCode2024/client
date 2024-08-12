@@ -1,8 +1,9 @@
 import { spacing } from '@/lib/constants';
 import { convertUTC } from '@/lib/utils/convertUTC';
 import { IChat } from '@/types';
-import { Box, Flex, Text } from '@chakra-ui/react';
+import { Box, Flex, Text, useDisclosure } from '@chakra-ui/react';
 import styled from 'styled-components';
+import MemberModal from './MemberModal';
 
 const ProfilePic = styled.div`
   width: 3rem;
@@ -12,6 +13,8 @@ const ProfilePic = styled.div`
 `;
 
 const ChatBox = ({ content, senderUsername, timestamp }: IChat) => {
+  const { isOpen, onOpen, onClose } = useDisclosure();
+
   return (
     <Flex
       alignItems={'center'}
@@ -20,7 +23,7 @@ const ChatBox = ({ content, senderUsername, timestamp }: IChat) => {
       my={spacing.small}
       py={spacing.small}
     >
-      <ProfilePic />
+      <ProfilePic onClick={onOpen} />
       <Box pb={2}>
         <Flex alignItems={'flex-end'} gap={2} pb={2}>
           <Text fontSize={'md'} fontWeight={'bold'}>
@@ -32,6 +35,11 @@ const ChatBox = ({ content, senderUsername, timestamp }: IChat) => {
         </Flex>
         <Text>{content}</Text>
       </Box>
+      <MemberModal
+        isOpen={isOpen}
+        onClose={onClose}
+        username={senderUsername}
+      />
     </Flex>
   );
 };

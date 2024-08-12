@@ -27,8 +27,13 @@ const useHandleDmRoom = () => {
   const toast = useCustomToast();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
-  const { setCurrentDmRoom, setCurrentDmId, dmRooms, currentDmId } =
-    useDmStore();
+  const {
+    setCurrentDmRoom,
+    setCurrentDmId,
+    dmRooms,
+    currentDmId,
+    currentFriend,
+  } = useDmStore();
 
   const { mutate: addDmRoomMutation } = useMutation<
     DmRoomResponse,
@@ -40,13 +45,13 @@ const useHandleDmRoom = () => {
       setCurrentDmId(data.roomId);
       const currentRoom = dmRooms.find((room) => room.roomId === currentDmId);
       if (currentRoom) setCurrentDmRoom(currentRoom);
-      toast({
-        title: 'DM 방 생성 성공',
-        description: '새로운 DM 방이 생성되었습니다.',
-        status: 'success',
-      });
       queryClient.invalidateQueries({ queryKey: ['dmRooms'] });
       navigate(`/chat/main/${data.roomId}`);
+      toast({
+        title: 'DM 방 입장',
+        description: `${currentFriend?.friendName}님의 DM 방에 입장하였습니다.`,
+        status: 'success',
+      });
     },
     onError: (error) => {
       toast({
