@@ -22,6 +22,8 @@ const useEnterRoom = (roomId: RoomId, firstChannelId: ChannelId) => {
       });
       if (firstChannelId !== 0) {
         navigate(`/chat/channels/${roomId}/${firstChannelId}`);
+      } else {
+        alert('Error: firstChannelId is 0');
       }
     },
     onError: (error) => {
