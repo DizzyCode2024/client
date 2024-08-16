@@ -1,10 +1,10 @@
 import { QUERY_KEYS, enterRoom } from '@/lib/api';
 import { useCustomToast } from '@/lib/hooks/useCustomToast';
-import { RoomId } from '@/types';
+import { ChannelId, RoomId } from '@/types';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-const useEnterRoom = (roomId: RoomId) => {
+const useEnterRoom = (roomId: RoomId, firstChannelId: ChannelId) => {
   const toast = useCustomToast();
   const queryClient = useQueryClient();
   const navigate = useNavigate();
@@ -20,7 +20,9 @@ const useEnterRoom = (roomId: RoomId) => {
       queryClient.invalidateQueries({
         queryKey: QUERY_KEYS.ROOMS,
       });
-      navigate(`/chat/channels/${roomId}`);
+      if (firstChannelId !== 0) {
+        navigate(`/chat/channels/${roomId}/${firstChannelId}`);
+      }
     },
     onError: (error) => {
       console.error('Error entering room:', error);
