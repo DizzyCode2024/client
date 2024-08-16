@@ -6,16 +6,16 @@ const useHeartbeat = (interval: number) => {
   const { sendMessage } = useStompClient();
   const { onlinePayload } = useStatusPayload();
 
-  const heartbeat = () => {
-    console.log('HEARTBEAT', onlinePayload);
-    sendMessage('/app/members/status/heartbeat', onlinePayload);
-  };
-
   useEffect(() => {
-    const intervalId = setInterval(heartbeat, interval);
+    const heartbeat = () => {
+      sendMessage('/app/members/status/heartbeat', onlinePayload);
+    };
+    const intervalId = setInterval(() => {
+      heartbeat();
+    }, interval);
 
     return () => clearInterval(intervalId);
-  }, [interval]);
+  }, [interval, onlinePayload, sendMessage]);
 };
 
 export default useHeartbeat;

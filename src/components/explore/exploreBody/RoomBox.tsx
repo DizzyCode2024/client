@@ -1,15 +1,44 @@
-import { Box, Heading, Text, Icon } from '@chakra-ui/react';
+import { QUERY_KEYS, getCategories } from '@/lib/api';
 import { spacing } from '@/lib/constants';
-import { FaLock, FaGlobeAmericas } from 'react-icons/fa';
-import { useNavigate } from 'react-router-dom';
-import { useCustomToast } from '@/lib/hooks/useCustomToast';
 import useEnterRoom from '@/lib/hooks/explore/useEnterRoom';
+import { useCustomToast } from '@/lib/hooks/useCustomToast';
 import { IRoomBox } from '@/types';
+import { Box, Heading, Icon, Text } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { useEffect, useState } from 'react';
+import { FaGlobeAmericas, FaLock } from 'react-icons/fa';
+import { useNavigate } from 'react-router-dom';
 
 const RoomBox = ({ roomId, roomName, open, isMember }: IRoomBox) => {
-  const { mutate: enterRoom } = useEnterRoom(roomId);
   const toast = useCustomToast();
   const navigate = useNavigate();
+
+  // roomId의 첫 번째 채널로 이동
+  const { data: roomInfo } = useQuery({
+    queryKey: QUERY_KEYS.CATWCHANNELS(roomId),
+    queryFn: () => getCategories(roomId),
+    select: (data) => {
+      if (data && data[0] && data[0].channels && data[0].channels[0]) {
+        return {
+          firstChannelId: data[0].channels[0].channelId,
+        };
+      }
+      return null;
+    },
+    enabled: !!roomId,
+  });
+
+  const [firstChannelId, setFirstChannelId] = useState<number>(0);
+  const { mutate: enterRoom } = useEnterRoom(
+    roomId,
+    roomInfo?.firstChannelId ?? 0,
+  );
+
+  useEffect(() => {
+    if (roomInfo) {
+      setFirstChannelId(roomInfo.firstChannelId);
+    }
+  }, [roomInfo]);
 
   const handleClick = () => {
     if (isMember) {
@@ -17,7 +46,9 @@ const RoomBox = ({ roomId, roomName, open, isMember }: IRoomBox) => {
         title: '이미 가입된 방입니다.',
         status: 'error',
       });
-      navigate(`/chat/channels/${roomId}`);
+
+      if (firstChannelId === 0) return;
+      navigate(`/chat/channels/${roomId}/${firstChannelId}`);
       return;
     }
     enterRoom(roomId);
