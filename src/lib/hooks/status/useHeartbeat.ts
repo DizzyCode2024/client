@@ -8,7 +8,6 @@ const useHeartbeat = (interval: number) => {
 
   useEffect(() => {
     const heartbeat = () => {
-      console.log('HEARTBEAT', onlinePayload);
       sendMessage('/app/members/status/heartbeat', onlinePayload);
     };
     const intervalId = setInterval(() => {
