@@ -1,7 +1,7 @@
 /* eslint-disable react/jsx-props-no-spreading */
 import { ArrowUpIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, HStack, Input } from '@chakra-ui/react';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
 import { useAuthStore } from '@/lib/stores/useAuthStore';
 import useFilesStore from '@/lib/stores/useFileStore';
@@ -13,30 +13,59 @@ import { useDestination } from '@/lib/hooks/useDestination';
 import { ISendChatPayload } from '../../../types/chat';
 
 const DmInput = () => {
-  const { files, addFiles, removeFile, clearFiles } = useFilesStore();
+  const { files, uploadedUrls, addFiles, removeFile, clearFiles } =
+    useFilesStore();
   const { uploadAllFiles } = useFileHandler();
   const [content, setContent] = useState('');
   const senderId = useAuthStore((state) => state.user?.id);
 
   const { sendMessage } = useStompClient();
   const { DmDestination } = useDestination();
+
+  console.log(uploadedUrls);
   const handleSendMessage = async () => {
     if (senderId && (content.trim() || files.length)) {
-      const payload: ISendChatPayload = {
-        senderId,
-        content,
-        ...(files.length > 0 && { files }),
-      };
-      console.log('Sending message:', payload);
-      console.log('ChatDestination', DmDestination);
-      sendMessage(DmDestination, payload);
-      setContent('');
       if (files.length > 0) {
-        await uploadAllFiles();
-        clearFiles();
+        files.forEach(async (_file, index) => {
+          const payload: ISendChatPayload = {
+            senderId,
+            content: index === 0 ? content : '',
+            url: uploadedUrls[index],
+          };
+
+          console.log('Sending message:', payload);
+          console.log('ChatDestination', DmDestination);
+
+          sendMessage(DmDestination, payload);
+        });
+      } else {
+        const payload: ISendChatPayload = {
+          senderId,
+          content,
+        };
+
+        console.log('Sending message:', payload);
+        sendMessage(DmDestination, payload);
       }
+
+      setContent('');
+      clearFiles();
     }
   };
+
+  useEffect(() => {
+    const uploadFiles = async () => {
+      if (files.length > 0) {
+        console.log('Uploading files:', files);
+        await uploadAllFiles();
+      }
+    };
+
+    if (files.length > 0) {
+      uploadFiles();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [files]);
 
   const onDrop = (acceptedFiles: File[]) => {
     const newFiles = acceptedFiles.map((file) => ({
