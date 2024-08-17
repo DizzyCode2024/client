@@ -21,7 +21,6 @@ const useFileHandler = () => {
     formData.append('file', file);
     try {
       const response = await axiosInstance.post('/file/upload', formData);
-      console.log('파일 업로드 성공:', response.data);
       const url = response.data.urls[0];
       addUploadedUrl(url);
     } catch (error) {
@@ -41,7 +40,6 @@ const useFileHandler = () => {
           encodedFile: fileData,
         },
       ]);
-      console.log('바이너리 파일 업로드 성공:', response.data);
       const url = response.data.urls[0];
       addUploadedUrl(url);
     } catch (error) {

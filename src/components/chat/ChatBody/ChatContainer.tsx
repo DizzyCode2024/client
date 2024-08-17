@@ -66,6 +66,7 @@ const ChatContainer = () => {
       }
     };
   }, [handleScroll]);
+  console.log('data', data);
 
   return data?.pages[0].length === 0 ? (
     <NoChatUI />
@@ -88,6 +89,7 @@ const ChatContainer = () => {
               content={chat.content}
               senderUsername={chat.senderUsername}
               timestamp={chat.timestamp}
+              url={chat.url}
             />
           )),
         )}

@@ -67,7 +67,7 @@ const ChatBox = ({ content, senderUsername, timestamp, url }: IChat) => {
             {convertUTC(timestamp)}
           </Text>
         </Flex>
-        <Text>{content}</Text>
+        <Text whiteSpace={'pre-line'}>{content}</Text>
         {url ? (
           isImageFile ? (
             <Link
