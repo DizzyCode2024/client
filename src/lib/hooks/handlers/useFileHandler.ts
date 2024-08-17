@@ -2,7 +2,7 @@ import { axiosInstance } from '@/lib/api';
 import useFilesStore from '@/lib/stores/useFileStore';
 
 const useFileHandler = () => {
-  const { files, clearFiles } = useFilesStore();
+  const { files, clearUploadedUrls, addUploadedUrl } = useFilesStore();
 
   const fileToBase64 = (file: File): Promise<string> =>
     new Promise((resolve, reject) => {
@@ -21,7 +21,8 @@ const useFileHandler = () => {
     formData.append('file', file);
     try {
       const response = await axiosInstance.post('/file/upload', formData);
-      console.log('파일 업로드 성공:', response.data);
+      const url = response.data.urls[0];
+      addUploadedUrl(url);
     } catch (error) {
       console.error('파일 업로드 요청 실패:', error);
       throw new Error(
@@ -33,11 +34,14 @@ const useFileHandler = () => {
   const uploadFileBinary = async (file: File): Promise<void> => {
     const fileData = await fileToBase64(file);
     try {
-      const response = await axiosInstance.post('/file/upload/binary', {
-        fileName: file.name,
-        encodedFile: fileData,
-      });
-      console.log('바이너리 파일 업로드 성공:', response.data);
+      const response = await axiosInstance.post('/file/upload/binary', [
+        {
+          fileName: file.name,
+          encodedFile: fileData,
+        },
+      ]);
+      const url = response.data.urls[0];
+      addUploadedUrl(url);
     } catch (error) {
       console.error('바이너리 파일 업로드 실패:', error);
       throw new Error(
@@ -48,16 +52,17 @@ const useFileHandler = () => {
 
   const uploadAllFiles = async (): Promise<void> => {
     try {
-      const uploadPromises = files.map((file) => {
-        if (files.length === 1) {
-          return uploadFileBinary(file.file);
-        }
-        return file.size > 1024 * 1024
-          ? uploadFileBinary(file.file)
-          : uploadFile(file.file);
-      });
-      await Promise.all(uploadPromises);
-      clearFiles();
+      clearUploadedUrls();
+
+      const hasLargeFile = files.some((file) => file.size > 1048576);
+
+      if (hasLargeFile) {
+        const uploadPromises = files.map((file) => uploadFileBinary(file.file));
+        await Promise.all(uploadPromises);
+      } else {
+        const uploadPromises = files.map((file) => uploadFile(file.file));
+        await Promise.all(uploadPromises);
+      }
     } catch (error) {
       console.error('파일 업로드 중 오류 발생:', error);
     }

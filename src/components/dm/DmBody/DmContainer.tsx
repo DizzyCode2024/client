@@ -72,6 +72,8 @@ const DmContainer = () => {
     };
   }, [handleScroll]);
 
+  console.log('data', data);
+
   return data?.pages[0].length === 0 ? (
     <NoDmUI />
   ) : (
@@ -94,6 +96,7 @@ const DmContainer = () => {
               content={chat.content}
               senderUsername={chat.senderUsername}
               timestamp={chat.timestamp}
+              url={chat.url}
             />
           )),
         )}

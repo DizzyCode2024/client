@@ -8,8 +8,16 @@ interface FilePreviewProps {
   onRemove: (file: IFile) => void;
 }
 
+const getTruncatedFileName = (name: string) => {
+  const fileParts = name.split('.');
+  const extension = fileParts.pop();
+  const truncatedName = fileParts.join('.').substring(0, 10);
+  return `${truncatedName}.${extension}`;
+};
+
 const FilePreview = ({ file, onRemove }: FilePreviewProps) => {
   const isImage = file.type?.startsWith('image/');
+  const truncatedFileName = getTruncatedFileName(file.name);
 
   return (
     <VStack spacing={2} align={'center'} position={'relative'}>
@@ -32,12 +40,12 @@ const FilePreview = ({ file, onRemove }: FilePreviewProps) => {
         >
           <FaFileAlt size={'24px'} color={'gray.600'} />
           <Text ml={2} fontSize={'sm'}>
-            {file.name}
+            {truncatedFileName}
           </Text>
         </Box>
       )}
       <Text fontSize={'xs'} color={'gray.500'}>
-        {file.name}
+        {truncatedFileName}
       </Text>
       <IconButton
         aria-label={'Remove file'}

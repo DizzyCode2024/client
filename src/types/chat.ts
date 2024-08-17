@@ -3,6 +3,7 @@ import { UserId } from './user';
 export type Content = string;
 
 export interface IFile {
+  length: number;
   name: string;
   type: string;
   size: number;
@@ -12,15 +13,18 @@ export interface IFile {
 
 export interface IFileState {
   files: IFile[];
+  uploadedUrls: string[];
   addFiles: (newFiles: File[]) => void;
   removeFile: (fileToRemove: IFile) => void;
   clearFiles: () => void;
+  addUploadedUrl: (url: string) => void;
+  clearUploadedUrls: () => void;
 }
 
 export interface ISendChatPayload {
   senderId: UserId;
   content: Content;
-  files?: IFile[];
+  url?: IFile[] | string | string[];
 }
 
 export interface IChat {
@@ -28,4 +32,5 @@ export interface IChat {
   senderUsername: string;
   content: Content;
   timestamp: string;
+  url?: string;
 }

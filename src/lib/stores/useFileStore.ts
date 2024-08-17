@@ -3,6 +3,7 @@ import { IFile, IFileState } from '@/types';
 
 const useFilesStore = create<IFileState>((set) => ({
   files: [],
+  uploadedUrls: [],
   addFiles: (newFiles: File[]) => {
     const filesWithPreview: IFile[] = newFiles
       .map((file) => {
@@ -39,6 +40,14 @@ const useFilesStore = create<IFileState>((set) => ({
       state.files.forEach((file) => URL.revokeObjectURL(file.preview));
       return { files: [] };
     });
+  },
+  addUploadedUrl: (url: string) => {
+    set((state) => ({
+      uploadedUrls: [...state.uploadedUrls, url],
+    }));
+  },
+  clearUploadedUrls: () => {
+    set({ uploadedUrls: [] });
   },
 }));
 
