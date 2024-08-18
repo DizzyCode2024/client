@@ -35,6 +35,7 @@ const ChatBox = ({ content, senderUsername, timestamp, url }: IChat) => {
   ];
   const baseURL = import.meta.env.VITE_BASE_URL;
 
+  // Helper function to extract file name and extension
   const getFileNameWithExtension = (url: string) => {
     const pathParts = url.split('/uploads/')[1];
     if (!pathParts) return '';
@@ -45,13 +46,62 @@ const ChatBox = ({ content, senderUsername, timestamp, url }: IChat) => {
     return `${fileName}.${fileExtension}`;
   };
 
-  const fileNameWithExtension = url ? getFileNameWithExtension(url) : '';
+  // Check if URL is array and handle accordingly
+  const renderFile = (url: string) => {
+    const fileNameWithExtension = getFileNameWithExtension(url);
+    const isImageFile = imageExtensions.some((ext) => url.endsWith(ext));
 
-  const isImageFile = url && imageExtensions.some((ext) => url.endsWith(ext));
+    return isImageFile ? (
+      <Link
+        href={`${baseURL}${url}`}
+        download
+        target={'_blank'}
+        rel={'noopener noreferrer'}
+      >
+        <Image
+          src={`${baseURL}${url}`}
+          alt={fileNameWithExtension}
+          maxW={'200px'}
+          maxH={'200px'}
+          objectFit={'cover'}
+          _hover={{ opacity: 0.8 }}
+          m={1}
+        />
+      </Link>
+    ) : (
+      <Link
+        href={`${baseURL}${url}`}
+        download
+        target={'_blank'}
+        rel={'noopener noreferrer'}
+      >
+        <Flex
+          alignItems={'center'}
+          justifyContent={'center'}
+          direction={'column'}
+          bg={'gray.100'}
+          w={'200px'}
+          h={'200px'}
+          borderRadius={'md'}
+          border={'1px solid gray'}
+        >
+          <FaFileAlt size={50} color={'gray'} />
+          <FileName
+            mt={3}
+            p={2}
+            fontSize={'sm'}
+            color={'gray.800'}
+            textAlign={'center'}
+          >
+            {fileNameWithExtension || '파일 다운로드'}
+          </FileName>
+        </Flex>
+      </Link>
+    );
+  };
 
   return (
     <Flex
-      // alignItems={'center'}
       gap={'1rem'}
       px={spacing.gutter}
       my={spacing.small}
@@ -68,56 +118,9 @@ const ChatBox = ({ content, senderUsername, timestamp, url }: IChat) => {
           </Text>
         </Flex>
         <Text whiteSpace={'pre-line'}>{content}</Text>
-        {url ? (
-          isImageFile ? (
-            <Link
-              href={`${baseURL}${url}`}
-              download
-              target={'_blank'}
-              rel={'noopener noreferrer'}
-            >
-              <Image
-                src={`${baseURL}${url}`}
-                alt={'Uploaded image'}
-                maxW={'200px'}
-                maxH={'200px'}
-                objectFit={'cover'}
-                _hover={{ opacity: 0.8 }}
-              />
-            </Link>
-          ) : (
-            <Link
-              href={`${baseURL}${url}`}
-              download
-              target={'_blank'}
-              rel={'noopener noreferrer'}
-            >
-              <Flex
-                alignItems={'center'}
-                justifyContent={'center'}
-                direction={'column'}
-                bg={'gray.100'}
-                w={'200px'}
-                h={'200px'}
-                borderRadius={'md'}
-                border={'1px solid gray'}
-              >
-                <FaFileAlt size={50} color={'gray'} />
-                <FileName
-                  mt={3}
-                  p={2}
-                  fontSize={'sm'}
-                  color={'gray.800'}
-                  textAlign={'center'}
-                >
-                  {fileNameWithExtension
-                    ? `${fileNameWithExtension}`
-                    : '파일 다운로드'}
-                </FileName>
-              </Flex>
-            </Link>
-          )
-        ) : null}
+        {Array.isArray(url)
+          ? url.map((u) => <Box key={u}>{renderFile(u)}</Box>)
+          : url && renderFile(url)}
       </Box>
       <MemberModal
         isOpen={isOpen}

@@ -27,24 +27,26 @@ const MessageInput = ({
   const { uploadAllFiles } = useFileHandler();
   const [content, setContent] = useState('');
 
+  console.log('uploadedUrls', uploadedUrls);
   const handleSendMessage = async () => {
     if (senderId && (content.trim() || files.length)) {
+      // 파일이 있을 경우
+      let payload: ISendChatPayload;
+
       if (files.length > 0) {
-        files.forEach(async (_file, index) => {
-          const payload: ISendChatPayload = {
-            senderId,
-            content: index === 0 ? content : '',
-            url: uploadedUrls[index],
-          };
-          sendMessage(destination, payload);
-        });
+        payload = {
+          senderId,
+          content,
+          url: uploadedUrls,
+        };
       } else {
-        const payload: ISendChatPayload = {
+        payload = {
           senderId,
           content,
         };
-        sendMessage(destination, payload);
       }
+
+      sendMessage(destination, payload);
 
       setContent('');
       clearFiles();
