@@ -41,9 +41,11 @@ const useFilesStore = create<IFileState>((set) => ({
       return { files: [] };
     });
   },
-  addUploadedUrl: (url: string) => {
+  addUploadedUrl: (url: string | string[]) => {
     set((state) => ({
-      uploadedUrls: [...state.uploadedUrls, url],
+      uploadedUrls: Array.isArray(url)
+        ? [...state.uploadedUrls, ...url]
+        : [...state.uploadedUrls, url],
     }));
   },
   clearUploadedUrls: () => {
