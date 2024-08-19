@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import { spacing } from '@/lib/constants';
 import { convertUTC } from '@/lib/utils/convertUTC';
 import { IChat } from '@/types';
@@ -21,21 +22,23 @@ const FileName = styled(Text)`
 const ChatBox = ({ content, senderUsername, timestamp, url }: IChat) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
-  const imageExtensions = [
-    'jpg',
-    'jpeg',
-    'png',
-    'gif',
-    'webp',
-    'PNG',
-    'JPEG',
-    'JPG',
-    'WEBP',
-    'GIF',
-  ];
+  const fileExtensions = {
+    images: [
+      'jpg',
+      'jpeg',
+      'png',
+      'gif',
+      'webp',
+      'PNG',
+      'JPEG',
+      'JPG',
+      'WEBP',
+      'GIF',
+    ],
+    videos: ['mov', 'mp4', 'avi', 'MOV', 'MP4', 'AVI'],
+  };
   const baseURL = import.meta.env.VITE_BASE_URL;
 
-  // Helper function to extract file name and extension
   const getFileNameWithExtension = (url: string) => {
     const pathParts = url.split('/uploads/')[1];
     if (!pathParts) return '';
@@ -46,29 +49,49 @@ const ChatBox = ({ content, senderUsername, timestamp, url }: IChat) => {
     return `${fileName}.${fileExtension}`;
   };
 
-  // Check if URL is array and handle accordingly
   const renderFile = (url: string) => {
     const fileNameWithExtension = getFileNameWithExtension(url);
-    const isImageFile = imageExtensions.some((ext) => url.endsWith(ext));
-
-    return isImageFile ? (
-      <Link
-        href={`${baseURL}${url}`}
-        download
-        target={'_blank'}
-        rel={'noopener noreferrer'}
-      >
-        <Image
-          src={`${baseURL}${url}`}
-          alt={fileNameWithExtension}
-          maxW={'200px'}
-          maxH={'200px'}
-          objectFit={'cover'}
-          _hover={{ opacity: 0.8 }}
-          m={1}
-        />
-      </Link>
-    ) : (
+    const isImageFile = fileExtensions.images.some((ext) => url.endsWith(ext));
+    const isVideoFile = fileExtensions.videos.some((ext) => url.endsWith(ext));
+    if (isImageFile) {
+      return (
+        <Link
+          href={`${baseURL}${url}`}
+          download
+          target={'_blank'}
+          rel={'noopener noreferrer'}
+        >
+          <Image
+            src={`${baseURL}${url}`}
+            alt={fileNameWithExtension}
+            maxW={'200px'}
+            maxH={'200px'}
+            objectFit={'cover'}
+            _hover={{ opacity: 0.8 }}
+            m={1}
+          />
+        </Link>
+      );
+    }
+    if (isVideoFile) {
+      return (
+        <Box m={2}>
+          <video
+            src={`${baseURL}${url}`}
+            controls
+            width={'200'}
+            style={{
+              maxWidth: '300px',
+              maxHeight: '300px',
+              borderRadius: '4px',
+            }}
+          >
+            {'Your browser does not support the video tag.'}
+          </video>
+        </Box>
+      );
+    }
+    return (
       <Link
         href={`${baseURL}${url}`}
         download
