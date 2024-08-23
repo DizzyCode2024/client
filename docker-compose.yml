@@ -12,4 +12,4 @@ services:
       - react_container
 
   react_container:
-    image: dizzycode-client
+    image: .

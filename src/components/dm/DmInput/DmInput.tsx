@@ -8,6 +8,7 @@ const DmInput = () => {
   const { sendMessage } = useStompClient();
   const { DmDestination } = useDestination();
 
+  if (!senderId) return null;
   return (
     <MessageInput
       destination={DmDestination}

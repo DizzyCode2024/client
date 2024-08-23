@@ -8,6 +8,7 @@ const ChatInput = () => {
   const { sendMessage } = useStompClient();
   const { ChatDestination } = useDestination();
 
+  if (!senderId) return null;
   return (
     <MessageInput
       destination={ChatDestination}
