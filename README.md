@@ -1,5 +1,5 @@
 <div align="center">
-<img src="https://img.shields.io/badge/-5865F2?style=plastic&logo=Discord&logoColor=white" width="140" height="100" />
+<img src="https://github.com/user-attachments/assets/84a6bdcb-ee7a-4979-989c-deac4c82b609" width="140"/>
   <h1>DIZZYCODE</h1>
   <strong>Discord Clone Project</strong>
 </div>
