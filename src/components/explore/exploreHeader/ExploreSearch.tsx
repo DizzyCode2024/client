@@ -1,7 +1,17 @@
+import { QUERY_KEYS, getRecommendations } from '@/lib/api';
 import { spacing } from '@/lib/constants';
 import { Box, Input, Text } from '@chakra-ui/react';
+import { useQuery } from '@tanstack/react-query';
+import { useState } from 'react';
 
 const ExploreSearch = () => {
+  const [value, setValue] = useState<string>('');
+
+  const { data } = useQuery({
+    queryKey: QUERY_KEYS.ROOM_RECOMMENDATION(value),
+    queryFn: () => getRecommendations(value, 5),
+  });
+
   return (
     <Box>
       <Text
@@ -19,8 +29,11 @@ const ExploreSearch = () => {
           height={'3rem'}
           bg={'gray.700'}
           fontSize={'md'}
+          value={value}
+          onChange={(e) => setValue(e.target.value)}
         />
       </Box>
+      <Text>{data}</Text>
     </Box>
   );
 };
