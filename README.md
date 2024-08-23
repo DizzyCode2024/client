@@ -55,7 +55,7 @@
 
 > **Client/Server Communication**
 
-![client-server communication](./docs/images/clientServer-comm.png)
+![client-server communication](./docs/images/frontbackArchitecture.png)
 
 > **Deployment**
 
