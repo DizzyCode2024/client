@@ -5,6 +5,13 @@ import { useHandleFriend } from '@/lib/hooks/handlers';
 import useFriendStore from '@/lib/stores/useFriendStore';
 import FriendBox from './FriendBox';
 
+interface FriendBoxProps {
+  id: number;
+  name: string;
+  openPopoverId?: number | null;
+  onOpenPopover?: (id: number) => void;
+}
+
 const Container = ({ children }: { children: React.ReactNode }) => (
   <Box width={'100%'} height={'100vh'} bg={'gray.600'}>
     {children}
@@ -12,14 +19,14 @@ const Container = ({ children }: { children: React.ReactNode }) => (
 );
 
 const PopoverManager = ({ children }: { children: React.ReactNode }) => {
-  const [openPopoverId, setOpenPopoverId] = useState(null);
+  const [openPopoverId, setOpenPopoverId] = useState<number | null>(null);
 
-  const handleOpenPopover = (id: React.SetStateAction<null>) => {
-    setOpenPopoverId(openPopoverId === id ? null : id);
+  const handleOpenPopover = (id: number) => {
+    setOpenPopoverId((currentId) => (currentId === id ? null : id));
   };
 
   const childrenWithProps = React.Children.map(children, (child) =>
-    React.isValidElement(child)
+    React.isValidElement<FriendBoxProps>(child)
       ? React.cloneElement(child, {
           openPopoverId,
           onOpenPopover: handleOpenPopover,

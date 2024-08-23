@@ -1,17 +1,17 @@
 /* eslint-disable react/jsx-props-no-spreading */
+import { useFileHandler } from '@/lib/hooks/handlers';
+import useFilesStore from '@/lib/stores/useFileStore';
+import { ISendChatPayload } from '@/types';
 import { ArrowUpIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, HStack, Input } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
-import { ISendChatPayload } from '@/types';
-import useFilesStore from '@/lib/stores/useFileStore';
-import { useFileHandler } from '@/lib/hooks/handlers';
 import FilePreview from './FilePreview';
 import InputPlusBtn from './InputPlusBtn';
 
 interface MessageInputProps {
   destination: string;
-  senderId: number;
+  senderId: ISendChatPayload['senderId'];
   placeholder: string;
   sendMessage: (destination: string, payload: ISendChatPayload) => void; // 메시지를 전송하는 함수
 }
@@ -69,7 +69,7 @@ const MessageInput = ({
   const onDrop = (acceptedFiles: File[]) => {
     if (files) {
       const newFiles = acceptedFiles.map((file) => ({
-        file,
+        ...file,
         name: file.name,
         size: file.size,
         type: file.type,
@@ -78,7 +78,6 @@ const MessageInput = ({
       addFiles(newFiles);
     }
   };
-
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     noClick: true,

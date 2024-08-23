@@ -8,7 +8,7 @@ import CommonBox from './CommonBox';
 interface FriendBoxProps {
   id: number;
   name: string;
-  openPopoverId?: number;
+  openPopoverId?: number | null;
   onOpenPopover?: (id: number) => void;
 }
 

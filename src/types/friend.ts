@@ -8,7 +8,6 @@ export interface IFriend {
 export interface IFriendRequestById {
   senderId: number;
   friendId: number;
-  n;
 }
 
 export interface IFriendRequestByName {

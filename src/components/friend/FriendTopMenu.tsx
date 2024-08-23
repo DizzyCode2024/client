@@ -38,7 +38,7 @@ const FriendTopMenu = ({
   const btnRef = useRef<HTMLDivElement>(null);
   const [modalPosition, setModalPosition] = useState({
     top: 0,
-    left: null,
+    left: 0,
     right: 10,
   });
 
