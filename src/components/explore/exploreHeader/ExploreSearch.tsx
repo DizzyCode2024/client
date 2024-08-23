@@ -1,16 +1,29 @@
 import { QUERY_KEYS, getRecommendations } from '@/lib/api';
 import { spacing } from '@/lib/constants';
-import { Box, Input, Text } from '@chakra-ui/react';
+import { Box, Button, Input, Text } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const ExploreSearch = () => {
   const [value, setValue] = useState<string>('');
 
+  const [queryEnabled, setQueryEnabled] = useState(false);
+
   const { data } = useQuery({
     queryKey: QUERY_KEYS.ROOM_RECOMMENDATION(value),
     queryFn: () => getRecommendations(value, 5),
+    enabled: queryEnabled,
   });
+
+  useEffect(() => {
+    if (data) {
+      setQueryEnabled(false);
+    }
+  }, [data]);
+
+  const handleSubmit = () => {
+    setQueryEnabled(true);
+  };
 
   return (
     <Box>
@@ -31,7 +44,11 @@ const ExploreSearch = () => {
           fontSize={'md'}
           value={value}
           onChange={(e) => setValue(e.target.value)}
+          onSubmit={handleSubmit}
         />
+        <Button mt={spacing.gutter} onClick={handleSubmit}>
+          {'Search'}
+        </Button>
       </Box>
       <Text>{data}</Text>
     </Box>
