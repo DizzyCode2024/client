@@ -10,8 +10,12 @@ const useFileHandler = () => {
       reader.readAsDataURL(file);
       reader.onload = (event) => {
         const base64String = event.target?.result;
-        const pureBase64 = base64String?.split(',')[1];
-        resolve(pureBase64);
+        if (typeof base64String === 'string') {
+          const pureBase64 = base64String.split(',')[1];
+          resolve(pureBase64);
+        } else {
+          reject(new Error('Expected a string but received a different type.'));
+        }
       };
       reader.onerror = (error) => reject(new Error(`파일 읽기 오류: ${error}`));
     });
@@ -25,9 +29,6 @@ const useFileHandler = () => {
       addUploadedUrl(url);
     } catch (error) {
       console.error('파일 업로드 요청 실패:', error);
-      throw new Error(
-        `파일 업로드 오류: ${error.response?.data?.message || error.message}`,
-      );
     }
   };
 
