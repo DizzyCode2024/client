@@ -21,7 +21,7 @@ const useFilesStore = create<IFileState>((set) => ({
           return null;
         }
       })
-      .filter((file): file is IFile => file !== null);
+      .filter((file): file is IFile => file !== null) as IFile[];
 
     set((state) => {
       const updatedFiles = [...state.files, ...filesWithPreview];

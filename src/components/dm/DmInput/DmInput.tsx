@@ -4,9 +4,13 @@ import { useDestination } from '@/lib/hooks/useDestination';
 import MessageInput from '@/components/chat/ChatInput/MessageInput';
 
 const DmInput = () => {
-  const senderId = useAuthStore((state) => state.user?.id);
+  const senderId = useAuthStore((state) => state.user.id);
   const { sendMessage } = useStompClient();
   const { DmDestination } = useDestination();
+
+  if (senderId === null) {
+    return null;
+  }
 
   return (
     <MessageInput

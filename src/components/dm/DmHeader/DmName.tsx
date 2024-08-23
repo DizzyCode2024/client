@@ -1,7 +1,7 @@
 import { ChatIcon } from '@chakra-ui/icons';
 import { Box } from '@chakra-ui/react';
 
-const DmName = ({ dmName }: { dmName: string | null }) => {
+const DmName = ({ dmName }: { dmName: string }) => {
   return (
     <Box display={'flex'} alignItems={'center'}>
       <Box

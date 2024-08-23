@@ -11,7 +11,7 @@ import InputPlusBtn from './InputPlusBtn';
 
 interface MessageInputProps {
   destination: string;
-  senderId: string | number;
+  senderId: number;
   placeholder: string;
   sendMessage: (destination: string, payload: ISendChatPayload) => void; // 메시지를 전송하는 함수
 }
@@ -67,14 +67,16 @@ const MessageInput = ({
   }, [files]);
 
   const onDrop = (acceptedFiles: File[]) => {
-    const newFiles = acceptedFiles.map((file) => ({
-      file,
-      name: file.name,
-      size: file.size,
-      type: file.type,
-      preview: URL.createObjectURL(file),
-    }));
-    addFiles(newFiles);
+    if (files) {
+      const newFiles = acceptedFiles.map((file) => ({
+        file,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        preview: URL.createObjectURL(file),
+      }));
+      addFiles(newFiles);
+    }
   };
 
   const { getRootProps, getInputProps } = useDropzone({
