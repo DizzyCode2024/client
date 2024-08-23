@@ -19,10 +19,13 @@ const Header = ({ isMembersOpen, setIsMembersOpen }: HeaderProps) => {
     setIsMembersOpen(!isMembersOpen);
   };
 
+  if (currentDmRoom === null) {
+    return null;
+  }
   return (
     <Container>
       <DmName
-        dmName={currentDmRoom?.roomName || currentDmRoom?.temporaryRoomName}
+        dmName={currentDmRoom.roomName || currentDmRoom.temporaryRoomName}
       />
       <Box display={'flex'}>
         <Tooltip label={'DM으로 친구 초대하기'} bg={'black'} hasArrow>

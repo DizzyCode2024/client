@@ -3,12 +3,11 @@ import { UserId } from './user';
 export type Content = string;
 
 export interface IFile {
-  length: number;
+  file: File;
   name: string;
   type: string;
   size: number;
   preview: string;
-  file: File;
 }
 
 export interface IFileState {
@@ -24,7 +23,7 @@ export interface IFileState {
 export interface ISendChatPayload {
   senderId: UserId;
   content: Content;
-  url?: IFile[] | string | string[];
+  url?: IFile[] | string[];
 }
 
 export interface IChat {

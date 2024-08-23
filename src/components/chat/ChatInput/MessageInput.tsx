@@ -67,16 +67,17 @@ const MessageInput = ({
   }, [files]);
 
   const onDrop = (acceptedFiles: File[]) => {
-    const newFiles = acceptedFiles.map((file) => ({
-      file,
-      name: file.name,
-      size: file.size,
-      type: file.type,
-      preview: URL.createObjectURL(file),
-    }));
-    addFiles(newFiles);
+    if (files) {
+      const newFiles = acceptedFiles.map((file) => ({
+        ...file,
+        name: file.name,
+        size: file.size,
+        type: file.type,
+        preview: URL.createObjectURL(file),
+      }));
+      addFiles(newFiles);
+    }
   };
-
   const { getRootProps, getInputProps } = useDropzone({
     onDrop,
     noClick: true,

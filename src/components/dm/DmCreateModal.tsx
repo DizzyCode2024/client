@@ -24,7 +24,7 @@ import { useHandleFriend } from '@/lib/hooks/handlers';
 interface DmCreateModalProps {
   isOpen: boolean;
   onClose: () => void;
-  modalPosition: { top: number; left: number | null; right: number | null };
+  modalPosition: { top: number; left: number; right: number };
 }
 
 const DmCreateModal = ({
