@@ -24,7 +24,7 @@ export function useOnClickDM() {
           roomId: 0,
           open: false,
           memberCount: 0,
-          temporaryRoomName: null,
+          temporaryRoomName: '',
         });
       } else {
         console.error('User is not logged in');
