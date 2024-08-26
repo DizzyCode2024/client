@@ -37,8 +37,7 @@
 
 > **VIDEO CONFERENCE**
 
-[📞 1:1, N:N Video Conference](./docs/features/openVidu.md)  
-[🤯 OpenVidu (Kurento based)](./docs/features/openVidu.md)  
+[🤯 1:1, N:N Video Conference w/ OpenVidu (Kurento based)](./docs/features/openVidu.md)  
 [📺 Screen Share](./docs/features/openVidu.md)
 
 > **EXPLORE**
