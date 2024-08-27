@@ -3,6 +3,7 @@ import useDmStore from '@/lib/stores/useDmStore';
 import { Box } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import useRoomStore from '@/lib/stores/useRoomStore';
 import FriendList from '../components/friend/FriendList';
 import FriendRequest from '../components/friend/FriendRequest';
 import FriendTopMenu from '../components/friend/FriendTopMenu';
@@ -17,6 +18,11 @@ const FriendPage = ({
   const roomIdParam = param.id ? parseInt(param.id, 10) : 0;
 
   const { setCurrentDmId, dmRooms, setCurrentDmRoom } = useDmStore();
+  const { setCurrentChannelPath } = useRoomStore();
+
+  useEffect(() => {
+    setCurrentChannelPath({ roomId: 0, categoryId: 0, channelId: 0 });
+  }, []);
 
   useEffect(() => {
     setCurrentDmId(roomIdParam);

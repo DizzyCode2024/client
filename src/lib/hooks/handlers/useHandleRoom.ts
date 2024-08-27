@@ -64,7 +64,7 @@ const useHandleRoom = () => {
         status: 'success',
       });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ROOMS });
-      // navigate(`/chat/channels/${}/${}`)
+      navigate(`/chat/main`);
     },
     onError: (error) => {
       console.error('Error deleting room:', error);
@@ -85,6 +85,7 @@ const useHandleRoom = () => {
         status: 'success',
       });
       queryClient.invalidateQueries({ queryKey: QUERY_KEYS.ROOMS });
+      navigate(`/chat/main`);
     },
     onError: (error) => {
       console.error('Error leaving room:', error);
