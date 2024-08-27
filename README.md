@@ -46,7 +46,7 @@
 
 > **FRIEND**
 
-👯 Add Friend
+[👯 Add Friend](./docs/features/friend.md)
 
 <br />
 
