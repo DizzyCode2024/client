@@ -1,13 +1,14 @@
 import { spacing } from '@/lib/constants';
-import { Box, Heading } from '@chakra-ui/react';
+import { Box, Heading, Text } from '@chakra-ui/react';
 import { useEffect } from 'react';
 import useRoomStore from '@/lib/stores/useRoomStore';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { QUERY_KEYS, getAllRooms } from '@/lib/api';
 import { IRoom } from '@/types';
-import RoomBox from './RoomBox';
+import SearchInput from './SearchInput';
+import RoomBox from '../RoomBox';
 
-const ExploreBody = () => {
+const ExploreHome = () => {
   const { setCurrentChannelPath } = useRoomStore();
   useEffect(() => {
     setCurrentChannelPath({
@@ -34,6 +35,15 @@ const ExploreBody = () => {
 
   return (
     <>
+      <Text
+        mt={spacing.offset}
+        textAlign={'center'}
+        color={'white'}
+        fontSize={'2xl'}
+      >
+        {'DizzyCode에서 커뮤니티 찾기'}
+      </Text>
+      <SearchInput />
       <Heading ml={spacing.offset} size={'md'} color={'white'}>
         {'추천 커뮤니티'}
       </Heading>
@@ -59,4 +69,4 @@ const ExploreBody = () => {
   );
 };
 
-export default ExploreBody;
+export default ExploreHome;
