@@ -7,19 +7,23 @@ import DMButton from './DMButton';
 import ExploreButton from './ExploreButton';
 import RoomButton from './RoomButton';
 
-const Container = ({ children }: { children: React.ReactNode }) => (
-  <Box minWidth={'4rem'} height={'100vh'} bg={'gray.800'}>
-    {children}
-  </Box>
-);
-
 const RoomList = () => {
   const queryClient = useQueryClient();
   const rooms: IRoom[] =
     queryClient.getQueryData<IRoom[]>(QUERY_KEYS.ROOMS) || [];
 
   return (
-    <Container>
+    <Box
+      minWidth={'4rem'}
+      bg={'gray.800'}
+      overflowY={'scroll'}
+      height={'100vh'}
+      sx={{
+        '::-webkit-scrollbar': {
+          display: 'none',
+        },
+      }}
+    >
       <Stack
         display={'flex'}
         justifyContent={'center'}
@@ -32,6 +36,7 @@ const RoomList = () => {
         <Divider borderColor={'gray.500'} w={'3rem'} />
 
         {/* Room */}
+
         {rooms?.map((room) => (
           <RoomButton
             key={room.roomId}
@@ -47,7 +52,7 @@ const RoomList = () => {
         {/* Explore Rooms */}
         <ExploreButton />
       </Stack>
-    </Container>
+    </Box>
   );
 };
 

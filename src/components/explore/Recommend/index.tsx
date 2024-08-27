@@ -2,7 +2,7 @@ import { QUERY_KEYS, getRecommendations } from '@/lib/api';
 import { spacing } from '@/lib/constants';
 import { IRoom } from '@/types';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
-import { Flex } from '@chakra-ui/react';
+import { Box, Flex } from '@chakra-ui/react';
 import { useQuery } from '@tanstack/react-query';
 import RoomBox from '../RoomBox';
 
@@ -14,7 +14,7 @@ const Recommend = ({ keyword }: { keyword: string }) => {
   });
 
   return (
-    <>
+    <Box h={'100vh'} overflowY={'scroll'}>
       <ChevronLeftIcon
         w={'2rem'}
         h={'2rem'}
@@ -23,13 +23,7 @@ const Recommend = ({ keyword }: { keyword: string }) => {
         mt={spacing.padding}
         onClick={() => window.history.back()}
       />
-      <Flex
-        p={spacing.padding}
-        direction={'column'}
-        gap={spacing.padding}
-        overflowY={'scroll'}
-        overflowX={'hidden'}
-      >
+      <Flex p={spacing.padding} direction={'column'} gap={spacing.padding}>
         {data?.map((room) => (
           <RoomBox
             key={room.roomId}
@@ -40,7 +34,7 @@ const Recommend = ({ keyword }: { keyword: string }) => {
           />
         ))}
       </Flex>
-    </>
+    </Box>
   );
 };
 
