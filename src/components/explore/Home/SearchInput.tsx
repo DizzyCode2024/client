@@ -29,6 +29,9 @@ const SearchInput = () => {
         value={value}
         onChange={(e) => setValue(e.target.value)}
         onSubmit={handleSubmit}
+        onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) =>
+          e.key === 'Enter' && handleSubmit()
+        }
       />
       <Button onClick={handleSubmit}>{'Search'}</Button>
     </Flex>

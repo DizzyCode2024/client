@@ -14,7 +14,7 @@ const Recommend = ({ keyword }: { keyword: string }) => {
   });
 
   return (
-    <Box h={'100vh'} overflowY={'scroll'}>
+    <Box h={'100vh'} overflowY={'scroll'} overflowX={'hidden'}>
       <ChevronLeftIcon
         w={'2rem'}
         h={'2rem'}
@@ -30,7 +30,6 @@ const Recommend = ({ keyword }: { keyword: string }) => {
             roomId={room.roomId}
             roomName={room.roomName}
             open
-            isMember
           />
         ))}
       </Flex>

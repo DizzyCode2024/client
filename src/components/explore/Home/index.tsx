@@ -61,7 +61,6 @@ const ExploreHome = () => {
             roomId={room.roomId}
             roomName={room.roomName}
             open={room.open}
-            isMember={room.isMember}
           />
         ))}
       </Box>

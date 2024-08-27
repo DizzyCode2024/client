@@ -2,16 +2,22 @@ import { QUERY_KEYS, getCategories } from '@/lib/api';
 import { spacing } from '@/lib/constants';
 import useEnterRoom from '@/lib/hooks/explore/useEnterRoom';
 import { useCustomToast } from '@/lib/hooks/useCustomToast';
-import { IRoomBox } from '@/types';
+import { IRoom } from '@/types';
 import { Box, Heading, Icon, Text } from '@chakra-ui/react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { FaGlobeAmericas, FaLock } from 'react-icons/fa';
 import { useNavigate } from 'react-router-dom';
 
-const RoomBox = ({ roomId, roomName, open, isMember }: IRoomBox) => {
+const RoomBox = ({ roomId, roomName, open }: IRoom) => {
   const toast = useCustomToast();
   const navigate = useNavigate();
+
+  // check if the user is a member of the room
+  const queryClient = useQueryClient();
+  const joinedRooms = queryClient.getQueryData<IRoom[]>(QUERY_KEYS.ROOMS) || [];
+
+  const isMember = joinedRooms.some((room) => room.roomId === roomId);
 
   // roomId의 첫 번째 채널로 이동
   const { data: roomInfo } = useQuery({
