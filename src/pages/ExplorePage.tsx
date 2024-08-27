@@ -1,8 +1,9 @@
 import ExploreMenu from '@/components/explore/ExploreMenu';
-import ExploreBody from '@/components/explore/exploreBody/ExploreBody';
-import ExploreSearch from '@/components/explore/exploreHeader/ExploreSearch';
+import ExploreHome from '@/components/explore/Home';
+import Recommend from '@/components/explore/Recommend';
 import { Box } from '@chakra-ui/react';
 import { useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 
 const ExplorePage = ({
   setMenu,
@@ -13,10 +14,12 @@ const ExplorePage = ({
     setMenu(<ExploreMenu />);
   }, []);
 
+  const [searchParams] = useSearchParams();
+  const keyword = searchParams.get('keyword');
+
   return (
     <Box flex={1} bg={'gray.600'}>
-      <ExploreSearch />
-      <ExploreBody />
+      {keyword ? <Recommend keyword={keyword} /> : <ExploreHome />}
     </Box>
   );
 };
