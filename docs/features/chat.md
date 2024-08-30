@@ -1,3 +1,6 @@
+![LayerStructure](../images/LayerStructureDesign.png)
+
+
 # 1. 웹소켓 연결부터 채널 입장, 채팅까지
 
 > **1) 사용자 A가 DizzyCode 로그인:** 
@@ -62,6 +65,16 @@
 
 <br>
 
+# 2. React Query와 Zustand로 서버/클라이언트 상태관리 분리 
+
+
+<br> 
+
+
+
+
+
+<!---
 # 0. 공통 핵심 기능 (DM, Channel)
 
 DM과 Channel에 공통적으로 사용되는 핵심 기능으로는 메시지 입력 및 파일 첨부 기능, 무한 스크롤 채팅 로딩, 실시간 메시지 업데이트 등이 있습니다. 
@@ -140,6 +153,8 @@ DM의 핵심적인 기능에는 DM방 생성, DM방 목록 조회, 친구 초대
 </details>
 
 # 4. Channel 핵심 기능
+
+-->
 
 # 5. Blog
 
