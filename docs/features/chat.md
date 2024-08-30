@@ -1,3 +1,67 @@
+# 1. 웹소켓 연결부터 채널 입장, 채팅까지
+
+> **1) 사용자 A가 DizzyCode 로그인:** 
+
+1. 웹소켓 연결 
+    
+    [client]
+    
+    - JWT를 사용하여 Secondary Token 발급을 요청한다.
+    
+    [server]
+    
+    - 서버는 클라이언트가 JWT를 보내면, 이를 검증한 후 ST를 반환한다.
+    - 이때 유효기간은 30초 정도로 매우 짧게 둔다.
+    
+    [client]
+    
+    - ST를 쿼리 파라미터에 넣어서 보내 웹소켓 업그레이드를 요청한다.
+    
+    [server]
+    
+    - HandshakeInterceptor를 사용하여 ST를 추출하고 검증한다.
+    - 웹소켓 연결 시 유효기간이 짧은 secondary token을 도입해 초기 연결의 보안성을 높이고, 이후의 STOMP 연결과 메시지 전송 과정에서는 JWT를 사용하여 지속적인 인증 및 권한 관리 수행
+
+1. 연결 성공 시 A가 속한 모든 방들 subscribe
+    1. 여기로 온 메시지들은 {roomId, categoryId, channelId} 형식으로 오며, 채널에 온 새로운 채팅 알림을 위함 
+
+
+<br>
+
+> **2) A가 채팅하기 위해 채널1에 들어감:** 
+
+1. 채널1 subscribe 
+    1. 해당 경로로 온 메시지들은 화면에 바로바로 업데이트
+2. 메시지 보낼 때 app 토픽으로 publish  
+    
+    ```tsx
+    if (client && isConnected) {
+      const destination = `/app/rooms.${roomId}.categories.${categoryId}.channels.${channelId}`;
+      client.publish({
+        destination,
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem('accessToken')}`,
+        },
+        body: JSON.stringify(body),
+      });
+    }
+    ```
+    
+<br>
+
+> **3) 채널1 퇴장, 채널2 입장:**
+
+- 채널1 unsubscribe, 채널2 subscribe
+
+<br>
+
+> **4) 로그아웃:** 
+
+- 모든 방, 채널 구독 취소, 웹소켓 연결 종료
+
+
+<br>
+
 # 0. 공통 핵심 기능 (DM, Channel)
 
 DM과 Channel에 공통적으로 사용되는 핵심 기능으로는 메시지 입력 및 파일 첨부 기능, 무한 스크롤 채팅 로딩, 실시간 메시지 업데이트 등이 있습니다. 
