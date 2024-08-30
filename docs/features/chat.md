@@ -1,11 +1,8 @@
-![LayerStructure](../images/LayerStructureDesign.png)
-
-
 # 1. 웹소켓 연결부터 채널 입장, 채팅까지
 
 > **1) 사용자 A가 DizzyCode 로그인:** 
 
-1. 웹소켓 연결 
+1. 웹소켓 연결 👉 [상세보기](https://hwanheejung.tistory.com/43)   
     
     [client]
     
@@ -25,8 +22,8 @@
     - HandshakeInterceptor를 사용하여 ST를 추출하고 검증한다.
     - 웹소켓 연결 시 유효기간이 짧은 secondary token을 도입해 초기 연결의 보안성을 높이고, 이후의 STOMP 연결과 메시지 전송 과정에서는 JWT를 사용하여 지속적인 인증 및 권한 관리 수행
 
-1. 연결 성공 시 A가 속한 모든 방들 subscribe
-    1. 여기로 온 메시지들은 {roomId, categoryId, channelId} 형식으로 오며, 채널에 온 새로운 채팅 알림을 위함 
+2. 연결 성공 시 A가 속한 모든 방들 subscribe
+    - 여기로 온 메시지들은 {roomId, categoryId, channelId} 형식으로 오며, 채널에 온 새로운 채팅 알림을 위함 
 
 
 <br>
@@ -34,7 +31,8 @@
 > **2) A가 채팅하기 위해 채널1에 들어감:** 
 
 1. 채널1 subscribe 
-    1. 해당 경로로 온 메시지들은 화면에 바로바로 업데이트
+    - 해당 경로로 온 메시지들은 화면에 바로바로 업데이트
+      
 2. 메시지 보낼 때 app 토픽으로 publish  
     
     ```tsx
@@ -65,11 +63,22 @@
 
 <br>
 
-# 2. React Query와 Zustand로 서버/클라이언트 상태관리 분리 
+# 2. 계층 구조 설계 
+
+![LayerStructure](../images/LayerStructureDesign.png)
+
+- TanStack Query와 Zustand로 서버/클라이언트 상태관리 분리 
+- TanStack Query의 useInfiniteQuery로 무한로딩(페이지네이션) 구현
 
 
 <br> 
 
+# 3. Blog
+
+[**웹소켓 개념**](https://hwanheejung.tistory.com/39)   
+[**웹소켓+STOMP**](https://hwanheejung.tistory.com/42)   
+[**리액트로 구현하고 이해해보는 웹 소켓 + STOMP**](https://velog.io/@mikio/websocket-stomp)   
+[**웹소켓 JWT 시나리오**](https://hwanheejung.tistory.com/43)   
 
 
 
@@ -156,6 +165,4 @@ DM의 핵심적인 기능에는 DM방 생성, DM방 목록 조회, 친구 초대
 
 -->
 
-# 5. Blog
 
-[**리액트로 구현하고 이해해보는 웹 소켓 + STOMP**](https://velog.io/@mikio/websocket-stomp)
