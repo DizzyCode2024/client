@@ -1,9 +1,11 @@
 <div align="center">
 <img src="https://github.com/user-attachments/assets/84a6bdcb-ee7a-4979-989c-deac4c82b609" width="140"/>
   <h1>DIZZYCODE</h1>
-  <strong>Discord Clone Project</strong>
+  <strong>Real time chat, video conference</strong>
 </div>
 <br><br>
+
+**Backend**: [Repository](https://github.com/hbam1/dizzycode)
 
 # Tech Stack
 
@@ -31,14 +33,14 @@
 [📱 Websockets (Sock.js, STOMP)](./docs/features/chat.md)  
 [💬 1:1(DM), N:N(Channel) Chat](./docs/features/chat.md)  
 [📁 Drag&drop file upload](./docs/features/dnd.md)  
-[🟢 Real-time on/offline status tracking](./docs/features/status.md)
+🟢 Real-time on/offline status tracking
 
 <!-- ☑️ Real-time read/unread message marking _(Coming Soon)_ -->
 
 > **VIDEO CONFERENCE**
 
 [🤯 1:1, N:N Video Conference w/ OpenVidu (Kurento based)](./docs/features/openVidu.md)  
-[📺 Screen Share](./docs/features/openVidu.md)
+📺 Screen Share
 
 > **EXPLORE**
 
@@ -56,9 +58,6 @@
 
 ![client-server communication](./docs/images/frontbackArchitecture.png)
 
-> **Deployment**
-
-<!-- TODO: add image -->
 
 <br />
 
@@ -70,6 +69,3 @@
 <br>
 
 
-
-## Backend
-[Repository](https://github.com/hbam1/dizzycode)
