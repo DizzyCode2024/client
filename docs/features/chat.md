@@ -67,13 +67,37 @@
 
 ![LayerStructure](../images/LayerStructureDesign.png)
 
-- TanStack Query와 Zustand로 서버/클라이언트 상태관리 분리 
-- TanStack Query의 useInfiniteQuery로 무한로딩(페이지네이션) 구현
+<br>
 
+# 3. useInfiniteQuery 무한스크롤   
+**기능**   
+- TanStack Query의 useInfiniteQuery를 활용해 채팅 메시지를 20개씩 끊어서 요청
+
+**원리**
+- 첫 로드 시, 초기 20개의 메시지를 가져옴.
+- 스크롤이 특정 지점에 도달하면 fetchNextPage를 호출하여 추가 메시지를 로드.
+- 이전에 가져온 데이터를 유지하면서 새로운 데이터만 추가.
+
+**효과**
+- 필요 이상의 데이터 로딩을 방지하여 성능 최적화
 
 <br> 
 
-# 3. Blog
+# 4. 캐싱
+**기능**
+- 한번 들어온 채팅방의 데이터를 TanStack Query의 캐시에 저장하여, 동일한 채팅방으로 재입장 시 네트워크 요청을 최소화.
+
+**원리**
+- 채팅방 데이터는 쿼리키 ['chats', currentChannelPath]를 기반으로 캐시에 저장됨.
+- currentChannelPath가 동일한 요청은 캐싱된 데이터를 반환하며 불필요한 네트워크 호출 방지
+
+**효과**
+- 네트워크 부하 감소
+- 캐싱된 데이터를 즉시 로드하여 빠른 사용자 경험 제공
+
+<br>
+
+# 5. Blog
 
 [**웹소켓 개념**](https://hwanheejung.tistory.com/39)   
 [**웹소켓+STOMP**](https://hwanheejung.tistory.com/42)   
