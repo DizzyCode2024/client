@@ -6,6 +6,7 @@ import { ArrowUpIcon } from '@chakra-ui/icons';
 import { Box, Button, Flex, HStack, Input } from '@chakra-ui/react';
 import { useEffect, useState } from 'react';
 import { useDropzone } from 'react-dropzone';
+import { useMessage } from '../MessageContext';
 import FilePreview from './FilePreview';
 import InputPlusBtn from './InputPlusBtn';
 
@@ -25,9 +26,9 @@ const MessageInput = ({
   const { files, uploadedUrls, addFiles, removeFile, clearFiles } =
     useFilesStore();
   const { uploadAllFiles } = useFileHandler();
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState<string>('');
+  const { setOptimisticMessage } = useMessage();
 
-  console.log('uploadedUrls', uploadedUrls);
   const handleSendMessage = async () => {
     if (senderId && (content.trim() || files.length)) {
       // 파일이 있을 경우
@@ -47,7 +48,7 @@ const MessageInput = ({
       }
 
       sendMessage(destination, payload);
-
+      setOptimisticMessage(content);
       setContent('');
       clearFiles();
     }
@@ -55,14 +56,10 @@ const MessageInput = ({
 
   useEffect(() => {
     const uploadFiles = async () => {
-      if (files.length > 0) {
-        await uploadAllFiles();
-      }
+      if (files.length > 0) await uploadAllFiles();
     };
 
-    if (files.length > 0) {
-      uploadFiles();
-    }
+    uploadFiles();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [files]);
 

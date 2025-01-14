@@ -13,6 +13,7 @@ import ChatContainer from './ChatBody/ChatContainer';
 import Header from './ChatHeader/Header';
 import ChatInput from './ChatInput/ChatInput';
 import Container from './DragFileContainer';
+import { MessageContextProvider } from './MessageContext';
 
 const ChatSection = () => {
   const {
@@ -30,8 +31,7 @@ const ChatSection = () => {
     if (isConnected && roomId && categoryId && channelId && client) {
       const subscription = subscribe(topic, (message) => {
         const chatMessage: IChat = JSON.parse(message.body);
-        console.log(`Received message in channel ${channelId}:`, chatMessage);
-        // TODO: 받은 메시지 처리
+
         queryClient.setQueryData<InfiniteData<IChat[]>>(
           QUERY_KEYS.CHATS({ roomId, categoryId, channelId }),
           (oldData) => {
@@ -78,19 +78,21 @@ const ChatSection = () => {
 
   const [isMembersOpen, setIsMembersOpen] = useState<boolean>(false);
   return (
-    <Container>
-      <Header
-        isMembersOpen={isMembersOpen}
-        setIsMembersOpen={setIsMembersOpen}
-      />
-      <Flex flex={1} overflowY={'scroll'}>
-        <Flex flex={1} direction={'column'}>
-          <ChatContainer />
-          <ChatInput />
+    <MessageContextProvider>
+      <Container>
+        <Header
+          isMembersOpen={isMembersOpen}
+          setIsMembersOpen={setIsMembersOpen}
+        />
+        <Flex flex={1} overflowY={'scroll'}>
+          <Flex flex={1} direction={'column'}>
+            <ChatContainer />
+            <ChatInput />
+          </Flex>
+          {isMembersOpen && <MemberList />}
         </Flex>
-        {isMembersOpen && <MemberList />}
-      </Flex>
-    </Container>
+      </Container>
+    </MessageContextProvider>
   );
 };
 
