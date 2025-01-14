@@ -24,15 +24,4 @@ export const palette = {
 export const theme = {
   name: 'main',
   palette,
-  //   text: palette.neutral700_gray,
-  //   textDim: palette.neutral600_gray,
-  //   textDimmer: palette.neutral500_gray,
-  //   background: palette.neutral300_gray,
-  //   mainBtnGray: palette.neutral200_gray,
-  //   mainBtnReversed: palette.neutral600_dark,
-  //   subBtnGray: palette.neutral400_gray,
-  //   textInput: palette.neutral100_gray,
-  //   textInputBorder: palette.neutral600_gray,
-
-  //   alert: palette.alert_red,
 };

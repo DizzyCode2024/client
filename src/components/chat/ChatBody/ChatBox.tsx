@@ -2,9 +2,10 @@
 import { spacing } from '@/lib/constants';
 import { convertUTC } from '@/lib/utils/convertUTC';
 import { IChat } from '@/types';
-import { Box, Flex, Text, useDisclosure, Image, Link } from '@chakra-ui/react';
+import { Box, Flex, Image, Link, Text, useDisclosure } from '@chakra-ui/react';
 import { FaFileAlt } from 'react-icons/fa';
 import styled from 'styled-components';
+import { useMessage } from '../MessageContext';
 import MemberModal from './MemberModal';
 
 const ProfilePic = styled.div`
@@ -21,6 +22,7 @@ const FileName = styled(Text)`
 
 const ChatBox = ({ content, senderUsername, timestamp, url }: IChat) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
+  const { optimisticMessage } = useMessage();
 
   const fileExtensions = {
     images: [
@@ -140,7 +142,10 @@ const ChatBox = ({ content, senderUsername, timestamp, url }: IChat) => {
             {convertUTC(timestamp)}
           </Text>
         </Flex>
-        <Text whiteSpace={'pre-line'}>{content}</Text>
+        <Text whiteSpace={'pre-line'} color={content ? 'gray.100' : 'gray.400'}>
+          {' '}
+          {content || optimisticMessage}
+        </Text>
         {Array.isArray(url)
           ? url.map((u) => <Box key={u}>{renderFile(u)}</Box>)
           : url && renderFile(url)}
